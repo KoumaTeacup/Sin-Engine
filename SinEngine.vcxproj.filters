@@ -18,9 +18,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SEVector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SELog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -31,6 +28,9 @@
     </ClInclude>
     <ClInclude Include="SELog.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SEMatrix.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

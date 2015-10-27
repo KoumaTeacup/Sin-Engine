@@ -9,7 +9,7 @@
 #define SE_DEBUG
 
 #define SE_LogManager			se_debug::SELogManager::getObj()
-#define SE_Alert(...)			se_debug::SELogManager::getObj()->alert(__VA_ARGS__)
+#define SE_Alert(...)			se_debug::SELogManager::getObj().alert(__VA_ARGS__)
 #define SE_LogManager_Release	se_debug::SELogManager::release
 
 #define SE_LOG_ENABLED	0x01
@@ -35,40 +35,40 @@ struct SELog {
 
 class SELogManager {
 public:
-	//flags
+	// flags
 	char settings;
 
-	//dtor
+	// dtor
 	~SELogManager();
 
-	//init
+	// init
 	static SELogManager& getObj();
 	static void release() { delete logManager; }
 
-	//a dummy init function
+	// a dummy init function
 	void init(char bits = SE_LOG_ENABLED);
 
-	//User method for log manipulations.
+	// User method for log manipulations.
 	void alert(bool exp, const char* msg = "User alert reached.");
 
-	//Kernel method for log manipulations.
+	// Kernel method for log manipulations.
 	void append(logType t, const char *msg);
 
-	//Output error message(s) to console.
+	// Output error message(s) to console.
 	void print(std::ostream *os = &std::cout);
 
 
 private:
-	//Private constructor for singleton pattern.
+	// Private constructor for singleton pattern.
 	SELogManager();
-
-	//log queue
+	
+	// log queue
 	std::vector<SELog> logData;
 
-	//SEError Object
+	// SEError Object
 	static SELogManager* logManager;
 
-	//sfml streambuff
+	// sfml streambuff
 	std::stringstream sfmlErr;
 
 	void clearConsole();

@@ -8,10 +8,8 @@ using namespace se_debug;
 
 SELogManager* SELogManager::logManager = NULL;
 
-SELogManager::SELogManager() :settings(SE_LOG_ENABLED) {
+SELogManager::SELogManager() :settings(0) {
 	sf::err().rdbuf(sfmlErr.rdbuf());
-	SELog log = { LOGTYPE_GENERAL, "Log Manager initialized." };
-	logData.push_back(log);
 }
 
 SELogManager::~SELogManager() {
@@ -30,20 +28,21 @@ SELogManager& SELogManager::getObj() {
 
 void SELogManager::init(char bits) {
 	settings = bits;
+	if (bits > 7) append(LOGTYPE_WARNNING, "Invalid LogManager Initialization bits");
+	else append(LOGTYPE_GENERAL, "Log Manager initialized.");
 	if (settings && !(settings&SE_LOG_ENABLED)) 
 		settings |= SE_LOG_ENABLED;
 }
 
 void SELogManager::alert(bool exp, const char* msg) {
-	if (exp) {
-		SELog log = { LOGTYPE_USER, msg };
-		logData.push_back(log);
-	}
+	if (exp)  append(LOGTYPE_USER, msg);
 }
 
 void SELogManager::append(logType t, const char *msg) {
-	SELog log = { t, msg };
-	logData.push_back(log);
+	if (settings & SE_LOG_ENABLED) {
+		SELog log = { t, msg };
+		logData.push_back(log);
+	}
 }
 
 void SELogManager::print(std::ostream *os) {
@@ -96,16 +95,16 @@ void SELogManager::clearConsole() {
 	hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	if (hStdOut == INVALID_HANDLE_VALUE) return;
 
-	/* Get the number of cells in the current buffer */
+	// Get the number of cells in the current buffer
 	if (!GetConsoleScreenBufferInfo(hStdOut, &csbi)) return;
 	cellCount = csbi.dwSize.X *csbi.dwSize.Y;
 
-	/* Fill the entire buffer with spaces */
+	// Fill the entire buffer with spaces
 	if (!FillConsoleOutputCharacter(hStdOut, (TCHAR) ' ', cellCount, homeCoords, &count)) return;
 
-	/* Fill the entire buffer with the current colors and attributes */
+	// Fill the entire buffer with the current colors and attributes
 	if (!FillConsoleOutputAttribute(hStdOut, csbi.wAttributes, cellCount, homeCoords, &count)) return;
 
-	/* Move the cursor home */
+	// Move the cursor home
 	SetConsoleCursorPosition(hStdOut, homeCoords);
 }
