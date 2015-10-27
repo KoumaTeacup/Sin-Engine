@@ -1,0 +1,5 @@
+- Sin Engine -[General] Log Manager initialized.
+- Sin Engine -[SFML] Warning: The created OpenGL context does not fully meet the settings that were requested
+Requested: version = 3.0 ; depth bits = 32 ; stencil bits = 8 ; AA level = 4 ; core = false ; debug = false
+Created: version = 4.5 ; depth bits = 24 ; stencil bits = 8 ; AA level = 4 ; core = false ; debug = false
+
