@@ -1,3 +1,11 @@
+/***************************************************************************************************
+* - SEMatrix.h
+* - Template Matrix Class of Sin Engine
+* - This class template provides various kinds of functionality for matrix mathmatics needed for
+*	graphics.
+* -	See SEvector.h
+***************************************************************************************************/
+
 #ifndef SEMATRIX_H
 #define SEMATRIX_H
 
@@ -19,14 +27,44 @@ enum axis {
 	AXIS_Z
 };
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 class matrix {
 public:
 	// ctor
 	matrix<DIM, T>() {}
 
 	// ctors
-	matrix<DIM, T>(T val) { initData(val); }
+	matrix<DIM, T>(
+		vector<DIM, T> v0,
+		vector<DIM, T> v1 = vector<DIM, T>(),
+		vector<DIM, T> v2 = vector<DIM, T>(),
+		vector<DIM, T> v3 = vector<DIM, T>()) { initData(v0, v1, v2, v3); }
+
+	matrix<DIM, T>(T m00) {data[0][0] = m00; }
+	matrix<DIM, T>(
+		T m00, T m01,
+		T m10, T m11) {
+		data[0].initData(m00, m01);
+		data[1].initData(m10, m11);
+	}
+	matrix<DIM, T>(
+		T m00, T m01, T m02,
+		T m10, T m11, T m12,
+		T m20, T m21, T m22) {
+		data[0].initData(m00, m01, m02);
+		data[1].initData(m10, m11, m12);
+		data[1].initData(m20, m21, m22);
+	}
+	matrix<DIM, T>(
+		T m00, T m01, T m02, T m03,
+		T m10, T m11, T m12, T m13,
+		T m20, T m21, T m22, T m23,
+		T m30, T m31, T m32, T m33) {
+		data[0].initData(m00, m01, m02, m03);
+		data[1].initData(m10, m11, m12, m13);
+		data[1].initData(m20, m21, m22, m23);
+		data[1].initData(m30, m31, m32, m33);
+	}
 
 	// operation overload
 	matrix<DIM, T>	operator*(T val)						const;
@@ -55,7 +93,11 @@ public:
 	static matrix<DIM, T>	PJ(float front, float back, float rx, float ry);
 
 	// setter&getter
-	void initData(T val = 0);
+	void initData(
+		vector<DIM,T> v0 = vector<DIM, T>(),
+		vector<DIM, T> v1 = vector<DIM, T>(),
+		vector<DIM, T> v2 = vector<DIM, T>(),
+		vector<DIM, T> v3 = vector<DIM, T>());
 
 	// friends
 	//friend matrix<DIM, T> operator*(T lhs, const matrix<DIM, T> &rhs) { return rhs * lhs; }
@@ -63,14 +105,14 @@ public:
 
 private:
 	// member variable
-	vector<DIM, T> data[4];
+	vector<DIM, T> data[DIM];
 };
 
-/*************************************************************************************/
-/*************************************************************************************/
+/***************************************************************************************************/
+/***************************************************************************************************/
 // Method definitions
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T> matrix<DIM, T>::operator*(T val) const {
 	matrix<DIM, T> result;
 	for (int i = 0; i < DIM; ++i)
@@ -78,7 +120,7 @@ matrix<DIM, T> matrix<DIM, T>::operator*(T val) const {
 	return result;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T> matrix<DIM, T>::operator/(T val) const {
 	matrix<DIM, T> result;
 	if (rhs == 0) SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Division by zero, no action taken.");
@@ -89,7 +131,7 @@ matrix<DIM, T> matrix<DIM, T>::operator/(T val) const {
 	return result;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T> matrix<DIM, T>::operator*(const matrix<DIM, T> &rhs) const {
 	matrix<DIM, T> result;
 	matrix<DIM, T> trans = rhs.transpose();
@@ -100,7 +142,7 @@ matrix<DIM, T> matrix<DIM, T>::operator*(const matrix<DIM, T> &rhs) const {
 	return result;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T>& matrix<DIM, T>::operator*=(T val) {
 	for (int i = 0; i < DIM; ++i) {
 		data[i] *= val;
@@ -108,13 +150,13 @@ matrix<DIM, T>& matrix<DIM, T>::operator*=(T val) {
 	return *this;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T>& matrix<DIM, T>::operator*=(const matrix<DIM, T> &rhs) {
 	*this = *this * rhs;
 	return *this;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T>& matrix<DIM, T>::operator/=(T val) {
 	if (rhs == 0) SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Division by zero, no action taken.");
 	else
@@ -124,7 +166,7 @@ matrix<DIM, T>& matrix<DIM, T>::operator/=(T val) {
 	return *this;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 vector<DIM, T> matrix<DIM, T>::operator[](int index) const {
 	if (index > DIM) {
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Matrix index out of range.");
@@ -133,7 +175,7 @@ vector<DIM, T> matrix<DIM, T>::operator[](int index) const {
 	return data[index];
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 vector<DIM, T>& matrix<DIM, T>::operator[](int index) {
 	if (index > DIM) {
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Matrix index out of range.");
@@ -142,7 +184,7 @@ vector<DIM, T>& matrix<DIM, T>::operator[](int index) {
 	return data[index];
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 bool matrix<DIM, T>::operator==(const matrix<DIM, T> &rhs) const {
 	for (int i = 0; i < DIM; ++i) {
 		if (data[i] != rhs) return false;
@@ -150,19 +192,19 @@ bool matrix<DIM, T>::operator==(const matrix<DIM, T> &rhs) const {
 	return true;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 bool matrix<DIM, T>::operator!=(const matrix<DIM, T> &rhs) const {
 	return !(*this == rhs);
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 void matrix<DIM, T>::identify(T val) {
 	for (int i = 0; i < DIM; ++i) {
 		data[i][i] = val;
 	}
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T> matrix<DIM, T>::transpose() const {
 	matrix<DIM, T> result;
 	for (int i = 0; i < DIM; ++i)
@@ -172,38 +214,37 @@ matrix<DIM, T> matrix<DIM, T>::transpose() const {
 	return result;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T> matrix<DIM, T>::translate(float x, float y, float z) const {
 	return TL(x, y, z) * *this;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T> matrix<DIM, T>::rotate(axis a, float degree) const {
 	return RT(a, degree) * *this;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T> matrix<DIM, T>::scale(float x, float y, float z) const {
 	return SL(x, y, z)* *this;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T> matrix<DIM, T>::project(float front, float back, float rx, float ry) const {
 	return PJ(front, back, rx, ry)* *this;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T>	matrix<DIM, T>::TL(float x, float y, float z) {
 	matrix<DIM, T> result;
 	result.identify();
-	result[0][DIM-1] = x;
-	result[1][DIM-1] = y;
-	result[2][DIM-1] = z;
-	result[DIM - 1][DIM - 1] = 1.0f;
+	if(DIM>0) result[0][DIM-1] = x;
+	if(DIM>1) result[1][DIM-1] = y;
+	if(DIM>2) result[2][DIM-1] = z;
 	return result;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T>	matrix<DIM, T>::RT(axis a, float degree) {
 	matrix<DIM, T> result;
 	result.identify();
@@ -241,17 +282,17 @@ matrix<DIM, T>	matrix<DIM, T>::RT(axis a, float degree) {
 	return result;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T>	matrix<DIM, T>::SL(float x, float y, float z) {
 	matrix<DIM, T> result;
-	result[0][0] = x;
-	result[1][1] = y;
-	result[2][2] = z;
+	if(DIM>0) result[0][0] = x;
+	if(DIM>1) result[1][1] = y;
+	if(DIM>2) result[2][2] = z;
 	result[DIM - 1][DIM - 1] = 1;
 	return result;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 matrix<DIM, T>	matrix<DIM, T>::PJ(float front, float back, float rx, float ry) {
 	if (DIM != 4) SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Projection only allowed in 3d space.");
 	else {
@@ -265,14 +306,19 @@ matrix<DIM, T>	matrix<DIM, T>::PJ(float front, float back, float rx, float ry) {
 	return result;
 }
 
-template <int DIM, typename T>
-void matrix<DIM, T>::initData(T val) {
-	for (int i = 0; i < DIM; ++i) {
-		data[i] = vector<DIM, T>(val);
-	}
+template <unsigned DIM, typename T>
+void matrix<DIM, T>::initData(
+	vector<DIM, T> v0 = vector<DIM, T>(),
+	vector<DIM, T> v1 = vector<DIM, T>(),
+	vector<DIM, T> v2 = vector<DIM, T>(),
+	vector<DIM, T> v3 = vector<DIM, T>()) {
+	if (DIM>0) data[0] = v0;
+	if (DIM>1) data[1] = v1;
+	if (DIM>2) data[2] = v2;
+	if (DIM>3) data[3] = v3;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 vector<DIM, T> operator*(const matrix<DIM, T> &lhs, const vector<DIM, T> &rhs) {
 	vector<DIM, T> result;
 	for (int i = 0; i < DIM; ++i)
@@ -280,7 +326,7 @@ vector<DIM, T> operator*(const matrix<DIM, T> &lhs, const vector<DIM, T> &rhs) {
 	return result;
 }
 
-template <int DIM, typename T>
+template <unsigned DIM, typename T>
 vector<DIM, T>& vector<DIM,T>::operator*=(const matrix<DIM, T> &rhs) {
 	*this = rhs * *this;
 	return *this;

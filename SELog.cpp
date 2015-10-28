@@ -34,7 +34,7 @@ void SELogManager::init(char bits) {
 		settings |= SE_LOG_ENABLED;
 }
 
-void SELogManager::alert(bool exp, const char* msg) {
+void SELogManager::assert(bool exp, const char* msg) {
 	if (exp)  append(LOGTYPE_USER, msg);
 }
 
@@ -80,7 +80,7 @@ void SELogManager::print(std::ostream *os) {
 				break;
 			default: break;
 			}
-			*os << i.msg << std::endl;
+			*os << i.msg << std::endl << std::endl;
 		}
 	}
 }

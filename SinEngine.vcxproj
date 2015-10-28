@@ -147,11 +147,17 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SELog.cpp" />
+    <ClCompile Include="SEUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SELog.h" />
     <ClInclude Include="SEMatrix.h" />
+    <ClInclude Include="SEUtility.h" />
     <ClInclude Include="SEVector.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shader.frag" />
+    <None Include="shader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

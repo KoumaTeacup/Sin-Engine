@@ -1,14 +1,12 @@
-﻿Build started 10/27/2015 10:09:52 AM.
+﻿Build started 10/28/2015 8:26:30 AM.
      1>Project "F:\VS Projects\Sin-Engine\SinEngine.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         D:\Dev Software\Visual Studio\VC\bin\CL.exe /c /I"F:\VS Projects\Sin-Engine\glew\include" /I"F:\VS Projects\Sin-Engine\freeglut\include" /I"F:\VS Projects\Sin-Engine\sfml\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
-         main.cpp
-       Link:
+     1>Link:
          D:\Dev Software\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\VS Projects\Sin-Engine\Debug\SinEngine.exe" /INCREMENTAL /NOLOGO /LIBPATH:"F:\VS Projects\Sin-Engine\sfml\lib" /LIBPATH:"F:\VS Projects\Sin-Engine\freeglut\lib" /LIBPATH:"F:\VS Projects\Sin-Engine\glew\lib" "sfml-window-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" opengl32.lib "sfml-system-d.lib" freeglut.lib glew32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"F:\VS Projects\Sin-Engine\Debug\SinEngine.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\VS Projects\Sin-Engine\Debug\SinEngine.lib" /MACHINE:X86 Debug\main.obj
          Debug\SELog.obj
+         Debug\SEUtility.obj
          SinEngine.vcxproj -> F:\VS Projects\Sin-Engine\Debug\SinEngine.exe
      1>Done Building Project "F:\VS Projects\Sin-Engine\SinEngine.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.68
+Time Elapsed 00:00:00.75

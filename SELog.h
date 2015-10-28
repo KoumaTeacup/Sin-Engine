@@ -9,7 +9,7 @@
 #define SE_DEBUG
 
 #define SE_LogManager			se_debug::SELogManager::getObj()
-#define SE_Alert(...)			se_debug::SELogManager::getObj().alert(__VA_ARGS__)
+#define SE_Assert(...)			se_debug::SELogManager::getObj().assert(__VA_ARGS__)
 #define SE_LogManager_Release	se_debug::SELogManager::release
 
 #define SE_LOG_ENABLED	0x01
@@ -49,7 +49,7 @@ public:
 	void init(char bits = SE_LOG_ENABLED);
 
 	// User method for log manipulations.
-	void alert(bool exp, const char* msg = "User alert reached.");
+	void assert(bool exp, const char* msg = "User assert reached.");
 
 	// Kernel method for log manipulations.
 	void append(logType t, const char *msg);
