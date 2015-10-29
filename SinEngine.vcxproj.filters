@@ -35,10 +35,10 @@
     <ClInclude Include="SELog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SEMatrix.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="SEUtility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SEMatrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
