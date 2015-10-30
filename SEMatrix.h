@@ -11,13 +11,13 @@
 
 #include "SEVector.h"
 
-#define SE_MATRIX_TRANSLATE4(...)	se_data::matrix<4,float>::TL(__VA_ARGS__);
-#define SE_MATRIX_ROTATE4(...)		se_data::matrix<4,float>::RT(__VA_ARGS__);
-#define SE_MATRIX_SCALE4(...)		se_data::matrix<4,float>::SL(__VA_ARGS__);
-#define SE_MATRIX_PROJECT4(...)		se_data::matrix<4,float>::PJ(__VA_ARGS__);
-#define SE_MATRIX_TRANSLATE3(...)	se_data::matrix<3,float>::TL(__VA_ARGS__);
-#define SE_MATRIX_ROTATE3(...)		se_data::matrix<3,float>::RT(__VA_ARGS__);
-#define SE_MATRIX_SCALE3(...)		se_data::matrix<3,float>::SL(__VA_ARGS__);
+#define SE_MATRIX_TRANSLATE4(...)	se_data::matrix<4,float>::TL(__VA_ARGS__)
+#define SE_MATRIX_ROTATE4(...)		se_data::matrix<4,float>::RT(__VA_ARGS__)
+#define SE_MATRIX_SCALE4(...)		se_data::matrix<4,float>::SL(__VA_ARGS__)
+#define SE_MATRIX_PROJECT4(...)		se_data::matrix<4,float>::PJ(__VA_ARGS__)
+#define SE_MATRIX_TRANSLATE3(...)	se_data::matrix<3,float>::TL(__VA_ARGS__)
+#define SE_MATRIX_ROTATE3(...)		se_data::matrix<3,float>::RT(__VA_ARGS__)
+#define SE_MATRIX_SCALE3(...)		se_data::matrix<3,float>::SL(__VA_ARGS__)
 
 namespace se_data {
 
@@ -294,9 +294,9 @@ matrix<DIM, T>	matrix<DIM, T>::SL(float x, float y, float z) {
 
 template <unsigned DIM, typename T>
 matrix<DIM, T>	matrix<DIM, T>::PJ(float front, float back, float rx, float ry) {
+	matrix<DIM, T> result;
 	if (DIM != 4) SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Projection only allowed in 3d space.");
 	else {
-		matrix<DIM, T> result;
 		result[0][0] = 1 / rx;
 		result[1][1] = 1 / ry;
 		result[2][2] = (front + back) / (front - back);
