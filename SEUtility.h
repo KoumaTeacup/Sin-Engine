@@ -4,9 +4,5 @@
 #include <string>
 #include <GL\glew.h>
 
-bool readFile(const char* filename, std::string &output);
 
-bool addShader(GLuint shaderProgram, const char* pShaderText, GLenum shaderType);
-
-GLuint createShaderProgram(const char** ppFilename, GLenum* pShaderType, int n);
 #endif
