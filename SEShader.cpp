@@ -34,7 +34,7 @@ bool SEShader::addShader(const char* shaderFile, GLenum shaderType) {
 	return true;
 }
 
-bool SEShader::Link() {
+bool SEShader::link() {
 	glLinkProgram(programId);
 	
 	GLint info;
@@ -51,7 +51,7 @@ bool SEShader::Link() {
 	return true;
 }
 
-bool SEShader::Validate() {
+bool SEShader::validate() {
 	glValidateProgram(programId);
 
 	GLint info;
@@ -68,11 +68,11 @@ bool SEShader::Validate() {
 	return true;
 }
 
-void SEShader::Use() {
+void SEShader::use() {
 	glUseProgram(programId);
 }
 
-void SEShader::Unuse() {
+void SEShader::unuse() {
 	glUseProgram(0);
 }
 
@@ -85,7 +85,7 @@ char* SEShader::readFile(const char* filename) {
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR, errorStr.c_str());
 	}
 	ifs.seekg(0, std::ios_base::end);
-	int fileLength = ifs.tellg();
+	int fileLength = static_cast<int>(ifs.tellg());
 
 	char* content = new char[fileLength + 1];
 	ifs.seekg(0, std::ios_base::beg);
