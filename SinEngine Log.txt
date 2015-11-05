@@ -1,1 +1,1 @@
-Current FPS: 6.  
+Current FPS: 12  

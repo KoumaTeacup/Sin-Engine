@@ -72,8 +72,6 @@ private:
 
 	// sfml streambuff
 	std::stringstream sfmlErr;
-
-	void clearConsole();
 };
 
 }

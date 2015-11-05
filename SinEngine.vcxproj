@@ -146,11 +146,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SEComponent.cpp" />
+    <ClCompile Include="SEComTransform.cpp" />
+    <ClCompile Include="SEGameObject.cpp" />
     <ClCompile Include="SELog.cpp" />
     <ClCompile Include="SEShader.cpp" />
     <ClCompile Include="SEUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SEComponent.h" />
+    <ClInclude Include="SEComTransform.h" />
+    <ClInclude Include="SEGameObject.h" />
     <ClInclude Include="SELog.h" />
     <ClInclude Include="SEMatrix.h" />
     <ClInclude Include="SEShader.h" />
