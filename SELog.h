@@ -1,12 +1,13 @@
 #ifndef SELOG_H
 #define SELOG_H
 
+#ifdef SE_DEBUG
+
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
 
-#define SE_DEBUG
 
 #define SE_LogManager			se_debug::SELogManager::getObj()
 #define SE_Assert(...)			se_debug::SELogManager::getObj().assert(__VA_ARGS__)
@@ -49,7 +50,7 @@ public:
 	void init(char bits = SE_LOG_ENABLED);
 
 	// User method for log manipulations.
-	void assert(bool exp, const char* msg = "User assert reached.");
+	void assert(bool exp, const char* msg = "User assertion reached.");
 
 	// Kernel method for log manipulations.
 	void append(logType t, const char *msg);
@@ -64,6 +65,7 @@ private:
 	
 	// log queue
 	std::vector<SELog> logData;
+	int logPos;
 
 	// SEError Object
 	static SELogManager* logManager;
@@ -76,4 +78,10 @@ private:
 
 }
 
-#endif
+#else // SE_DEBUG
+
+#define SE_Assert(...)	(__VA_ARGS__)
+
+#endif // SE_DEBUG
+
+#endif // SELOG_H

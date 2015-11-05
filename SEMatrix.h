@@ -123,11 +123,15 @@ matrix<DIM, T> matrix<DIM, T>::operator*(T val) const {
 template <unsigned DIM, typename T>
 matrix<DIM, T> matrix<DIM, T>::operator/(T val) const {
 	matrix<DIM, T> result;
-	if (rhs == 0) SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Division by zero, no action taken.");
-	else
-		for (int i = 0; i < DIM; ++i) {
-			result[i] /= val;
-		}
+#ifdef SE_DEBUG
+	if (rhs == 0) {
+		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Division by zero, no action taken.");
+		return result;
+	}
+#endif
+	for (int i = 0; i < DIM; ++i) {
+		result[i] /= val;
+	}
 	return result;
 }
 
@@ -158,8 +162,12 @@ matrix<DIM, T>& matrix<DIM, T>::operator*=(const matrix<DIM, T> &rhs) {
 
 template <unsigned DIM, typename T>
 matrix<DIM, T>& matrix<DIM, T>::operator/=(T val) {
-	if (rhs == 0) SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Division by zero, no action taken.");
-	else
+#ifdef SE_DEBUG
+	if (rhs == 0) {
+		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Division by zero, no action taken.");
+		return *this;
+	}
+#endif
 	for (int i = 0; i < DIM; ++i) {
 		data[i] /= val;
 	}
@@ -168,19 +176,23 @@ matrix<DIM, T>& matrix<DIM, T>::operator/=(T val) {
 
 template <unsigned DIM, typename T>
 vector<DIM, T> matrix<DIM, T>::operator[](int index) const {
+#ifdef SE_DEBUG
 	if (index > DIM) {
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Matrix index out of range.");
 		index = 0;
 	}
+#endif
 	return data[index];
 }
 
 template <unsigned DIM, typename T>
 vector<DIM, T>& matrix<DIM, T>::operator[](int index) {
+#ifdef SE_DEBUG
 	if (index > DIM) {
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Matrix index out of range.");
 		index = 0;
 	}
+#endif
 	return data[index];
 }
 
@@ -248,10 +260,12 @@ template <unsigned DIM, typename T>
 matrix<DIM, T>	matrix<DIM, T>::RT(axis a, float degree) {
 	matrix<DIM, T> result;
 	result.identify();
+#ifdef SE_DEBUG
 	if (DIM < 3) {
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Invalid matrix dimension for rotation.");
 		return result;
 	}
+#endif
 	if (DIM == 3) {
 		result[0][0] = cosf(degree);
 		result[0][1] = -sinf(degree);
@@ -295,14 +309,17 @@ matrix<DIM, T>	matrix<DIM, T>::SL(float x, float y, float z) {
 template <unsigned DIM, typename T>
 matrix<DIM, T>	matrix<DIM, T>::PJ(float front, float back, float rx, float ry) {
 	matrix<DIM, T> result;
-	if (DIM != 4) SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Projection only allowed in 3d space.");
-	else {
-		result[0][0] = 1 / rx;
-		result[1][1] = 1 / ry;
-		result[2][2] = (front + back) / (front - back);
-		result[2][3] = 2 * front*back / (front - back);
-		result[3][2] = -1;
+#ifdef SE_DEBUG
+	if (DIM != 4) {
+		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Projection only allowed in 3d space.");
+		return result;
 	}
+#endif
+	result[0][0] = 1 / rx;
+	result[1][1] = 1 / ry;
+	result[2][2] = (front + back) / (front - back);
+	result[2][3] = 2 * front*back / (front - back);
+	result[3][2] = -1;
 	return result;
 }
 

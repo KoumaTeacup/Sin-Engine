@@ -23,25 +23,7 @@ public:
 	bool validate();
 	void use();
 	void unuse();
-	void load(TYPE_UNIFORM type, const char* varName, void *data) {
-		GLint glLocation = glGetUniformLocation(programId, varName);
-		if (glLocation == -1)
-			SE_LogManager.append(se_debug::LOGTYPE_ERROR, "failed to query uniform variable in shader.");
-		switch (type) {
-		case UNIFORM_INT:
-			glUniform1i(glLocation, *(int*)data);
-			break;
-		case UNIFORM_FLOAT:
-			glUniform1f(glLocation, *(float*)data);
-			break;
-		case UNIFORM_VECTOR:
-			glUniform4fv(glLocation, 1, &(*(SEVector4f*)data)[0]);
-			break;
-		case UNIFORM_MATRIX:
-			glUniformMatrix4fv(glLocation, 1, GL_TRUE, &(*(SEMatrix4f*)data)[0][0]);
-			break;
-		}
-	}
+	void load(TYPE_UNIFORM type, const char* varName, void *data);
 
 	GLuint id() { return programId; }
 

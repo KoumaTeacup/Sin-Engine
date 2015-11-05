@@ -1,14 +1,17 @@
+#ifdef SE_DEBUG
+
 #include <fstream>
 #include <Windows.h>
 #include <SFML\System.hpp>
 
 #include "SELOG.h"
+#include "SEUtility.h"
 
 using namespace se_debug;
 
 SELogManager* SELogManager::logManager = NULL;
 
-SELogManager::SELogManager() :settings(0) {
+SELogManager::SELogManager() :settings(0), logPos(0) {
 	sf::err().rdbuf(sfmlErr.rdbuf());
 }
 
@@ -52,11 +55,10 @@ void SELogManager::print(std::ostream *os) {
 		sfmlErr.str(std::string());
 	}
 	if (settings & SE_LOG_ENABLED) {
-		for (auto i : logData) {
-			clearConsole();
-			if (settings & SE_LOG_USERONLY && i.type != LOGTYPE_USER) continue;
+		while (logPos < logData.size()) {
+			if (settings & SE_LOG_USERONLY && logData[logPos].type != LOGTYPE_USER) continue;
 			*os << "- Sin Engine -";
-			switch (i.type) {
+			switch (logData[logPos].type) {
 			case LOGTYPE_UNKNOWN:
 				*os << "[Unknown] ";
 				break;
@@ -80,9 +82,15 @@ void SELogManager::print(std::ostream *os) {
 				break;
 			default: break;
 			}
-			*os << i.msg << std::endl << std::endl;
+			*os << logData[logPos].msg << std::endl << std::endl;
+			++logPos;
 		}
 	}
+	char log[64];
+	sprintf(log, "Current FPS: %d.  \r", static_cast<int>(1.0f / SE_Utility.getFrameTime()));
+	//*os << std::endl << "Curr\rent FPS: " << static_cast<int>(1.0f / SE_Utility.getFrameTime())
+	//	<< " \rblabla" << std::flush;
+	*os << log;
 }
 
 void SELogManager::clearConsole() {
@@ -108,3 +116,5 @@ void SELogManager::clearConsole() {
 	// Move the cursor home
 	SetConsoleCursorPosition(hStdOut, homeCoords);
 }
+
+#endif

@@ -96,14 +96,15 @@ vector<DIM, T> vector<DIM, T>::operator-(const vector<DIM, T> &rhs) const {
 template <unsigned DIM, typename T>
 vector<DIM, T> vector<DIM, T>::operator%(const vector<DIM, T> &rhs) const {
 	vector<DIM, T> result;
+#ifdef SE_DEBUG
 	if (DIM <= 2) {
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Cross product performed on non-3d vectors.");
+		return result;
 	}
-	else {
-		result[0] = data[1] * rhs[2] - data[2] * rhs[1];
-		result[1] = data[2] * rhs[0] - data[0] * rhs[2];
-		result[2] = data[0] * rhs[1] - data[1] * rhs[0];
-	}
+#endif
+	result[0] = data[1] * rhs[2] - data[2] * rhs[1];
+	result[1] = data[2] * rhs[0] - data[0] * rhs[2];
+	result[2] = data[0] * rhs[1] - data[1] * rhs[0];
 	return result;
 }
 
@@ -128,11 +129,15 @@ T vector<DIM, T>::operator*(const vector<DIM, T> &rhs) const {
 template <unsigned DIM, typename T>
 vector<DIM, T> vector<DIM, T>::operator/(T rhs) const {
 	vector<DIM, T> result;
-	if (rhs == 0) SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Division by zero, no action taken.");
-	else
-		for (int i = 0; i < DIM; ++i) {
-			result[i] = data[i] / rhs;
-		}
+#ifdef SE_DEBUG
+	if (rhs == 0) {
+		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Division by zero, no action taken.");
+		return result;
+	}
+#endif
+	for (int i = 0; i < DIM; ++i) {
+		result[i] = data[i] / rhs;
+	}
 	return result;
 }
 
@@ -162,11 +167,14 @@ vector<DIM, T>& vector<DIM, T>::operator*=(T rhs) {
 
 template <unsigned DIM, typename T>
 vector<DIM, T>& vector<DIM, T>::operator/=(T rhs) {
-	if (rhs == 0) SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Division by zero, no action taken.");
-	else
-		for (int i = 0; i < DIM; ++i) {
-			data[i] /= rhs;
-		}
+#ifdef SE_DEBUG
+	if (rhs == 0) {
+		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Division by zero, no action taken.");
+		return *this
+	}
+#endif
+	for (int i = 0; i < DIM; ++i)
+		data[i] /= rhs;
 	return *this;
 }
 
@@ -202,19 +210,23 @@ void vector<DIM, T>::initData(T vx, T vy, T vz, T vw) {
 
 template <unsigned DIM, typename T>
 T& vector<DIM, T>::operator[](int index) {
+#ifdef SE_DEBUG
 	if (index > DIM) {
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Vector index out of range.");
 		index = 0;
 	}
+#endif
 	return data[index];
 }
 
 template <unsigned DIM, typename T>
 T vector<DIM, T>::operator[](int index) const {
+#ifdef SE_DEBUG
 	if (index > DIM) {
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Vector index out of range.");
 		index = 0;
 	}
+#endif
 	return data[index];
 }
 
