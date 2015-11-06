@@ -19,6 +19,7 @@ SELogManager::~SELogManager() {
 	if (settings & SE_LOG_LOCAL) {
 		std::ofstream f;
 		f.open("SinEngine Log.txt");
+		logPos = 0;
 		print(&f);
 		f.close();
 	}
@@ -29,9 +30,14 @@ SELogManager& SELogManager::getObj() {
 	return *logManager;
 }
 
-void SELogManager::init(char bits) {
+void SELogManager::release() {
+	if (logManager)
+		delete logManager;
+}
+
+void SELogManager::config(char bits) {
 	settings = bits;
-	if (bits > 7) append(LOGTYPE_WARNNING, "Invalid LogManager Initialization bits");
+	if (bits > 7) append(LOGTYPE_WARNNING, "Invalid LogManager configuration bits");
 	else append(LOGTYPE_GENERAL, "Log Manager initialized.");
 	if (settings && !(settings&SE_LOG_ENABLED)) 
 		settings |= SE_LOG_ENABLED;

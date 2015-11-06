@@ -1,13 +1,30 @@
 c:\users\s.chen\documents\github\sin-engine\debug\vc140.pdb
 c:\users\s.chen\documents\github\sin-engine\debug\vc140.idb
-c:\users\s.chen\documents\github\sin-engine\debug\main.obj
 c:\users\s.chen\documents\github\sin-engine\debug\selog.obj
 c:\users\s.chen\documents\github\sin-engine\debug\seshader.obj
 c:\users\s.chen\documents\github\sin-engine\debug\seutility.obj
+c:\users\s.chen\documents\github\sin-engine\debug\main.obj
+c:\users\s.chen\documents\github\sin-engine\debug\secomponent.obj
+c:\users\s.chen\documents\github\sin-engine\debug\segameobject.obj
+c:\users\s.chen\documents\github\sin-engine\debug\secomtransform.obj
+f:\vs projects\sin-engine\debug\vc140.pdb
+f:\vs projects\sin-engine\debug\vc140.idb
+f:\vs projects\sin-engine\debug\main.obj
+f:\vs projects\sin-engine\debug\secomponent.obj
+f:\vs projects\sin-engine\debug\secomtransform.obj
+f:\vs projects\sin-engine\debug\segameobject.obj
+f:\vs projects\sin-engine\debug\selog.obj
+f:\vs projects\sin-engine\debug\seshader.obj
+f:\vs projects\sin-engine\debug\seutility.obj
+c:\users\s.chen\documents\github\sin-engine\debug\sinengine.ilk
+c:\users\s.chen\documents\github\sin-engine\debug\sinengine.exe
 c:\users\s.chen\documents\github\sin-engine\debug\sinengine.pdb
-c:\users\s.chen\documents\github\sin-engine\debug\sinengine.tlog\cl.command.1.tlog
-c:\users\s.chen\documents\github\sin-engine\debug\sinengine.tlog\cl.read.1.tlog
-c:\users\s.chen\documents\github\sin-engine\debug\sinengine.tlog\cl.write.1.tlog
-c:\users\s.chen\documents\github\sin-engine\debug\sinengine.tlog\link.command.1.tlog
-c:\users\s.chen\documents\github\sin-engine\debug\sinengine.tlog\link.read.1.tlog
-c:\users\s.chen\documents\github\sin-engine\debug\sinengine.tlog\link.write.1.tlog
+f:\vs projects\sin-engine\debug\sinengine.ilk
+f:\vs projects\sin-engine\debug\sinengine.exe
+f:\vs projects\sin-engine\debug\sinengine.pdb
+f:\vs projects\sin-engine\debug\sinengine.tlog\cl.command.1.tlog
+f:\vs projects\sin-engine\debug\sinengine.tlog\cl.read.1.tlog
+f:\vs projects\sin-engine\debug\sinengine.tlog\cl.write.1.tlog
+f:\vs projects\sin-engine\debug\sinengine.tlog\link.command.1.tlog
+f:\vs projects\sin-engine\debug\sinengine.tlog\link.read.1.tlog
+f:\vs projects\sin-engine\debug\sinengine.tlog\link.write.1.tlog

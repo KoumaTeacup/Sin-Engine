@@ -147,21 +147,29 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SEComponent.cpp" />
+    <ClCompile Include="SEComRenderer.cpp" />
     <ClCompile Include="SEComTransform.cpp" />
     <ClCompile Include="SEGameObject.cpp" />
     <ClCompile Include="SELog.cpp" />
-    <ClCompile Include="SEShader.cpp" />
+    <ClCompile Include="SEResource.cpp" />
+    <ClCompile Include="SESin.cpp" />
     <ClCompile Include="SEUtility.cpp" />
+    <ClCompile Include="shader.cpp" />
+    <ClCompile Include="vao.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SEComponent.h" />
+    <ClInclude Include="SEComRenderer.h" />
     <ClInclude Include="SEComTransform.h" />
     <ClInclude Include="SEGameObject.h" />
     <ClInclude Include="SELog.h" />
     <ClInclude Include="SEMatrix.h" />
-    <ClInclude Include="SEShader.h" />
+    <ClInclude Include="SEResource.h" />
+    <ClInclude Include="SESin.h" />
     <ClInclude Include="SEUtility.h" />
     <ClInclude Include="SEVector.h" />
+    <ClInclude Include="shader.h" />
+    <ClInclude Include="vao.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.frag" />

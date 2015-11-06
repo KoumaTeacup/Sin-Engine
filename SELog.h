@@ -8,10 +8,9 @@
 #include <string>
 #include <vector>
 
-
 #define SE_LogManager			se_debug::SELogManager::getObj()
-#define SE_Assert(...)			se_debug::SELogManager::getObj().assert(__VA_ARGS__)
-#define SE_LogManager_Release	se_debug::SELogManager::release
+//#define SE_Assert(...)			se_debug::SELogManager::getObj().assert(__VA_ARGS__)
+#define SE_LogManager_Release	se_debug::SELogManager::release()
 
 #define SE_LOG_ENABLED	0x01
 #define SE_LOG_USERONLY 0x02
@@ -44,13 +43,13 @@ public:
 
 	// init
 	static SELogManager& getObj();
-	static void release() { delete logManager; }
+	static void release();
 
 	// a dummy init function
-	void init(char bits = SE_LOG_ENABLED);
+	void config(char bits = SE_LOG_ENABLED);
 
 	// User method for log manipulations.
-	void assert(bool exp, const char* msg = "User assertion reached.");
+	void assert(bool exp, const char* msg = "User assertion failed.");
 
 	// Kernel method for log manipulations.
 	void append(logType t, const char *msg);
@@ -65,7 +64,7 @@ private:
 	
 	// log queue
 	std::vector<SELog> logData;
-	int logPos;
+	unsigned logPos;
 
 	// SEError Object
 	static SELogManager* logManager;

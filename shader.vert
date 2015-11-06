@@ -1,6 +1,7 @@
 #version 330
 
-layout (location = 0) in vec3 Position;
+//layout (location = 0) in vec3 Position;
+in vec3 Position;
 
 uniform mat4 PVM;
 

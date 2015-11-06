@@ -5,7 +5,7 @@
 #include "sfml\System\Time.hpp"
 
 #define SE_Utility			SEUtility::getObj()
-#define SE_Utility_Release	SEUtility::release
+#define SE_Utility_Release	SEUtility::release()
 
 class SEUtility {
 public:
@@ -17,6 +17,7 @@ public:
 
 	void update();
 	float getFrameTime() { return frameTime; }
+
 private:
 	SEUtility();
 

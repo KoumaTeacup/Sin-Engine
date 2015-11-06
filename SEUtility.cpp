@@ -3,6 +3,12 @@
 
 SEUtility* SEUtility::utilityManager = nullptr;
 
+SEUtility::SEUtility() :fpsLimit(0), frameTime(1.0f) {
+#ifdef SE_DEBUG
+	SE_LogManager.append(se_debug::LOGTYPE_GENERAL, "utilityManager Initialized.");
+#endif
+}
+
 SEUtility& SEUtility::getObj() {
 	if (!utilityManager) utilityManager = new SEUtility();
 	return *utilityManager;
@@ -27,10 +33,4 @@ void SEUtility::setFPSLimit(int limit) {
 	SE_LogManager.append(se_debug::LOGTYPE_GENERAL, log);
 #endif
 	fpsLimit = limit; 
-}
-
-SEUtility::SEUtility() :fpsLimit(0), frameTime(1.0f) {
-#ifdef SE_DEBUG
-	SE_LogManager.append(se_debug::LOGTYPE_GENERAL, "utilityManager Initialized.");
-#endif
 }
