@@ -5,18 +5,28 @@
 
 #include "GL\glew.h"
 
+#include "SEResource.h"
 #include "SEVector.h"
 
-class SEVAO {
+class SEVAO : public SEFile{
 public:
-	SEVAO();
+	SEVAO(const char* name, resourceType type);
+	~SEVAO();
 
+	// Inherited methods override
 	bool load(const char* filename);
+	int unload();
+
 	bool initVAO();
+
+	bool getMode() { return mode; }
+	int	getNumOfIndex();
+	int* getLoc();
 
 private:
 
 	GLuint id;
+	bool mode;
 
 	std::vector<SEVector3f> pnt;
 	std::vector<SEVector3f> nrm;

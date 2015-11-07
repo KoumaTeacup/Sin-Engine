@@ -4,10 +4,16 @@
 #include "SELog.h"
 
 
-SEVAO::SEVAO() {
+SEVAO::SEVAO(const char* name, resourceType type):SEFile(name, type), mode(0) {
+}
+
+SEVAO::~SEVAO() {
 }
 
 bool SEVAO::load(const char* filename) {
+	// Base Implementation.
+	if (!SEFile::load(filename)) return false;
+
 	std::ifstream ifs(filename);
 	if (!ifs.is_open()) {
 #ifdef SE_DEBUG
@@ -76,12 +82,15 @@ bool SEVAO::load(const char* filename) {
 	return true;
 }
 
+int SEVAO::unload() {
+	return SEFile::unload();
+}
+
 bool SEVAO::initVAO(){
 	glGenVertexArrays(1, &id);
 	glBindVertexArray(id);
 
 	GLuint vbo;
-	GLuint ibo;
 	if (pnt.size() > 0) {
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -114,18 +123,31 @@ bool SEVAO::initVAO(){
 		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
+	glBindVertexArray(0);
+
+	GLuint ibo;
 	if (tri.size() > 0) {
+		mode = true;
 		glGenBuffers(1, &ibo);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * 3 * tri.size(), &tri[0][0], GL_STATIC_DRAW);
 	}
 	if (quad.size() > 0) {
-		GLuint ibo;
+		mode = false;
 		glGenBuffers(1, &ibo);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(int) * 4 * quad.size(), &quad[0][0], GL_STATIC_DRAW);
 	}
 
-	glBindVertexArray(0);
 	return true;
+}
+
+int SEVAO::getNumOfIndex(){
+	if (mode)	return tri.size();
+	else		return quad.size();
+}
+
+int * SEVAO::getLoc(){
+	if (mode) return &tri[0][0];
+	else return &quad[0][0];
 }

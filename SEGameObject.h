@@ -7,7 +7,10 @@
 
 class SEGameObject {
 public:
-	~SEGameObject() {};
+	SEGameObject();
+	~SEGameObject();
+
+	SEComponent& operator[](componentType type);
 private:
 	std::unordered_map<componentType, SEComponent*> components;
 };

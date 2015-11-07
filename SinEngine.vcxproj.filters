@@ -19,7 +19,7 @@
     <Filter Include="Components">
       <UniqueIdentifier>{a9dcb857-1678-48b1-a248-8495d491e9d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics">
+    <Filter Include="Resource">
       <UniqueIdentifier>{9d73226a-d88b-4978-8c11-3290af2352df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -43,10 +43,10 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="shader.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="vao.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="SEComRenderer.cpp">
       <Filter>Components</Filter>
@@ -55,6 +55,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SESin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SEScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -81,10 +84,10 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="shader.h">
-      <Filter>Graphics</Filter>
+      <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="vao.h">
-      <Filter>Graphics</Filter>
+      <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="SEComRenderer.h">
       <Filter>Components</Filter>
@@ -95,12 +98,15 @@
     <ClInclude Include="SESin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SEScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader.frag">
+    <None Include="default.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="shader.vert">
+    <None Include="default.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

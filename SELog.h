@@ -25,7 +25,8 @@ enum logType {
 	LOGTYPE_ERROR,		//3
 	LOGTYPE_OPENGL,		//4
 	LOGTYPE_SFML,		//5
-	LOGTYPE_USER		//6
+	LOGTYPE_USER,		//6
+	LOGTYPE_CONTINUE,	//7
 };
 
 struct SELog {

@@ -7,12 +7,18 @@
 
 class SEComRenderer : public SEComponent {
 public:
-	SEComRenderer();
+	SEComRenderer(SEGameObject* onwer);
+	SEComRenderer(const SEComRenderer& rhs);
 	~SEComRenderer() {};
 
-	bool attachShader(const char* shaderFile, GLenum shaderType);
+	SEComRenderer& operator=(const SEComRenderer& rhs);
+
+	void attach(const char* filename);
+
+	void onInit();
+	void onDraw();
 private:
-	SEShader	shader;
-	SEVAO		vao;
+	SEShader* shader;
+	SEVAO*	  vao;
 };
 #endif

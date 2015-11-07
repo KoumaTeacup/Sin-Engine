@@ -3,22 +3,25 @@
 
 #include <unordered_map>
 
-#define SE_Resource SEResource::getObj()
+#define SE_Resource			SEResource::getObj()
+#define SE_Resource_Release	SEResource::release()
 
 enum resourceType {
-	RESTYPE_VERTEX_SHADER,
-	RESTYPE_FRAGMENT_SHADER,
+	RESTYPE_UNDEFINED,
+	RESTYPE_SHADER,
 	RESTYPE_VERTEX_ARRAY,
-	RESTYPE_IMAGE_DIFFUSEMAP
+	RESTYPE_TEXTURE
 };
 
 class SEFile {
 public:
-	SEFile(resourceType);
-	virtual ~SEFile() {};
+	SEFile(const char* n, resourceType t);
+	virtual ~SEFile();
 
-	virtual void load();
-	virtual void unload();
+	virtual bool load(const char* filename);
+	virtual int	 unload();
+
+	resourceType getType() { return type; }
 
 private:
 	int refCount;
@@ -34,6 +37,7 @@ public:
 
 	SEFile* load(const char* filename);
 	void	unload(const char* filename);
+	void	unload(SEFile* res);
 
 private:
 	SEResource() {};

@@ -6,8 +6,11 @@
 
 class SEComTransform : public SEComponent {
 public:
-	SEComTransform();
+	SEComTransform(SEGameObject* owner);
+	SEComTransform(const SEComTransform& rhs);
 	~SEComTransform() {};
+
+	SEComTransform& operator=(const SEComTransform& rhs);
 private:
 	enum modelTr {
 		trans = 0,

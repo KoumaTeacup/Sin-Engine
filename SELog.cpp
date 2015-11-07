@@ -62,8 +62,10 @@ void SELogManager::print(std::ostream *os) {
 	}
 	if (settings & SE_LOG_ENABLED) {
 		while (logPos < logData.size()) {
-			if (settings & SE_LOG_USERONLY && logData[logPos].type != LOGTYPE_USER) continue;
-			*os << "- Sin Engine -";
+			if (settings & SE_LOG_USERONLY && logData[logPos].type != LOGTYPE_USER) 
+				continue;
+			if (logData[logPos].type != LOGTYPE_CONTINUE) 
+				*os << "- Sin Engine -";
 			switch (logData[logPos].type) {
 			case LOGTYPE_UNKNOWN:
 				*os << "[Unknown] ";
@@ -88,8 +90,10 @@ void SELogManager::print(std::ostream *os) {
 				break;
 			default: break;
 			}
-			*os << logData[logPos].msg << std::endl;
-			++logPos;
+			std::string str = logData[logPos++].msg;
+			*os << str;
+			if (strcmp(str.substr(str.length() - 3, 3).c_str(), "..."))
+				*os << std::endl;
 		}
 	}
 	*os << "Current FPS: " << static_cast<int>(1.0f / SE_Utility.getFrameTime()) << "  \r";

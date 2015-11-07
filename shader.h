@@ -2,8 +2,8 @@
 #define SHSHADER_H
 
 #include <GL\glew.h>
-#include <vector>
 
+#include "SEResource.h"
 #include "SEMatrix.h"
 
 enum TYPE_UNIFORM {
@@ -13,17 +13,20 @@ enum TYPE_UNIFORM {
 	UNIFORM_MATRIX
 };
 
-class SEShader {
+class SEShader : public SEFile {
 public:
-	SEShader();
-	~SEShader() {};
+	SEShader(const char* name, resourceType type);
+	~SEShader();
 
-	bool addShader(const char* shaderFile, GLenum shaderType);
+	// Inherited methods override
+	bool load(const char* shaderFile);
+	int unload();
+
 	bool link();
 	bool validate();
 	void use();
 	void unuse();
-	void load(TYPE_UNIFORM type, const char* varName, void *data);
+	void setVal(TYPE_UNIFORM type, const char* varName, void *data);
 
 	GLuint id() { return programId; }
 
@@ -31,7 +34,8 @@ private:
 	char* readFile(const char* filename);
 
 	GLuint programId;
-	std::vector<GLuint> shaderObjs;
+
+	GLuint vertShaderId, fragShaderId;
 };
 
 #endif
