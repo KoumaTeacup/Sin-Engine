@@ -1,10 +1,12 @@
 #ifndef SESHADER_H
-#define SHSHADER_H
+#define SESHADER_H
 
 #include <GL\glew.h>
 
-#include "SEResource.h"
-#include "SEMatrix.h"
+#include "SEFile.h"
+
+#define SE_Shader(...) static_cast<se_data::SEShader*>((__VA_ARGS__)->getFile())
+
 
 enum TYPE_UNIFORM {
 	UNIFORM_INT,
@@ -13,29 +15,31 @@ enum TYPE_UNIFORM {
 	UNIFORM_MATRIX
 };
 
+namespace se_data{
 class SEShader : public SEFile {
 public:
-	SEShader(const char* name, resourceType type);
+	SEShader(std::string name, resourceType type);
 	~SEShader();
 
 	// Inherited methods override
 	bool load(const char* shaderFile);
-	int unload();
+	void onInit();
+	void onRelease();
+	void onDraw();
 
-	bool link();
-	bool validate();
-	void use();
-	void unuse();
+	bool link()		const;
+	bool validate() const;
 	void setVal(TYPE_UNIFORM type, const char* varName, void *data);
 
-	GLuint id() { return programId; }
+	const char*	toString() const { return SEFile::toString(); }
 
 private:
-	char* readFile(const char* filename);
-
 	GLuint programId;
-
 	GLuint vertShaderId, fragShaderId;
+
+	char* readFile(const char* filename) const;
 };
+
+}
 
 #endif

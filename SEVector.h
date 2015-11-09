@@ -21,11 +21,20 @@ template <unsigned DIM, typename T> class matrix;
 template <unsigned DIM, typename T>
 class vector {
 public:
-	// ctor
+	// default ctor
 	vector<DIM, T>() : data() {}
 
-	// ctors
+	// copy ctor
+	vector<DIM, T>(const vector<DIM, T> &rhs) {	memcpy(data, rhs.data, DIM * sizeof(T));}
+
+	// misc ctors
 	vector<DIM, T>(T vx, T vy = 0, T vz = 0, T vw = 0) { initData(vx,vy,vz,vw); }
+
+	// copy assignment
+	vector<DIM, T>& operator=(const vector<DIM, T>&) { 
+		memcpy(data, rhs.data, DIM * sizeof(T));
+		return *this;
+	}
 
 	// operation overload
 	vector<DIM, T>	operator-()								const;	//negation

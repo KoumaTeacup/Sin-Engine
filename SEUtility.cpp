@@ -1,3 +1,5 @@
+#include <GL\glew.h>
+
 #include "SEUtility.h"
 #include "SELog.h"
 
@@ -24,6 +26,10 @@ void SEUtility::update() {
 		while (frameTime < spf)
 			frameTime += clock.restart().asSeconds();
 	}
+
+	// Clear framebuffer
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void SEUtility::setFPSLimit(int limit) {

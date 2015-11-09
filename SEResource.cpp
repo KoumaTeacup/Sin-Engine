@@ -1,27 +1,12 @@
-#include <string>
-
 #include "SEResource.h"
 
 #include "SELog.h"
 #include "shader.h"
 #include "vao.h"
 
+using namespace se_data;
+
 SEResource* SEResource::resourceManager = nullptr;
-
-SEFile::SEFile(const char* n, resourceType t):name(n), type(t), refCount(0) {
-}
-
-SEFile::~SEFile() {
-}
-
-bool SEFile::load(const char* filename) {
-	++refCount;
-	return true;
-}
-
-int SEFile::unload() {
-	return --refCount;
-}
 
 SEResource& SEResource::getObj() {
 	if (!resourceManager) resourceManager = new SEResource();
@@ -33,10 +18,9 @@ void SEResource::release() {
 		delete resourceManager;
 }
 
-SEFile* SEResource::load(const char* filename) {
+SEFilePointer SEResource::load(const char* filename) {
 	// Determine file type.
-	resourceType type;
-	const char* name = std::string(filename).substr(0, std::string(filename).find('.')).c_str();
+	std::string name(std::string(filename).substr(0, std::string(filename).find('.')));
 	const char* ext = strrchr(filename, '.') + 1;
 
 	// Check Existance
@@ -52,35 +36,28 @@ SEFile* SEResource::load(const char* filename) {
 			char log[64];
 			sprintf(log, "File \"%s\" of type \".%s\" is not supported.", filename, ext);
 			SE_LogManager.append(se_debug::LOGTYPE_ERROR, log);
-			return NULL;
+			return SEFilePointer(NULL);
 		}
 #endif
 	}
 
 	// load file
-	if (userResources[name]->load(filename)) return userResources[name];
+	if (userResources[name]->load(filename))
+		return SEFilePointer(userResources[name]);
 
 #ifdef SE_DEBUG
 	char log[64];
 	sprintf(log, "Failed to create resource from file \"%s\".", filename);
 	SE_LogManager.append(se_debug::LOGTYPE_ERROR, log);
-	return NULL;
 #endif
+	return SEFilePointer(NULL);
 }
 
-void SEResource::unload(const char* filename) {
-	if (userResources.find(filename) != userResources.end()) {
-		SEFile* file = userResources[filename];
-		if (!file->unload()) {
-			delete file;
-			userResources.erase(filename);
-		}
-	}
-}
-
-void SEResource::unload(SEFile * res){
-	if (!res) return;
-	if (!res->unload()) {
-		delete res;
-	}
+void SEResource::erase(std::string name) {
+#ifdef SE_DEBUG
+	char log[64];
+	sprintf(log, "Internal file %s is released.", name.c_str());
+	SE_LogManager.append(se_debug::LOGTYPE_GENERAL, log);
+#endif
+	userResources.erase(name);
 }

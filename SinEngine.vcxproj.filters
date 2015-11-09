@@ -36,9 +36,6 @@
     <ClCompile Include="SEGameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SEComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SEComTransform.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -51,13 +48,25 @@
     <ClCompile Include="SEComRenderer.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="SEResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SESin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SEScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SEResource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="SEFile.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="SEComCamera.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SEComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SEObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,9 +86,6 @@
     <ClInclude Include="SEGameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SEComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SEComTransform.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -92,13 +98,28 @@
     <ClInclude Include="SEComRenderer.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="SEResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SESin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SEScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SEResource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="SEFile.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="SEComCamera.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleStructure.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SEComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SEObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

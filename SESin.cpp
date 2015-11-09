@@ -5,7 +5,7 @@
 
 SESin* SESin::pSin = nullptr;
 
-SESin::SESin() {
+SESin::SESin():activeScene(NULL), activeCamera(NULL) {
 	glSettings.depthBits = 24;
 	glSettings.stencilBits = 8;
 	glSettings.antialiasingLevel = 4;
@@ -25,6 +25,7 @@ void SESin::release() {
 	SE_LogManager_Release;
 #endif
 	SE_Utility_Release;
+	SE_Resource_Release;
 
 	if (pSin)delete pSin;
 }
@@ -53,11 +54,11 @@ bool SESin::init(){
 }
 
 void SESin::begin(SEScene &scene) {
-	
-	scene.update();
+	activeScene = &scene;
+
+	scene.init();
 	// run the main loop
-	bool running = true;
-	while (running)
+	while (!scene.isEnd())
 	{
 		scene.update();
 		// handle events
@@ -67,7 +68,7 @@ void SESin::begin(SEScene &scene) {
 			if (event.type == sf::Event::Closed)
 			{
 				// end the program
-				running = false;
+				scene.endScene();
 			}
 			else if (event.type == sf::Event::Resized)
 			{
@@ -76,35 +77,16 @@ void SESin::begin(SEScene &scene) {
 			}
 		}
 
-		// clear the buffers
-		//testShader.use();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		/*glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-
-		PVM *= SE_MATRIX_ROTATE4(se_data::AXIS_Y, 0.01f)
-			*SE_MATRIX_ROTATE4(se_data::AXIS_Z, 0.05f);
-		testShader.setVal(UNIFORM_MATRIX, "PVM", &PVM);
-
-		glDrawElements(GL_TRIANGLES, sizeof(index), GL_UNSIGNED_INT, 0);
-
-		glDisableVertexAttribArray(0);
-
-		testShader.unuse();*/
-
 		// draw...
-		// end the current frame (internally swaps the front and back buffers)
 		scene.draw();
 
+		// end the current frame (internally swaps the front and back buffers)
 		window.display();
+
+		scene.postUpdate();
 
 		SE_Utility.update();
 	}
-}
 
-void SESin::end(SEScene &scene) {
 	scene.release();
 }

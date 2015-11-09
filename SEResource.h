@@ -2,32 +2,17 @@
 #define SERESOURCE_H
 
 #include <unordered_map>
+#include <string>
 
-#define SE_Resource			SEResource::getObj()
-#define SE_Resource_Release	SEResource::release()
+#define SE_Resource			se_data::SEResource::getObj()
+#define SE_Resource_Release	se_data::SEResource::release()
 
-enum resourceType {
-	RESTYPE_UNDEFINED,
-	RESTYPE_SHADER,
-	RESTYPE_VERTEX_ARRAY,
-	RESTYPE_TEXTURE
-};
 
-class SEFile {
-public:
-	SEFile(const char* n, resourceType t);
-	virtual ~SEFile();
 
-	virtual bool load(const char* filename);
-	virtual int	 unload();
+namespace se_data{
 
-	resourceType getType() { return type; }
-
-private:
-	int refCount;
-	const char* name;
-	resourceType type;
-};
+class SEFile;
+class SEFilePointer;
 
 class SEResource {
 public:
@@ -35,16 +20,16 @@ public:
 	static SEResource& getObj();
 	static void release();
 
-	SEFile* load(const char* filename);
-	void	unload(const char* filename);
-	void	unload(SEFile* res);
+	SEFilePointer load(const char *filename);
+	void erase(std::string name);
 
 private:
 	SEResource() {};
 
 	static SEResource* resourceManager;
 
-	std::unordered_map<const char*, SEFile*> userResources;
+	std::unordered_map<std::string, SEFile*> userResources;
 };
 
+}
 #endif

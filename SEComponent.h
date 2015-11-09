@@ -1,37 +1,50 @@
 #ifndef SECOMPONENT_H
 #define SECOMPONENT_H
 
+#include "SEObject.h"
+
+#include "SEResource.h"
+
 class SEGameObject;
 
+// New Component TO DOs
+// ATTENTION: component order matters!
+// Transform < Renderer : worldspace matrix construction.
 enum componentType {
 	COM_TRANSFORM = 0,
-	COM_CONTROLLER,
-	COM_COLLIDER,
+	COM_CAMERA,
+	//COM_CONTROLLER,
+	//COM_COLLIDER,
 	COM_RENDERER,
-	COM_RIGID,
-	COM_ANIMATOR,
+	//COM_RIGID,
+	//COM_ANIMATOR,
 	COM_NUM
 };
 
-class SEComponent {
+class SEComponent : public SEObject {
 public:
-	SEComponent(componentType t, SEGameObject* o);
+	SEComponent(componentType t, 
+		SEGameObject* o, 
+		std::string name = std::string(), 
+		std::string tag = std::string());
+
 	SEComponent(const SEComponent& rhs);
 
-	virtual const SEComponent& operator=(const SEComponent& rhs) { return *this; }
-
 	virtual ~SEComponent() {};
+
+	virtual SEComponent& operator=(const SEComponent& rhs);
+
 	virtual void attach(const char* filename) {}
 
-	virtual void onInit() {}
-	virtual void onUpdate() {}
-	virtual void onDraw() {}
-	virtual void onRelease() {}
+	componentType getType() const	{ return type; }
+	SEGameObject& getOwner() const	{ return *owner; }
 
-	componentType getType() { return type; }
+	const virtual char* toString() const;
 private:
 	componentType type;
 	SEGameObject *owner;
+
+	static int num; // used for naming
 };
 
 #endif

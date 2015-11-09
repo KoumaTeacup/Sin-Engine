@@ -1,38 +1,32 @@
 #ifndef SEVAO_H
 #define SEVAO_H
 
-#include <vector>
-
 #include "GL\glew.h"
 
-#include "SEResource.h"
-#include "SEVector.h"
+#include "SEFile.h"
+
+namespace se_data {
 
 class SEVAO : public SEFile{
 public:
-	SEVAO(const char* name, resourceType type);
+	SEVAO(std::string name, resourceType type);
 	~SEVAO();
 
 	// Inherited methods override
 	bool load(const char* filename);
-	int unload();
+	void onInit();
+	void onRelease();
+	void onDraw();
 
-	bool initVAO();
-
-	bool getMode() { return mode; }
-	int	getNumOfIndex();
-	int* getLoc();
+	const char* toString() const { return SEFile::toString(); }
 
 private:
-
-	GLuint id;
-	bool mode;
-
-	std::vector<SEVector3f> pnt;
-	std::vector<SEVector3f> nrm;
-	std::vector<SEVector2f> tex;
-	std::vector<SEVector3f> tan;
-	std::vector<SEVector3i> tri;
-	std::vector<SEVector4i> quad;
+	GLuint id, ibo;
+	// True for triangles, false for quads.
+	GLuint mode;
+	GLsizei indicesCount;
+	int* pIndices;
 };
+
+}
 #endif

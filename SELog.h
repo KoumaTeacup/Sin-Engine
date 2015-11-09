@@ -1,6 +1,10 @@
 #ifndef SELOG_H
 #define SELOG_H
 
+#define SE_LOG_ENABLED	0x01
+#define SE_LOG_USERONLY 0x02
+#define SE_LOG_LOCAL	0x04
+
 #ifdef SE_DEBUG
 
 #include <iostream>
@@ -8,13 +12,14 @@
 #include <string>
 #include <vector>
 
+// User Command
+#define SE_LogConfig			se_debug::SELogManager::getObj().config
+#define SE_Assert				se_debug::SELogManager::getObj().assert
+
+// Internal Command
 #define SE_LogManager			se_debug::SELogManager::getObj()
-//#define SE_Assert(...)			se_debug::SELogManager::getObj().assert(__VA_ARGS__)
 #define SE_LogManager_Release	se_debug::SELogManager::release()
 
-#define SE_LOG_ENABLED	0x01
-#define SE_LOG_USERONLY 0x02
-#define SE_LOG_LOCAL	0x04
 
 namespace se_debug {
 
@@ -78,7 +83,8 @@ private:
 
 #else // SE_DEBUG
 
-#define SE_Assert(...)	(__VA_ARGS__)
+#define SE_Assert
+#define SE_LogConfig
 
 #endif // SE_DEBUG
 

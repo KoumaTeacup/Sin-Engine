@@ -30,10 +30,13 @@ enum axis {
 template <unsigned DIM, typename T>
 class matrix {
 public:
-	// ctor
+	// default ctor
 	matrix<DIM, T>() {}
 
-	// ctors
+	// copy ctor
+	matrix<DIM, T>(const matrix<DIM, T>& rhs) { memcpy(data, rhs.data, sizeof(T)*DIM*DIM); }
+
+	// misc ctors
 	matrix<DIM, T>(
 		vector<DIM, T> v0,
 		vector<DIM, T> v1 = vector<DIM, T>(),
@@ -64,6 +67,12 @@ public:
 		data[1].initData(m10, m11, m12, m13);
 		data[1].initData(m20, m21, m22, m23);
 		data[1].initData(m30, m31, m32, m33);
+	}
+
+	// copy assignment
+	matrix<DIM, T>&	operator=(const matrix<DIM, T>& rhs) {
+		memcpy(data, rhs.data, sizeof(T)*DIM*DIM);
+		return *this;
 	}
 
 	// operation overload
@@ -352,24 +361,24 @@ vector<DIM, T>& vector<DIM,T>::operator*=(const matrix<DIM, T> &rhs) {
 }// namespace se_data
 
 // typedefs
-typedef se_data::matrix<2, float> SEMatrix2f;
-typedef se_data::matrix<3, float> SEMatrix3f;
-typedef se_data::matrix<4, float> SEMatrix4f;
-typedef se_data::matrix<2, double> SEMatrix2d;
-typedef se_data::matrix<3, double> SEMatrix3d;
-typedef se_data::matrix<4, double> SEMatrix4d;
-typedef se_data::matrix<2, int> SEMatrix2i;
-typedef se_data::matrix<3, int> SEMatrix3i;
-typedef se_data::matrix<4, int> SEMatrix4i;
-typedef se_data::matrix<2, unsigned> SEMatrix2ui;
-typedef se_data::matrix<3, unsigned> SEMatrix3ui;
-typedef se_data::matrix<4, unsigned> SEMatrix4ui;
-typedef se_data::matrix<2, char> SEMatrix2c;
-typedef se_data::matrix<3, char> SEMatrix3c;
-typedef se_data::matrix<4, char> SEMatrix4c;
-typedef se_data::matrix<2, unsigned char> SEMatrix2uc;
-typedef se_data::matrix<3, unsigned char> SEMatrix3uc;
-typedef se_data::matrix<4, unsigned char> SEMatrix4uc;
+typedef se_data::matrix<2, float>			SEMatrix2f;
+typedef se_data::matrix<3, float>			SEMatrix3f;
+typedef se_data::matrix<4, float>			SEMatrix4f;
+typedef se_data::matrix<2, double>			SEMatrix2d;
+typedef se_data::matrix<3, double>			SEMatrix3d;
+typedef se_data::matrix<4, double>			SEMatrix4d;
+typedef se_data::matrix<2, int>				SEMatrix2i;
+typedef se_data::matrix<3, int>				SEMatrix3i;
+typedef se_data::matrix<4, int>				SEMatrix4i;
+typedef se_data::matrix<2, unsigned>		SEMatrix2ui;
+typedef se_data::matrix<3, unsigned>		SEMatrix3ui;
+typedef se_data::matrix<4, unsigned>		SEMatrix4ui;
+typedef se_data::matrix<2, char>			SEMatrix2c;
+typedef se_data::matrix<3, char>			SEMatrix3c;
+typedef se_data::matrix<4, char>			SEMatrix4c;
+typedef se_data::matrix<2, unsigned char>	SEMatrix2uc;
+typedef se_data::matrix<3, unsigned char>	SEMatrix3uc;
+typedef se_data::matrix<4, unsigned char>	SEMatrix4uc;
 
 #endif
 

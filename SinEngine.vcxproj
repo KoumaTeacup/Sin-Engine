@@ -92,7 +92,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(projectdir)glew\include;$(projectdir)freeglut\include;$(projectdir)sfml\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SE_DEBUG</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -119,7 +119,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(projectdir)glew\include;$(projectdir)freeglut\include;$(projectdir)sfml\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SE_DEBUG</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -146,11 +146,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SEComCamera.cpp" />
     <ClCompile Include="SEComponent.cpp" />
     <ClCompile Include="SEComRenderer.cpp" />
     <ClCompile Include="SEComTransform.cpp" />
+    <ClCompile Include="SEFile.cpp" />
     <ClCompile Include="SEGameObject.cpp" />
     <ClCompile Include="SELog.cpp" />
+    <ClCompile Include="SEObject.cpp" />
     <ClCompile Include="SEResource.cpp" />
     <ClCompile Include="SEScene.cpp" />
     <ClCompile Include="SESin.cpp" />
@@ -159,12 +162,16 @@
     <ClCompile Include="vao.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SampleStructure.h" />
+    <ClInclude Include="SEComCamera.h" />
     <ClInclude Include="SEComponent.h" />
     <ClInclude Include="SEComRenderer.h" />
     <ClInclude Include="SEComTransform.h" />
+    <ClInclude Include="SEFile.h" />
     <ClInclude Include="SEGameObject.h" />
     <ClInclude Include="SELog.h" />
     <ClInclude Include="SEMatrix.h" />
+    <ClInclude Include="SEObject.h" />
     <ClInclude Include="SEResource.h" />
     <ClInclude Include="SEScene.h" />
     <ClInclude Include="SESin.h" />

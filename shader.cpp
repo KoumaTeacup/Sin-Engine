@@ -2,9 +2,13 @@
 #include <string>
 
 #include "shader.h"
-#include "SELog.h"
 
-SEShader::SEShader(const char* name, resourceType type) :
+#include "SELog.h"
+#include "SEMatrix.h"
+
+using namespace se_data;
+
+SEShader::SEShader(std::string name, resourceType type) :
 	SEFile(name, type), 
 	programId(glCreateProgram()),
 	vertShaderId(0),
@@ -12,11 +16,10 @@ SEShader::SEShader(const char* name, resourceType type) :
 }
 
 SEShader::~SEShader() {
+	glDeleteProgram(programId);
 }
 
 bool SEShader::load(const char* shaderFile) {
-	// Base Implementation.
-	if (!SEFile::load(shaderFile)) return false;
 
 #ifdef SE_DEBUG
 	char log[64];
@@ -26,23 +29,21 @@ bool SEShader::load(const char* shaderFile) {
 	// Read file.
 	char *src = readFile(shaderFile);
 	if (!src) return false;
-	const char *psrc[1] = { src };
+	//const char *psrc[1] = { src };
 
 	// Determine the shader type.
 	GLuint shaderId;
 	const char* ext = strrchr(shaderFile, '.') + 1;
 	if (strcmp(ext,"vert") == 0) {
-		if (vertShaderId) glDetachShader(programId, vertShaderId);
 		shaderId = vertShaderId = glCreateShader(GL_VERTEX_SHADER);
 	}
 	else if (strcmp(ext,"frag") == 0) {
-		if (fragShaderId) glDetachShader(programId, fragShaderId);
 		shaderId = fragShaderId = glCreateShader(GL_FRAGMENT_SHADER);
 	}
 
 	// Create shader and attach to the program.
 	glAttachShader(programId, shaderId);
-	glShaderSource(shaderId, 1, psrc, NULL);
+	glShaderSource(shaderId, 1, &src, NULL);
 	glCompileShader(shaderId);
 	delete src;
 
@@ -65,11 +66,34 @@ bool SEShader::load(const char* shaderFile) {
 	return true;
 }
 
-int SEShader::unload() {
-	return SEFile::unload();
+void SEShader::onInit() {
+	glBindAttribLocation(programId, 0, "vertex");
+	glBindAttribLocation(programId, 1, "normal");
+	glBindAttribLocation(programId, 2, "uv");
+	glBindAttribLocation(programId, 3, "tangent");
+
+	// Unbind vao.
+	glBindVertexArray(0);
+
+#ifdef SE_DEBUG
+	if (!link())
+		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Failed to link shader program.");
+	if (!validate())
+		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Shader validation failed.");
+#else
+	link();
+#endif
+
 }
 
-bool SEShader::link() {
+void SEShader::onRelease() {
+}
+
+void SEShader::onDraw() {
+	glUseProgram(programId);
+}
+
+bool SEShader::link() const {
 	glLinkProgram(programId);
 #ifdef SE_DEBUG
 	SE_LogManager.append(se_debug::LOGTYPE_GENERAL, "Linking shader program...");
@@ -91,7 +115,7 @@ bool SEShader::link() {
 	return true;
 }
 
-bool SEShader::validate() {
+bool SEShader::validate() const {
 	glValidateProgram(programId);
 #ifdef SE_DEBUG
 	SE_LogManager.append(se_debug::LOGTYPE_GENERAL, "Validating shader program...");
@@ -113,20 +137,9 @@ bool SEShader::validate() {
 	return true;
 }
 
-void SEShader::use() {
-	glUseProgram(programId);
-}
-
-void SEShader::unuse() {
-	glUseProgram(0);
-}
-
 void SEShader::setVal(TYPE_UNIFORM type, const char* varName, void *data) {
 	GLint glLocation = glGetUniformLocation(programId, varName);
-#ifdef SE_DEBUG
-	if (glLocation == -1)
-		SE_LogManager.append(se_debug::LOGTYPE_WARNNING, "Uniform variable location not found.");
-#endif
+
 	switch (type) {
 	case UNIFORM_INT:
 		glUniform1i(glLocation, *(int*)data);
@@ -143,7 +156,7 @@ void SEShader::setVal(TYPE_UNIFORM type, const char* varName, void *data) {
 	}
 }
 
-char* SEShader::readFile(const char* filename) {
+char* SEShader::readFile(const char* filename) const {
 	std::ifstream ifs(filename, std::ios_base::binary);
 #ifdef SE_DEBUG
 	if (!ifs.is_open()) {
