@@ -56,10 +56,19 @@ bool SEScene::validate(SEGameObject &obj) const {
 	SE_LogManager.append(se_debug::LOGTYPE_GENERAL, log);
 	if (obj[COM_RENDERER]) {
 		if (!obj[COM_TRANSFORM]) {
-			sprintf(log, "%s > Renderer need a Transform component for object to be rendered.", name);
+			sprintf(log, "%s> Renderers needs to have a Transform component for object to be rendered.", name);
 			SE_LogManager.append(se_debug::LOGTYPE_CONTINUE, "failed.");
 			SE_LogManager.append(se_debug::LOGTYPE_ERROR, log);
 			
+			return false;
+		}
+	}
+	if (obj[COM_CAMERA]) {
+		if (!obj[COM_TRANSFORM]) {
+			sprintf(log, "%s> Camera needs to have a Transform component.", name);
+			SE_LogManager.append(se_debug::LOGTYPE_CONTINUE, "failed.");
+			SE_LogManager.append(se_debug::LOGTYPE_ERROR, log);
+
 			return false;
 		}
 	}

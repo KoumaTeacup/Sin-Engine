@@ -58,7 +58,7 @@ void SEComRenderer::onRelease() {
 }
 
 void SEComRenderer::onDraw()
-{s
+{
 	SEComponent::onDraw();
 	if (!vao->getFile()) return;
 	// Bind shader.

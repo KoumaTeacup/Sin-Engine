@@ -31,7 +31,7 @@ public:
 	vector<DIM, T>(T vx, T vy = 0, T vz = 0, T vw = 0) { initData(vx,vy,vz,vw); }
 
 	// copy assignment
-	vector<DIM, T>& operator=(const vector<DIM, T>&) { 
+	vector<DIM, T>& operator=(const vector<DIM, T> &rhs) { 
 		memcpy(data, rhs.data, DIM * sizeof(T));
 		return *this;
 	}
@@ -179,7 +179,7 @@ vector<DIM, T>& vector<DIM, T>::operator/=(T rhs) {
 #ifdef SE_DEBUG
 	if (rhs == 0) {
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR, "Division by zero, no action taken.");
-		return *this
+		return *this;
 	}
 #endif
 	for (int i = 0; i < DIM; ++i)
