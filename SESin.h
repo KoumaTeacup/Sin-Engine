@@ -10,6 +10,8 @@
 #define SIN			SESin::getObj()
 #define SIN_Release	SESin::release()
 
+#define PI 3.1415926536f
+
 class SESin {
 
 public:
@@ -35,6 +37,9 @@ public:
 	void			setActiveCamera(SEComponent* pCam) { activeCamera = static_cast<SEComCamera*>(pCam); }
 	SEComCamera*	getActiveCamera() { return activeCamera; }
 	SEVector2ui		getWindowSize() { return SEVector2ui(window.getSize().x, window.getSize().y); }
+
+	// Functional Methods
+	float toRad(float degree) { return degree / 180.0f*PI; }
 
 private:
 	SESin();

@@ -22,15 +22,12 @@
     <Filter Include="Resource">
       <UniqueIdentifier>{9d73226a-d88b-4978-8c11-3290af2352df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{eb345abe-ab52-4163-ae8f-73b22980e5df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SELog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SEUtility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SEGameObject.cpp">
@@ -63,21 +60,21 @@
     <ClCompile Include="SEComCamera.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="SEComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="SELog.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="SEUtility.cpp">
+      <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="SEObject.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="SEComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SEVector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SELog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SEUtility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SEMatrix.h">
@@ -116,10 +113,16 @@
     <ClInclude Include="SampleStructure.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="SEComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="SEUtility.h">
+      <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="SEObject.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="SELog.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="SEComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

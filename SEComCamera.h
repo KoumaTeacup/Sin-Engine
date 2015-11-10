@@ -5,10 +5,11 @@
 #include "SEFile.h"
 #include "SEMatrix.h"
 
-#define CAMERA_BACK_CULL			0x01
-#define CAMERA_WIREFRAME			0x02
-#define CAMERA_FLAT_LIGHTING		0x04
-#define CAMERA_MOTION_BLUR_ENABLED	0x18
+#define CAMERA_FOCUS_MODE			0x01
+#define CAMERA_BACK_CULL			0x02
+#define CAMERA_WIREFRAME			0x04
+#define CAMERA_FLAT_LIGHTING		0x08
+#define CAMERA_MOTION_BLUR_ENABLED	0x10
 
 class SEComCamera : public SEComponent {
 public:
@@ -23,9 +24,11 @@ public:
 	// Local methods.
 	void attach(const char* filename) {}
 	void preDraw();
+	void setFocus(SEVector3f f) { focus = f; }
+	void setUp(SEVector3f u) { up = u; }
 
 	// Public variables.
-	SEMatrix4f viewTr, ProjTr;
+	SEMatrix4f viewTr, projTr;
 
 protected:
 	// Inherited pure virtuals.
@@ -45,6 +48,7 @@ private:
 	unsigned viewPortWidth, viewPortHeight;
 	float viewAngle;
 	float frontClip, backClip;
+	SEVector3f focus, up;
 
 };
 

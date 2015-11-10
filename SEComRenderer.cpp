@@ -58,7 +58,7 @@ void SEComRenderer::onRelease() {
 }
 
 void SEComRenderer::onDraw()
-{
+{s
 	SEComponent::onDraw();
 	if (!vao->getFile()) return;
 	// Bind shader.
@@ -66,11 +66,11 @@ void SEComRenderer::onDraw()
 
 	// Load worldspace stransfromation from transform component.
 	if (getOwner()[COM_TRANSFORM])
-		SE_Shader(shader)->setVal(UNIFORM_MATRIX, "ModelTr", &SE_COMP_TRANSFORM->modelTr);
+		SE_Shader(shader)->setVal(UNIFORM_MATRIX, "ModelTr", &SE_COMP_TRANSFORM.modelTr);
 	SEComCamera* camera = SIN.getActiveCamera();
 	if (camera) {
 		SE_Shader(shader)->setVal(UNIFORM_MATRIX, "ViewTr", &camera->viewTr);
-		SE_Shader(shader)->setVal(UNIFORM_MATRIX, "ProjTr", &camera->ProjTr);
+		SE_Shader(shader)->setVal(UNIFORM_MATRIX, "ProjTr", &camera->projTr);
 	}
 
 	// Bind VAO&IBO -> draw model -> Unbind.

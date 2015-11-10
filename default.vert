@@ -11,7 +11,6 @@ uniform mat4 ProjTr;
 
 void main()
 {
-    gl_Position = ModelTr * vec4(vertex , 1.0);
-    //gl_Position = vec4(vertex , 1.0);
+    gl_Position =  ProjTr * ViewTr * ModelTr * vec4(vertex , 1.0);
 }
 

@@ -10,9 +10,9 @@
 #include "SEComTransform.h"
 #include "SEComCamera.h"
 
-#define SE_COMP_TRANSFORM	static_cast<SEComTransform*>(getOwner()[COM_TRANSFORM])
-#define SE_COMP_CAMERA		static_cast<SEComCamera*>(getOwner()[COM_CAMERA])
-#define SE_COMP_RENDERER	static_cast<SEComRenderer*>(getOwner()[COM_RENDERER])
+#define SE_COMP_TRANSFORM	(*static_cast<SEComTransform*>(getOwner()[COM_TRANSFORM]))
+#define SE_COMP_CAMERA		(*static_cast<SEComCamera*>(getOwner()[COM_CAMERA]))
+#define SE_COMP_RENDERER	(*static_cast<SEComRenderer*>(getOwner()[COM_RENDERER]))
 
 class SEGameObject : public SEObject{
 public:

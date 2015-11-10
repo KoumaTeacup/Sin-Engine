@@ -1,4 +1,6 @@
 - Sin Engine -[General] Log Manager initialized.
+- Sin Engine -[General] utilityManager Initialized.
+- Sin Engine -[General] FPS limit set to 60
 - Sin Engine -[General] Loading VAO file test.vao...success.
 - Sin Engine -[General] Loading Game Object "test"...success.
 - Sin Engine -[General] Loading Game Object "mainCamera"...success.
@@ -6,5 +8,8 @@
 - Sin Engine -[General] Loading shader file default.frag...Success.
 - Sin Engine -[General] Linking shader program...Success.
 - Sin Engine -[General] Validating shader program...Success.
-- Sin Engine -[General] utilityManager Initialized.
-Current FPS: 7  
+- Sin Engine -[SFML] Warning: The created OpenGL context does not fully meet the settings that were requested
+Requested: version = 3.0 ; depth bits = 24 ; stencil bits = 8 ; AA level = 4 ; core = false ; debug = false
+Created: version = 4.5 ; depth bits = 24 ; stencil bits = 8 ; AA level = 4 ; core = false ; debug = true
+
+Current FPS: 9  
