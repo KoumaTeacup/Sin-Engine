@@ -1,5 +1,7 @@
 #include "SEObject.h"
 
+using namespace se_system;
+
 SEObject::SEObject(std::string n, std::string t, int num) :
 	name(n),
 	tag(t),

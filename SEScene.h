@@ -28,6 +28,9 @@ public:
 	bool isPause() { return ((sceneFlags & SCENE_PAUSE) != 0); }
 	void endScene() { sceneFlags |= SCENE_END; }
 
+	// funcional methods
+	void handle(SEEvent &event);
+
 	// Setters & Getters
 
 	// States call back methods.
@@ -46,6 +49,7 @@ private:
 	// Game objects container
 	std::vector<std::list<SEGameObject*>> gameObjs;
 	std::vector<SEGameObject*> CameraObjs;
+	std::vector<SEComListener*> listeners;
 };
 
 #endif

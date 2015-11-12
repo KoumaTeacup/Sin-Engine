@@ -4,15 +4,16 @@
 #include "sfml\System\Clock.hpp"
 #include "sfml\System\Time.hpp"
 
-#define SE_Utility			SEUtility::getObj()
-#define SE_Utility_Release	SEUtility::release()
+#include "SESystem.h"
 
-class SEUtility {
+#define SE_Utility			se_system::SEUtility::getObj()
+#define SE_Utility_Release	se_system::SEUtility::release()
+
+namespace se_system{
+
+class SEUtility :public SESystem<SEUtility>{
+	friend SESystem<SEUtility>;
 public:
-
-	static SEUtility& getObj();
-	static void release() { delete utilityManager; }
-
 	void setFPSLimit(int limit);
 
 	void update();
@@ -21,11 +22,11 @@ public:
 private:
 	SEUtility();
 
-	static SEUtility* utilityManager;
-
 	sf::Clock clock;
 	float frameTime;
 	int fpsLimit;
 };
+
+}
 
 #endif

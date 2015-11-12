@@ -87,6 +87,12 @@ void SEScene::clear() {
 	gameObjs.clear();
 }
 
+void SEScene::handle(SEEvent &event) {
+	for (auto i : listeners) {
+		i->handle(event);
+	}
+}
+
 void SEScene::init() {
 	for (auto i : gameObjs) {
 		for (auto j : i)

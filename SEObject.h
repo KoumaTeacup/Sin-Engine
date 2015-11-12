@@ -3,6 +3,8 @@
 
 #include <string>
 
+namespace se_system {
+
 class SEObject {
 public:
 	SEObject(std::string n = std::string(), std::string t = std::string(), int num = 0);
@@ -38,4 +40,6 @@ private:
 
 	bool enabled;
 };
+
+}
 #endif

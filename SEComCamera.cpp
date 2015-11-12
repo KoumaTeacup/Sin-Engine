@@ -7,6 +7,8 @@
 
 SEComCamera::SEComCamera(SEGameObject* owner, std::string name, std::string tag) :
 	SEComponent(COM_CAMERA, owner, name, tag),
+	viewPortX(0),
+	viewPortY(0),
 	viewPortWidth(SIN.getWindowSize()[0]),
 	viewPortHeight(SIN.getWindowSize()[1]),
 	viewAngle(40),
@@ -25,6 +27,13 @@ SEComCamera& SEComCamera::operator=(const SEComCamera & rhs) {
 }
 
 void SEComCamera::preDraw() {
+	if (flags&CAMERA_VIEWPORT_INDEPENDENT == 0) {
+		viewPortX = 0;
+		viewPortY = 0;
+		viewPortWidth = SIN.getWindowSize()[0];
+		viewPortHeight = SIN.getWindowSize()[1];
+	}
+
 	// View Matrix Construction
 	SEComTransform &trans = SE_COMP_TRANSFORM;
 	if (flags&CAMERA_FOCUS_MODE) {
@@ -54,4 +63,6 @@ void SEComCamera::preDraw() {
 	float ry = tanf(SIN.toRad(viewAngle) / 2.0f);
 	float rx = ry * viewPortWidth / viewPortHeight;
 	projTr = SE_MATRIX_PROJECT4(frontClip, backClip, rx, ry);
+
+	glViewport(viewPortX, viewPortY, viewPortWidth, viewPortHeight);
 }

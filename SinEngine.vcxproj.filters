@@ -19,17 +19,17 @@
     <Filter Include="Components">
       <UniqueIdentifier>{a9dcb857-1678-48b1-a248-8495d491e9d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource">
-      <UniqueIdentifier>{9d73226a-d88b-4978-8c11-3290af2352df}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{eb345abe-ab52-4163-ae8f-73b22980e5df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{9d73226a-d88b-4978-8c11-3290af2352df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="User">
+      <UniqueIdentifier>{1a806355-39ef-4e10-b104-8195ecd86264}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SEGameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -37,10 +37,10 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="shader.cpp">
-      <Filter>Resource</Filter>
+      <Filter>Data</Filter>
     </ClCompile>
     <ClCompile Include="vao.cpp">
-      <Filter>Resource</Filter>
+      <Filter>Data</Filter>
     </ClCompile>
     <ClCompile Include="SEComRenderer.cpp">
       <Filter>Components</Filter>
@@ -50,12 +50,6 @@
     </ClCompile>
     <ClCompile Include="SEScene.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SEResource.cpp">
-      <Filter>Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="SEFile.cpp">
-      <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="SEComCamera.cpp">
       <Filter>Components</Filter>
@@ -72,6 +66,21 @@
     <ClCompile Include="SEComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SEEvent.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="SEResource.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="SEFile.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>User</Filter>
+    </ClCompile>
+    <ClCompile Include="SEComListener.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SEVector.h">
@@ -87,10 +96,10 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="shader.h">
-      <Filter>Resource</Filter>
+      <Filter>Data</Filter>
     </ClInclude>
     <ClInclude Include="vao.h">
-      <Filter>Resource</Filter>
+      <Filter>Data</Filter>
     </ClInclude>
     <ClInclude Include="SEComRenderer.h">
       <Filter>Components</Filter>
@@ -100,12 +109,6 @@
     </ClInclude>
     <ClInclude Include="SEScene.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SEResource.h">
-      <Filter>Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="SEFile.h">
-      <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="SEComCamera.h">
       <Filter>Components</Filter>
@@ -124,6 +127,21 @@
     </ClInclude>
     <ClInclude Include="SEComponent.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SEEvent.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="SEResource.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="SESystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="SEFile.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="SEComListener.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

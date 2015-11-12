@@ -18,10 +18,13 @@ enum componentType {
 	COM_RENDERER,
 	//COM_RIGID,
 	//COM_ANIMATOR,
-	COM_NUM
+	COM_NUM,
+	
+	// User derived components
+	COM_LISTENER
 };
 
-class SEComponent : public SEObject {
+class SEComponent : public se_system::SEObject {
 public:
 	SEComponent(componentType t, 
 		SEGameObject* o, 

@@ -5,7 +5,9 @@
 
 class SEComSample : public SEComponent {
 public:
-	SEComSample(SEGameObject *onwer);
+	SEComSample(SEGameObject *onwer,
+		std::string name = std::string(),
+		std::string tag = std::string());
 	SEComSample(const SEComSample &rhs);
 	~SEComSample();
 

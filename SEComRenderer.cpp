@@ -30,6 +30,7 @@ SEComRenderer& SEComRenderer::operator=(const SEComRenderer & rhs) {
 }
 
 void SEComRenderer::onInit() {
+	SEComponent::onInit();
 	if (!vao->getFile()) {
 #ifdef SE_DEBUG
 		char log[256];

@@ -10,6 +10,7 @@
 #define CAMERA_WIREFRAME			0x04
 #define CAMERA_FLAT_LIGHTING		0x08
 #define CAMERA_MOTION_BLUR_ENABLED	0x10
+#define CAMERA_VIEWPORT_INDEPENDENT	0x20
 
 class SEComCamera : public SEComponent {
 public:
@@ -45,6 +46,7 @@ protected:
 
 private:
 	char flags;
+	int viewPortX, viewPortY;
 	unsigned viewPortWidth, viewPortHeight;
 	float viewAngle;
 	float frontClip, backClip;

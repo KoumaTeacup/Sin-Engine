@@ -3,8 +3,6 @@
 
 #include "SESin.h"
 
-SESin* SESin::pSin = nullptr;
-
 SESin::SESin():activeScene(NULL), activeCamera(NULL) {
 	glSettings.depthBits = 24;
 	glSettings.stencilBits = 8;
@@ -13,12 +11,7 @@ SESin::SESin():activeScene(NULL), activeCamera(NULL) {
 	glSettings.minorVersion = 0;
 }
 
-SESin& SESin::getObj() {
-	if (!pSin) pSin = new SESin();
-	return *pSin;
-}
-
-void SESin::release() {
+void SESin::cleanUp() {
 	// Release all global managers
 #ifdef SE_DEBUG
 	SE_LogManager.print();
@@ -26,8 +19,6 @@ void SESin::release() {
 #endif
 	SE_Utility_Release;
 	SE_Resource_Release;
-
-	if (pSin)delete pSin;
 }
 
 bool SESin::init(){
@@ -60,27 +51,13 @@ void SESin::begin(SEScene &scene) {
 	// run the main loop
 	while (!scene.isEnd())
 	{
+		// Process window/input events
+		SE_EventManager.update(window);
+
 		scene.update();
-		// handle events
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-			{
-				// end the program
-				scene.endScene();
-			}
-			else if (event.type == sf::Event::Resized)
-			{
-				// adjust the viewport when the window is resized
-				glViewport(0, 0, event.size.width, event.size.height);
-			}
-		}
 
-		// draw...
 		scene.draw();
-
-		// end the current frame (internally swaps the front and back buffers)
+		
 		window.display();
 
 		scene.postUpdate();

@@ -9,9 +9,7 @@
 
 using namespace se_debug;
 
-SELogManager* SELogManager::logManager = NULL;
-
-SELogManager::SELogManager() :settings(0), logPos(0) {
+SELogManager::SELogManager() :SESystem(), settings(0), logPos(0) {
 	sf::err().rdbuf(sfmlErr.rdbuf());
 }
 
@@ -23,16 +21,6 @@ SELogManager::~SELogManager() {
 		print(&f);
 		f.close();
 	}
-}
-
-SELogManager& SELogManager::getObj() {
-	if (!logManager) logManager = new SELogManager;
-	return *logManager;
-}
-
-void SELogManager::release() {
-	if (logManager)
-		delete logManager;
 }
 
 void SELogManager::config(char bits) {

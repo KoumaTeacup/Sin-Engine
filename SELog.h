@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include "SESystem.h"
+
 // User Command
 #define SE_LogConfig			se_debug::SELogManager::getObj().config
 #define SE_Assert				se_debug::SELogManager::getObj().assert
@@ -39,17 +41,12 @@ struct SELog {
 	std::string msg;
 };
 
-class SELogManager {
-public:
-	// flags
-	char settings;
+class SELogManager:public se_system::SESystem<SELogManager> {
+	friend SESystem<SELogManager>;
 
+public:
 	// dtor
 	~SELogManager();
-
-	// init
-	static SELogManager& getObj();
-	static void release();
 
 	// a dummy init function
 	void config(char bits = SE_LOG_ENABLED);
@@ -65,15 +62,15 @@ public:
 
 
 private:
+	// flags
+	char settings;
+
 	// Private constructor for singleton pattern.
 	SELogManager();
 	
 	// log queue
 	std::vector<SELog> logData;
 	unsigned logPos;
-
-	// SEError Object
-	static SELogManager* logManager;
 
 	// sfml streambuff
 	std::stringstream sfmlErr;
@@ -83,8 +80,8 @@ private:
 
 #else // SE_DEBUG
 
-#define SE_Assert
-#define SE_LogConfig
+#define SE_Assert(...)	/*__VA_ARGS__*/
+#define SE_LogConfig(x)	/*x*/
 
 #endif // SE_DEBUG
 

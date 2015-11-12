@@ -14,7 +14,7 @@ enum resourceType {
 };
 
 // SEFile class is not allowed for any copy operations.
-class SEFile : public SEObject{
+class SEFile : public se_system::SEObject{
 	friend class SEFilePointer;
 
 public:

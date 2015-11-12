@@ -9,12 +9,14 @@
 #include "SEComRenderer.h"
 #include "SEComTransform.h"
 #include "SEComCamera.h"
+#include "SEComListener.h"
 
+// New Components TO DOs
 #define SE_COMP_TRANSFORM	(*static_cast<SEComTransform*>(getOwner()[COM_TRANSFORM]))
 #define SE_COMP_CAMERA		(*static_cast<SEComCamera*>(getOwner()[COM_CAMERA]))
 #define SE_COMP_RENDERER	(*static_cast<SEComRenderer*>(getOwner()[COM_RENDERER]))
 
-class SEGameObject : public SEObject{
+class SEGameObject : public se_system::SEObject{
 public:
 	SEGameObject(std::string name = std::string(), std::string tag = std::string());
 	SEGameObject(const SEGameObject& rhs);

@@ -29,7 +29,7 @@ SEComponent*& SEGameObject::operator[](componentType type) {
 
 void SEGameObject::attach(componentType type, std::string name, std::string tag) {
 	// New Component TO DOs
-	if (components[type]) {
+	if (type != COM_LISTENER && components[type]) {
 #ifdef SE_DEBUG
 		char log[256], typeStr[32];
 		const char *name = toString();
@@ -55,7 +55,9 @@ void SEGameObject::attach(componentType type, std::string name, std::string tag)
 
 void SEGameObject::attach(SEComponent *pCom) {
 	if (!pCom) return;
+	if (pCom->getType()!=COM_LISTENER)
 	components[pCom->getType()] = pCom;
+	else components.push_back(pCom);
 }
 
 void SEGameObject::onInit() {

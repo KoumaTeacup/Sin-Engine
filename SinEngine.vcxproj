@@ -147,9 +147,11 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SEComCamera.cpp" />
+    <ClCompile Include="SEComListener.cpp" />
     <ClCompile Include="SEComponent.cpp" />
     <ClCompile Include="SEComRenderer.cpp" />
     <ClCompile Include="SEComTransform.cpp" />
+    <ClCompile Include="SEEvent.cpp" />
     <ClCompile Include="SEFile.cpp" />
     <ClCompile Include="SEGameObject.cpp" />
     <ClCompile Include="SELog.cpp" />
@@ -164,9 +166,11 @@
   <ItemGroup>
     <ClInclude Include="SampleStructure.h" />
     <ClInclude Include="SEComCamera.h" />
+    <ClInclude Include="SEComListener.h" />
     <ClInclude Include="SEComponent.h" />
     <ClInclude Include="SEComRenderer.h" />
     <ClInclude Include="SEComTransform.h" />
+    <ClInclude Include="SEEvent.h" />
     <ClInclude Include="SEFile.h" />
     <ClInclude Include="SEGameObject.h" />
     <ClInclude Include="SELog.h" />
@@ -175,6 +179,7 @@
     <ClInclude Include="SEResource.h" />
     <ClInclude Include="SEScene.h" />
     <ClInclude Include="SESin.h" />
+    <ClInclude Include="SESystem.h" />
     <ClInclude Include="SEUtility.h" />
     <ClInclude Include="SEVector.h" />
     <ClInclude Include="shader.h" />
