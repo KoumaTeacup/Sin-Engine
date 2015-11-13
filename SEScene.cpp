@@ -9,7 +9,13 @@ unsigned SEScene::load(SEGameObject *obj) {
 	SEGameObject *pObj = new SEGameObject(*obj);
 	gameObjs.push_back(std::list<SEGameObject*>(1, pObj));
 	if ((*obj)[COM_CAMERA]) {
-		CameraObjs.push_back(obj);
+		cameraObjs.push_back(obj);
+	}
+	if (obj->getCompNum() > COM_NUM) {
+		for (int i = COM_NUM; i < obj->getCompNum(); ++i) {
+			if ((*obj)[i]->getType() == COM_LISTENER)
+				listeners.push_back(static_cast<SEComListener*>((*obj)[i]));
+		}
 	}
 	return gameObjs.size();
 }
@@ -89,33 +95,34 @@ void SEScene::clear() {
 
 void SEScene::handle(SEEvent &event) {
 	for (auto i : listeners) {
-		i->handle(event);
+		if (i->isEnabled() && i->getOwner().isEnabled())
+			i->handle(event);
 	}
 }
 
 void SEScene::init() {
 	for (auto i : gameObjs) {
 		for (auto j : i)
-			j->onInit();
+			if(j->isEnabled()) j->onInit();
 	}
 }
 
 void SEScene::update() {
 	for (auto i : gameObjs) {
 		for (auto j : i)
-			j->onUpdate();
+			if(j->isEnabled()) j->onUpdate();
 	}
 }
 
 void SEScene::draw() {
-	for (auto c : CameraObjs) {
+	for (auto c : cameraObjs) {
 		SEComponent *pCamera = (*c)[COM_CAMERA];
 		if (pCamera->isEnabled()) {
 			SIN.setActiveCamera(pCamera);
-			SIN.getActiveCamera()->preDraw();
+			static_cast<SEComCamera*>(pCamera)->preDraw();
 			for (auto i : gameObjs) {
 				for (auto j : i)
-					j->onDraw();
+					if(j->isEnabled()) j->onDraw();
 			}
 		}
 	}
@@ -124,7 +131,7 @@ void SEScene::draw() {
 void SEScene::postUpdate() {
 	for (auto i : gameObjs) {
 		for (auto j : i)
-			j->onPostUpdate();
+			if (j->isEnabled()) j->onPostUpdate();
 	}
 }
 
@@ -132,20 +139,28 @@ void SEScene::pause() {
 	sceneFlags |= SCENE_PAUSE;
 	for (auto i : gameObjs) {
 		for (auto j : i)
-			j->onPause();
+			if (j->isEnabled()) j->onPause();
 	}
 }
 
 void SEScene::resume() {
 	for (auto i : gameObjs) {
 		for (auto j : i)
-			j->onResume();
+			if(j->isEnabled()) j->onResume();
 	}
 }
 
 void SEScene::release() {
 	for (auto i : gameObjs) {
 		for (auto j : i)
-			j->onRelease();
+			if(j->isEnabled()) j->onRelease();
 	}
+}
+
+void SEScene::resize() {
+	for (auto c : cameraObjs)
+		if (c->isEnabled()) {
+			SEComCamera* pCamera = static_cast<SEComCamera*>((*c)[COM_CAMERA]);
+			pCamera->onResize();
+		}
 }

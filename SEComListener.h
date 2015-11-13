@@ -3,32 +3,32 @@
 
 #include "SEComponent.h"
 
-class SEEvent;
+struct SEEvent;
 
 class SEComListener : public SEComponent {
 public:
-	SEComListener(SEGameObject *onwer,
+	SEComListener(SEGameObject *owner,
 		std::string name = std::string(),
 		std::string tag = std::string());
 	SEComListener(const SEComListener &rhs);
-	~SEComListener();
+	~SEComListener() {}
 
-	SEComListener& operator =(const SEComListener &rhs);
+	virtual SEComListener& operator =(const SEComListener &rhs);
 
 	// Local methods.
-	void handle(SEEvent &event);
+	virtual void handle(SEEvent &event) = 0;
 
 protected:
 	// Inherited pure virtuals.
-	void onInit() {}
-	void onRelease() {}
+	virtual void onInit() {}
+	virtual void onRelease() {}
 
 	// Inherited virtuals.
-	void onUpdate();
-	void onDraw();
-	void onPostUpdate();
-	void onPause();
-	void onResume();
+	virtual void onUpdate() {}
+	virtual void onDraw() {}
+	virtual void onPostUpdate() {}
+	virtual void onPause() {}
+	virtual void onResume() {}
 
 private:
 

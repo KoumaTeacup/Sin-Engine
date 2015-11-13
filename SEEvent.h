@@ -1,10 +1,13 @@
 #ifndef SEEVENT_H
 #define SEEVENT_H
 
+#include <SFML\Window.hpp>
+
 #include <list>
 #include <vector>
 
 #include "SESystem.h"
+#include "SEInput.h"
 
 #define SE_EventManager	se_system::SEEventManager::getObj()
 #define SE_Broadcast	se_system::SEEventManager::getObj().broadcast
@@ -13,6 +16,8 @@ class SEGameObject;
 
 enum eventType {
 	EVENT_DEFAULT,
+	EVENT_KEYPRESS,
+	EVENT_KEYRELEASE,
 	EVENT_CAMERA,
 	EVENT_NUM
 };
@@ -22,6 +27,11 @@ struct SEEvent {
 	float delay;
 	int numOfObjects;
 	SEGameObject **pObjs;
+
+	union {
+		sf::Keyboard::Key	key;
+		sf::Joystick::Axis	axis;
+	};
 
 	SEEvent(eventType t = EVENT_DEFAULT, float d = 0.0f, int num = 0, SEGameObject **obj = NULL) :
 		type(t),
@@ -33,7 +43,7 @@ struct SEEvent {
 		}
 	}
 
-	~SEEvent() { delete[] pObjs; }
+	~SEEvent() { if (numOfObjects > 0) delete[] pObjs; }
 };
 
 namespace se_system {

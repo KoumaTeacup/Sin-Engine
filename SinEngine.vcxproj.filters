@@ -81,6 +81,9 @@
     <ClCompile Include="SEComListener.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="SEInput.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SEVector.h">
@@ -142,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="SEComListener.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SEInput.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

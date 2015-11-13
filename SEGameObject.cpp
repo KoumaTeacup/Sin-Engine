@@ -27,9 +27,23 @@ SEComponent*& SEGameObject::operator[](componentType type) {
 	return components[type];
 }
 
-void SEGameObject::attach(componentType type, std::string name, std::string tag) {
+SEComponent*& SEGameObject::operator[](int index) {
+	return components[index];
+}
+
+int SEGameObject::attach(componentType type, std::string name, std::string tag) {
 	// New Component TO DOs
-	if (type != COM_LISTENER && components[type]) {
+	if (type == COM_LISTENER || type == COM_USER) {
+#ifdef SE_DEBUG
+		char log[256];
+		const char *name = toString();
+		sprintf(log, "%s> Attaching default Listener/User component (ignored).", name);
+		SE_LogManager.append(se_debug::LOGTYPE_WARNNING, log);
+		free((void*)name);
+#endif
+		return -1;
+	}
+	if (components[type]) {
 #ifdef SE_DEBUG
 		char log[256], typeStr[32];
 		const char *name = toString();
@@ -51,48 +65,51 @@ void SEGameObject::attach(componentType type, std::string name, std::string tag)
 	case COM_RENDERER:	pCom = static_cast<SEComponent *>(new SEComRenderer(this, name ,tag)); break;
 	}
 	components[type] = pCom;
+
+	return components.size() - 1;
 }
 
-void SEGameObject::attach(SEComponent *pCom) {
-	if (!pCom) return;
+int SEGameObject::attach(SEComponent *pCom) {
+	if (!pCom) return -1;
 	if (pCom->getType()!=COM_LISTENER)
 	components[pCom->getType()] = pCom;
 	else components.push_back(pCom);
+	return components.size() - 1;
 }
 
 void SEGameObject::onInit() {
 	for (auto i : components)
-		if(i) i->onInit();
+		if(i && i->isEnabled()) i->onInit();
 }
 
 void SEGameObject::onRelease() {
 	for (auto i : components)
-		if (i) i->onRelease();
+		if (i && i->isEnabled()) i->onRelease();
 }
 
 void SEGameObject::onUpdate() {
 	for (auto i : components)
-		if (i) i->onUpdate();
+		if (i && i->isEnabled()) i->onUpdate();
 }
 
 void SEGameObject::onDraw() {
 	for (auto i : components)
-		if (i) i->onDraw();
+		if (i && i->isEnabled()) i->onDraw();
 }
 
 void SEGameObject::onPostUpdate() {
 	for (auto i : components)
-		if (i) i->onPostUpdate();
+		if (i && i->isEnabled()) i->onPostUpdate();
 }
 
 void SEGameObject::onPause() {
 	for (auto i : components)
-		if (i) i->onPause();
+		if (i && i->isEnabled()) i->onPause();
 }
 
 void SEGameObject::onResume() {
 	for (auto i : components)
-		if (i) i->onResume();
+		if (i && i->isEnabled()) i->onResume();
 }
 
 const char* SEGameObject::toString() const {

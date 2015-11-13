@@ -1,17 +1,28 @@
-﻿Build started 11/12/2015 7:20:28 AM.
-     1>Project "F:\VS Projects\Sin-Engine\SinEngine.vcxproj" on node 2 (Build target(s)).
+﻿Build started 11/12/2015 5:50:07 PM.
+     1>Project "C:\Users\s.chen\Documents\GitHub\Sin-Engine\SinEngine.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Dev Software\Visual Studio\VC\bin\CL.exe /c /I"F:\VS Projects\Sin-Engine\glew\include" /I"F:\VS Projects\Sin-Engine\freeglut\include" /I"F:\VS Projects\Sin-Engine\sfml\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D SE_DEBUG /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt SEEvent.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\s.chen\Documents\GitHub\Sin-Engine\glew\include" /I"C:\Users\s.chen\Documents\GitHub\Sin-Engine\freeglut\include" /I"C:\Users\s.chen\Documents\GitHub\Sin-Engine\sfml\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D SE_DEBUG /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt SEComCamera.cpp SEComListener.cpp SEComRenderer.cpp SEEvent.cpp SEScene.cpp SESin.cpp main.cpp
+         SEComCamera.cpp
+         Generating Code...
+         Compiling...
+         main.cpp
+         SESin.cpp
+         SEScene.cpp
          SEEvent.cpp
+         SEComRenderer.cpp
+         SEComListener.cpp
+         Generating Code...
        Link:
-         D:\Dev Software\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\VS Projects\Sin-Engine\Debug\SinEngine.exe" /INCREMENTAL /NOLOGO /LIBPATH:"F:\VS Projects\Sin-Engine\sfml\lib" /LIBPATH:"F:\VS Projects\Sin-Engine\freeglut\lib" /LIBPATH:"F:\VS Projects\Sin-Engine\glew\lib" "sfml-window-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" opengl32.lib "sfml-system-d.lib" freeglut.lib glew32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"F:\VS Projects\Sin-Engine\Debug\SinEngine.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\VS Projects\Sin-Engine\Debug\SinEngine.lib" /MACHINE:X86 Debug\main.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\s.chen\Documents\GitHub\Sin-Engine\Debug\SinEngine.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\s.chen\Documents\GitHub\Sin-Engine\sfml\lib" /LIBPATH:"C:\Users\s.chen\Documents\GitHub\Sin-Engine\freeglut\lib" /LIBPATH:"C:\Users\s.chen\Documents\GitHub\Sin-Engine\glew\lib" "sfml-window-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" opengl32.lib "sfml-system-d.lib" freeglut.lib glew32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\s.chen\Documents\GitHub\Sin-Engine\Debug\SinEngine.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\s.chen\Documents\GitHub\Sin-Engine\Debug\SinEngine.lib" /MACHINE:X86 Debug\main.obj
          Debug\SEComCamera.obj
+         Debug\SEComListener.obj
          Debug\SEComponent.obj
          Debug\SEComRenderer.obj
          Debug\SEComTransform.obj
          Debug\SEEvent.obj
          Debug\SEFile.obj
          Debug\SEGameObject.obj
+         Debug\SEInput.obj
          Debug\SELog.obj
          Debug\SEObject.obj
          Debug\SEResource.obj
@@ -20,9 +31,9 @@
          Debug\SEUtility.obj
          Debug\shader.obj
          Debug\vao.obj
-         SinEngine.vcxproj -> F:\VS Projects\Sin-Engine\Debug\SinEngine.exe
-     1>Done Building Project "F:\VS Projects\Sin-Engine\SinEngine.vcxproj" (Build target(s)).
+         SinEngine.vcxproj -> C:\Users\s.chen\Documents\GitHub\Sin-Engine\Debug\SinEngine.exe
+     1>Done Building Project "C:\Users\s.chen\Documents\GitHub\Sin-Engine\SinEngine.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.69
+Time Elapsed 00:00:07.52

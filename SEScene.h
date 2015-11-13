@@ -42,13 +42,15 @@ public:
 	void resume();
 	void release();
 
+	void resize();
+
 private:
 	// scenewise flags
 	char sceneFlags;
 
 	// Game objects container
 	std::vector<std::list<SEGameObject*>> gameObjs;
-	std::vector<SEGameObject*> CameraObjs;
+	std::vector<SEGameObject*> cameraObjs;
 	std::vector<SEComListener*> listeners;
 };
 

@@ -27,13 +27,6 @@ SEComCamera& SEComCamera::operator=(const SEComCamera & rhs) {
 }
 
 void SEComCamera::preDraw() {
-	if (flags&CAMERA_VIEWPORT_INDEPENDENT == 0) {
-		viewPortX = 0;
-		viewPortY = 0;
-		viewPortWidth = SIN.getWindowSize()[0];
-		viewPortHeight = SIN.getWindowSize()[1];
-	}
-
 	// View Matrix Construction
 	SEComTransform &trans = SE_COMP_TRANSFORM;
 	if (flags&CAMERA_FOCUS_MODE) {
@@ -65,4 +58,13 @@ void SEComCamera::preDraw() {
 	projTr = SE_MATRIX_PROJECT4(frontClip, backClip, rx, ry);
 
 	glViewport(viewPortX, viewPortY, viewPortWidth, viewPortHeight);
+}
+
+void SEComCamera::onResize() {
+	if ((flags & CAMERA_VIEWPORT_INDEPENDENT) == 0) {
+		viewPortX = 0;
+		viewPortY = 0;
+		viewPortWidth = SIN.getWindowSize()[0];
+		viewPortHeight = SIN.getWindowSize()[1];
+	}
 }

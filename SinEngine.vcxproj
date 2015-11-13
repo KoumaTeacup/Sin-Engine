@@ -154,6 +154,7 @@
     <ClCompile Include="SEEvent.cpp" />
     <ClCompile Include="SEFile.cpp" />
     <ClCompile Include="SEGameObject.cpp" />
+    <ClCompile Include="SEInput.cpp" />
     <ClCompile Include="SELog.cpp" />
     <ClCompile Include="SEObject.cpp" />
     <ClCompile Include="SEResource.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="SEEvent.h" />
     <ClInclude Include="SEFile.h" />
     <ClInclude Include="SEGameObject.h" />
+    <ClInclude Include="SEInput.h" />
     <ClInclude Include="SELog.h" />
     <ClInclude Include="SEMatrix.h" />
     <ClInclude Include="SEObject.h" />

@@ -42,6 +42,9 @@ const char* SEComponent::toString() const {
 	case COM_TRANSFORM: sprintf(str, "Transform "); break;
 	case COM_RENDERER:	sprintf(str, "Renderer "); break;
 	case COM_CAMERA:	sprintf(str, "Camera"); break;
+	case COM_LISTENER:	sprintf(str, "Listner"); break;
+	case COM_USER:		sprintf(str, "User-defined"); break;
+	default:			sprintf(str, "undefined"); break;
 	}
 	sprintf(output, "%s > Componet \"%s\" of type %s ", ownerName, getName().c_str(), str);
 	free((void*)ownerName);

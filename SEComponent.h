@@ -21,6 +21,7 @@ enum componentType {
 	COM_NUM,
 	
 	// User derived components
+	COM_USER,
 	COM_LISTENER
 };
 
@@ -39,10 +40,23 @@ public:
 
 	virtual void attach(const char* filename) {}
 
+	// Setters & Getters
 	componentType getType() const	{ return type; }
 	SEGameObject& getOwner() const	{ return *owner; }
 
 	const virtual char* toString() const;
+
+	// Inherited pure virtuals.
+	virtual void onInit() {}
+	virtual void onRelease() {}
+
+	// Inherited virtuals.
+	virtual void onUpdate() {}
+	virtual void onDraw() {}
+	virtual void onPostUpdate() {}
+	virtual void onPause() {}
+	virtual void onResume() {}
+
 private:
 	componentType type;
 	SEGameObject *owner;
