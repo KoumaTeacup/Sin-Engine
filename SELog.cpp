@@ -80,7 +80,7 @@ void SELogManager::print(std::ostream *os) {
 			}
 			std::string str = logData[logPos++].msg;
 			*os << str;
-			if (strcmp(str.substr(str.length() - 3, 3).c_str(), "..."))
+			if (str.length() < 3 || strcmp(str.substr(str.length() - 3, 3).c_str(), "..."))
 				*os << std::endl;
 		}
 	}

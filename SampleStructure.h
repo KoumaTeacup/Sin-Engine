@@ -5,15 +5,17 @@
 
 class SEComSample : public SEComponent {
 public:
-	SEComSample(SEGameObject *owner,
-		std::string name = std::string(),
-		std::string tag = std::string());
+	SEComSample(std::string name = std::string(),
+		std::string tag = std::string(),
+		SEGameObject *owner = NULL);
 	SEComSample(const SEComSample &rhs);
 	~SEComSample();
 
 	SEComSample& operator =(const SEComSample &rhs);
 
 	// Local methods.
+
+	SEComponent *clone() const { return new SEComSample(*this); }
 
 protected:
 	// Inherited pure virtuals.

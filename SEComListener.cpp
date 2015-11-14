@@ -4,8 +4,8 @@
 
 
 
-SEComListener::SEComListener(SEGameObject * owner, std::string name, std::string tag) :
-	SEComponent(COM_LISTENER, owner, name, tag){
+SEComListener::SEComListener(std::string name, std::string tag, SEGameObject * owner) :
+	SEComponent(COM_LISTENER, name, tag, owner){
 }
 
 SEComListener::SEComListener(const SEComListener & rhs):

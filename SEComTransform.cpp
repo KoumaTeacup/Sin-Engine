@@ -1,7 +1,7 @@
 #include "SEComTransform.h"
 
-SEComTransform::SEComTransform(SEGameObject* owner,	std::string name, std::string tag):
-	SEComponent(COM_TRANSFORM, owner, name, tag) {
+SEComTransform::SEComTransform(std::string name, std::string tag, SEGameObject* owner):
+	SEComponent(COM_TRANSFORM, name, tag, owner) {
 	data[scale][x] = data[scale][y] = data[scale][z] = 1.0f;
 }
 
@@ -74,3 +74,4 @@ float& SEComTransform::operator[](index i) {
 		return data[0][0];
 	}
 }
+

@@ -1,23 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{60969b9d-6c7c-44e9-895c-c47e0296a492}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components">
-      <UniqueIdentifier>{a9dcb857-1678-48b1-a248-8495d491e9d4}</UniqueIdentifier>
     </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{eb345abe-ab52-4163-ae8f-73b22980e5df}</UniqueIdentifier>
@@ -28,13 +17,27 @@
     <Filter Include="User">
       <UniqueIdentifier>{1a806355-39ef-4e10-b104-8195ecd86264}</UniqueIdentifier>
     </Filter>
+    <Filter Include="User\Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="User\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="User\Components">
+      <UniqueIdentifier>{a9dcb857-1678-48b1-a248-8495d491e9d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="User\Components\Listeners">
+      <UniqueIdentifier>{acf7446c-e6b9-47f6-8d2b-83243d33ff81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SEGameObject.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>User\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SEComTransform.cpp">
-      <Filter>Components</Filter>
+      <Filter>User\Components</Filter>
     </ClCompile>
     <ClCompile Include="shader.cpp">
       <Filter>Data</Filter>
@@ -43,16 +46,16 @@
       <Filter>Data</Filter>
     </ClCompile>
     <ClCompile Include="SEComRenderer.cpp">
-      <Filter>Components</Filter>
+      <Filter>User\Components</Filter>
     </ClCompile>
     <ClCompile Include="SESin.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>User\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SEScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>User\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SEComCamera.cpp">
-      <Filter>Components</Filter>
+      <Filter>User\Components</Filter>
     </ClCompile>
     <ClCompile Include="SELog.cpp">
       <Filter>System</Filter>
@@ -64,7 +67,7 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="SEComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>User\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SEEvent.cpp">
       <Filter>System</Filter>
@@ -79,24 +82,27 @@
       <Filter>User</Filter>
     </ClCompile>
     <ClCompile Include="SEComListener.cpp">
-      <Filter>Components</Filter>
+      <Filter>User\Components</Filter>
     </ClCompile>
     <ClCompile Include="SEInput.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="SEComController.cpp">
+      <Filter>User\Components\Listeners</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SEVector.h">
-      <Filter>Header Files</Filter>
+      <Filter>User\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SEMatrix.h">
-      <Filter>Header Files</Filter>
+      <Filter>User\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SEGameObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>User\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SEComTransform.h">
-      <Filter>Components</Filter>
+      <Filter>User\Components</Filter>
     </ClInclude>
     <ClInclude Include="shader.h">
       <Filter>Data</Filter>
@@ -105,19 +111,19 @@
       <Filter>Data</Filter>
     </ClInclude>
     <ClInclude Include="SEComRenderer.h">
-      <Filter>Components</Filter>
+      <Filter>User\Components</Filter>
     </ClInclude>
     <ClInclude Include="SESin.h">
-      <Filter>Header Files</Filter>
+      <Filter>User\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SEScene.h">
-      <Filter>Header Files</Filter>
+      <Filter>User\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SEComCamera.h">
-      <Filter>Components</Filter>
+      <Filter>User\Components</Filter>
     </ClInclude>
     <ClInclude Include="SampleStructure.h">
-      <Filter>Components</Filter>
+      <Filter>User\Components</Filter>
     </ClInclude>
     <ClInclude Include="SEUtility.h">
       <Filter>System</Filter>
@@ -129,7 +135,7 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="SEComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>User\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SEEvent.h">
       <Filter>System</Filter>
@@ -144,10 +150,16 @@
       <Filter>Data</Filter>
     </ClInclude>
     <ClInclude Include="SEComListener.h">
-      <Filter>Components</Filter>
+      <Filter>User\Components</Filter>
     </ClInclude>
     <ClInclude Include="SEInput.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="SEComController.h">
+      <Filter>User\Components\Listeners</Filter>
+    </ClInclude>
+    <ClInclude Include="SEComTemp.h">
+      <Filter>User\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

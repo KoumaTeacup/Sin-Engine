@@ -7,8 +7,8 @@
 #include "SEMatrix.h"
 #include "SESin.h"
 
-SEComRenderer::SEComRenderer(SEGameObject* owner, std::string name,	std::string tag) :
-	SEComponent(COM_RENDERER, owner, name, tag),
+SEComRenderer::SEComRenderer(std::string name,	std::string tag, SEGameObject* owner) :
+	SEComponent(COM_RENDERER, name, tag, owner),
 	shader(NULL),
 	vao(NULL) {}
 
@@ -67,7 +67,7 @@ void SEComRenderer::onDraw()
 
 	// Load worldspace stransfromation from transform component.
 	if (getOwner()[COM_TRANSFORM])
-		SE_Shader(shader)->setVal(UNIFORM_MATRIX, "ModelTr", &SE_COMP_TRANSFORM.modelTr);
+		SE_Shader(shader)->setVal(UNIFORM_MATRIX, "ModelTr", &SE_TRANSFORM.modelTr);
 	SEComCamera* camera = SIN.getActiveCamera();
 	if (camera) {
 		SE_Shader(shader)->setVal(UNIFORM_MATRIX, "ViewTr", &camera->viewTr);

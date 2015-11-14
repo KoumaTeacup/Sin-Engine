@@ -25,7 +25,6 @@ private:
 	// True for triangles, false for quads.
 	GLuint mode;
 	GLsizei indicesCount;
-	int* pIndices;
 };
 
 }

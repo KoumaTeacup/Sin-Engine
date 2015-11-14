@@ -7,9 +7,9 @@ struct SEEvent;
 
 class SEComListener : public SEComponent {
 public:
-	SEComListener(SEGameObject *owner,
-		std::string name = std::string(),
-		std::string tag = std::string());
+	SEComListener(std::string name = std::string(),
+		std::string tag = std::string(),
+		SEGameObject *owner = NULL);
 	SEComListener(const SEComListener &rhs);
 	~SEComListener() {}
 

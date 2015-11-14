@@ -24,18 +24,25 @@ void SEEventManager::update(sf::Window &window) {
 			break;
 		case sf::Event::KeyPressed:
 			event.type = EVENT_KEYPRESS;
-			event.key = sfEvent.key.code;
+			event.key = sfEvent.key;
 			broadcast(event);
 			break;
 		case sf::Event::KeyReleased:
 			event.type = EVENT_KEYRELEASE;
-			event.key = sfEvent.key.code;
+			event.key = sfEvent.key;
 			broadcast(event);
 			break;
 		case sf::Event::JoystickButtonPressed:
+			event.type = EVENT_BUTTONPRESS;
+			event.button = sfEvent.joystickButton;
 			break;
 		case sf::Event::JoystickButtonReleased:
+			event.type = EVENT_BUTTONRELEASE;
+			event.button = sfEvent.joystickButton;
 			break;
+		case sf::Event::JoystickMoved:
+			event.type = EVENT_MOVE;
+			event.move = sfEvent.joystickMove;
 		default:
 			break;
 		}

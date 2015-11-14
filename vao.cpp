@@ -118,6 +118,7 @@ bool SEVAO::load(const char* filename) {
 	}
 	glBindVertexArray(0);
 
+	int *pIndices;
 	// Generate IBO.
 	if (tri.size() > 0) {
 		mode = 3;

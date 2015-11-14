@@ -8,13 +8,13 @@ unsigned SEScene::load(SEGameObject *obj) {
 	if (!validate(*obj)) return 0;
 	SEGameObject *pObj = new SEGameObject(*obj);
 	gameObjs.push_back(std::list<SEGameObject*>(1, pObj));
-	if ((*obj)[COM_CAMERA]) {
-		cameraObjs.push_back(obj);
+	if ((*pObj)[COM_CAMERA]) {
+		cameraObjs.push_back(pObj);
 	}
-	if (obj->getCompNum() > COM_NUM) {
-		for (int i = COM_NUM; i < obj->getCompNum(); ++i) {
-			if ((*obj)[i]->getType() == COM_LISTENER)
-				listeners.push_back(static_cast<SEComListener*>((*obj)[i]));
+	if (pObj->getCompNum() > COM_NUM) {
+		for (int i = COM_NUM; i < pObj->getCompNum(); ++i) {
+			if ((*pObj)[i]->getType() == COM_LISTENER)
+				listeners.push_back(static_cast<SEComListener*>((*pObj)[i]));
 		}
 	}
 	return gameObjs.size();

@@ -6,9 +6,9 @@
 
 class SEComRenderer : public SEComponent {
 public:
-	SEComRenderer(SEGameObject* onwer,
-		std::string name = std::string(),
-		std::string tag = std::string());
+	SEComRenderer(std::string name = std::string(),
+		std::string tag = std::string(),
+		SEGameObject* onwer = NULL);
 	SEComRenderer(const SEComRenderer& rhs);
 	~SEComRenderer();
 
@@ -16,6 +16,8 @@ public:
 
 	// Local methods.
 	void attach(const char* filename);
+
+	SEComponent *clone() const { return new SEComRenderer(*this); }
 
 protected:
 	// Inherited pure virtuals.

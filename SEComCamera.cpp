@@ -5,30 +5,52 @@
 
 #include "SESin.h"
 
-SEComCamera::SEComCamera(SEGameObject* owner, std::string name, std::string tag) :
-	SEComponent(COM_CAMERA, owner, name, tag),
+SEComCamera::SEComCamera(std::string name, std::string tag, SEGameObject* owner) :
+	SEComponent(COM_CAMERA, name, tag, owner),
 	viewPortX(0),
 	viewPortY(0),
 	viewPortWidth(SIN.getWindowSize()[0]),
 	viewPortHeight(SIN.getWindowSize()[1]),
 	viewAngle(40),
 	frontClip(0.1f),
-	backClip(1000.0f){
+	backClip(1000.0f),
+	up(SEVector3f(0.0f, 1.0f, 0.0f)){
 }
 
 SEComCamera::SEComCamera(const SEComCamera& rhs) :
-	SEComponent(rhs) {}
+	SEComponent(rhs),
+	flags(rhs.flags),
+	viewPortX(rhs.viewPortX),
+	viewPortY(rhs.viewPortY),
+	viewPortWidth(rhs.viewPortWidth),
+	viewPortHeight(rhs.viewPortHeight),
+	viewAngle(rhs.viewAngle),
+	frontClip(rhs.frontClip),
+	backClip(rhs.backClip),
+	focus(rhs.focus),
+	up(rhs.up){}
 
 SEComCamera::~SEComCamera() {
 }
 
 SEComCamera& SEComCamera::operator=(const SEComCamera & rhs) {
-	return static_cast<SEComCamera&>(SEComponent::operator=(rhs));
+	SEComponent::operator=(rhs);
+	flags = rhs.flags;
+	viewPortX = rhs.viewPortX;
+	viewPortY = rhs.viewPortY;
+	viewPortWidth = rhs.viewPortWidth;
+	viewPortHeight = rhs.viewPortHeight;
+	viewAngle = rhs.viewAngle;
+	frontClip = rhs.frontClip;
+	backClip = rhs.backClip;
+	focus = rhs.focus;
+	up = rhs.up;
+	return *this;
 }
 
 void SEComCamera::preDraw() {
 	// View Matrix Construction
-	SEComTransform &trans = SE_COMP_TRANSFORM;
+	SEComTransform &trans = SE_TRANSFORM;
 	if (flags&CAMERA_FOCUS_MODE) {
 		SEVector3f camZ = focus - SEVector3f(trans[tx], trans[ty], trans[tz]);
 		SEVector3f camX = up % camZ;

@@ -22,15 +22,22 @@ enum componentType {
 	
 	// User derived components
 	COM_USER,
-	COM_LISTENER
+	COM_LISTENER,
+	COM_CONTROLLER,
+
+	// This is the temporary type
+	// Any operation performed on it will not affect the game logic
+	COM_UNDEFINED
 };
 
 class SEComponent : public se_system::SEObject {
 public:
-	SEComponent(componentType t, 
-		SEGameObject* o, 
-		std::string name = std::string(), 
-		std::string tag = std::string());
+
+	// Internal Constructor
+	SEComponent(componentType t,
+	std::string name = std::string(),
+		std::string tag = std::string(),
+		SEGameObject* o = NULL);
 
 	SEComponent(const SEComponent& rhs);
 
@@ -41,10 +48,14 @@ public:
 	virtual void attach(const char* filename) {}
 
 	// Setters & Getters
-	componentType getType() const	{ return type; }
-	SEGameObject& getOwner() const	{ return *owner; }
+	componentType	getType() const				{ return type; }
+	SEGameObject&	getOwner() const			{ return *owner; }
+	void			setOwner(SEGameObject *o)	{ owner = o; }
 
 	const virtual char* toString() const;
+
+	// Derived class must implement this clone function to return a copy of itself.
+	virtual SEComponent *clone() const = 0;
 
 	// Inherited pure virtuals.
 	virtual void onInit() {}

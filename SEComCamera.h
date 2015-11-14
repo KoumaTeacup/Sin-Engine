@@ -14,9 +14,9 @@
 
 class SEComCamera : public SEComponent {
 public:
-	SEComCamera(SEGameObject *onwer,
-		std::string name = std::string(),
-		std::string tag = std::string());
+	SEComCamera(std::string name = std::string(),
+		std::string tag = std::string(),
+		SEGameObject *onwer = NULL);
 	SEComCamera(const SEComCamera &rhs);
 	~SEComCamera();
 
@@ -31,6 +31,8 @@ public:
 
 	// Public variables.
 	SEMatrix4f viewTr, projTr;
+
+	SEComponent *clone() const { return new SEComCamera(*this); }
 
 protected:
 	// Inherited pure virtuals.

@@ -18,7 +18,9 @@ enum eventType {
 	EVENT_DEFAULT,
 	EVENT_KEYPRESS,
 	EVENT_KEYRELEASE,
-	EVENT_CAMERA,
+	EVENT_BUTTONPRESS,
+	EVENT_BUTTONRELEASE,
+	EVENT_MOVE,
 	EVENT_NUM
 };
 
@@ -29,8 +31,9 @@ struct SEEvent {
 	SEGameObject **pObjs;
 
 	union {
-		sf::Keyboard::Key	key;
-		sf::Joystick::Axis	axis;
+		sf::Event::KeyEvent				key;
+		sf::Event::JoystickButtonEvent	button;
+		sf::Event::JoystickMoveEvent	move;
 	};
 
 	SEEvent(eventType t = EVENT_DEFAULT, float d = 0.0f, int num = 0, SEGameObject **obj = NULL) :

@@ -4,7 +4,7 @@
 
 int SEComponent::num = 0;
 
-SEComponent::SEComponent(componentType t, SEGameObject* o, std::string name, std::string tag): 
+SEComponent::SEComponent(componentType t, std::string name, std::string tag, SEGameObject* o): 
 	SEObject(name, tag, ++num),
 	type(t), 
 	owner(o) {}

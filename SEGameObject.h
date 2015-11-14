@@ -11,12 +11,6 @@
 #include "SEComCamera.h"
 #include "SEComListener.h"
 
-// New Components TO DOs
-#define SE_COMP_TRANSFORM	(*static_cast<SEComTransform*>(getOwner()[COM_TRANSFORM]))
-#define SE_COMP_CAMERA		(*static_cast<SEComCamera*>(getOwner()[COM_CAMERA]))
-#define SE_COMP_RENDERER	(*static_cast<SEComRenderer*>(getOwner()[COM_RENDERER]))
-#define SE_COMP(x)			(*static_cast<SEComRenderer*>(getOwner()[x]))
-
 class SEGameObject : public se_system::SEObject{
 public:
 	SEGameObject(std::string name = std::string(), std::string tag = std::string());
@@ -27,7 +21,7 @@ public:
 	virtual SEGameObject& operator=(const SEGameObject &rhs);
 
 	SEComponent*& operator[](componentType type);
-	SEComponent*& operator[](int index);
+	SEComponent*& operator[](unsigned index);
 
 	int attach(componentType type, 
 		std::string name = std::string(), 
@@ -38,6 +32,7 @@ public:
 
 	// Setters & Getters
 	int getCompNum() { return components.size(); }
+	void resetOwner();
 
 	// Inherited virtual methods.
 	virtual void onInit();

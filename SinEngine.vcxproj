@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SEComCamera.cpp" />
+    <ClCompile Include="SEComController.cpp" />
     <ClCompile Include="SEComListener.cpp" />
     <ClCompile Include="SEComponent.cpp" />
     <ClCompile Include="SEComRenderer.cpp" />
@@ -167,9 +168,11 @@
   <ItemGroup>
     <ClInclude Include="SampleStructure.h" />
     <ClInclude Include="SEComCamera.h" />
+    <ClInclude Include="SEComController.h" />
     <ClInclude Include="SEComListener.h" />
     <ClInclude Include="SEComponent.h" />
     <ClInclude Include="SEComRenderer.h" />
+    <ClInclude Include="SEComTemp.h" />
     <ClInclude Include="SEComTransform.h" />
     <ClInclude Include="SEEvent.h" />
     <ClInclude Include="SEFile.h" />

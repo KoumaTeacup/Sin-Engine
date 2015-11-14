@@ -14,9 +14,9 @@ class SEComTransform : public SEComponent {
 public:
 	SEMatrix4f modelTr;
 
-	SEComTransform(SEGameObject* owner,
-		std::string name = std::string(),
-		std::string tag = std::string());
+	SEComTransform(std::string name = std::string(),
+		std::string tag = std::string(),
+		SEGameObject* owner = NULL);
 	SEComTransform(const SEComTransform& rhs);
 	~SEComTransform();
 
@@ -27,6 +27,8 @@ public:
 	// Setters & Getters
 	float  operator[](index i) const;
 	float& operator[](index i);
+
+	SEComponent *clone() const { return new SEComTransform(*this); }
 
 protected:
 	// Inherited pure virtuals.

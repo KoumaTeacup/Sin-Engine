@@ -5,7 +5,7 @@
 
 #include "SEFile.h"
 
-#define SE_Shader(...) static_cast<se_data::SEShader*>((__VA_ARGS__)->getFile())
+#define SE_Shader(x) static_cast<se_data::SEShader*>((x)->getFile())
 
 
 enum TYPE_UNIFORM {
