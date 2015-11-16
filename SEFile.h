@@ -1,7 +1,6 @@
 #ifndef SEFILE_H
 #define SEFILE_H
 
-#include <string>
 #include "SEObject.h"
 
 namespace se_data {

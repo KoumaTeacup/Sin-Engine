@@ -1,9 +1,9 @@
 #include <GL\glew.h>
-#include <SFML\Window\Window.hpp>
 
 #include "SEComCamera.h"
 
 #include "SESin.h"
+#include "SEComTransform.h"
 
 SEComCamera::SEComCamera(std::string name, std::string tag, SEGameObject* owner) :
 	SEComponent(COM_CAMERA, name, tag, owner),

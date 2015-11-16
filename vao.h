@@ -14,11 +14,13 @@ public:
 
 	// Inherited methods override
 	bool load(const char* filename);
+
+	const char* toString() const { return SEFile::toString(); }
+
+protected:
 	void onInit();
 	void onRelease();
 	void onDraw();
-
-	const char* toString() const { return SEFile::toString(); }
 
 private:
 	GLuint id, ibo;

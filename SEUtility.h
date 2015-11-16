@@ -6,6 +6,10 @@
 
 #include "SESystem.h"
 
+enum componentType;
+
+class SEComponent;
+
 #define SE_Utility			se_system::SEUtility::getObj()
 #define SE_Utility_Release	se_system::SEUtility::release()
 
@@ -17,7 +21,12 @@ public:
 	void setFPSLimit(int limit);
 
 	void update();
-	float getFrameTime() { return frameTime; }
+	float getFrameTime() const { return frameTime; }
+
+	void typeToString(char *str, componentType type) const;
+	SEComponent *typeToPointer(componentType type,
+		std::string name = std::string(),
+		std::string tag = std::string()) const;
 
 private:
 	SEUtility();

@@ -1,10 +1,10 @@
 #ifdef SE_DEBUG
 
 #include <fstream>
-#include <Windows.h>
 #include <SFML\System.hpp>
 
 #include "SELOG.h"
+
 #include "SEUtility.h"
 
 using namespace se_debug;

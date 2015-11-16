@@ -27,6 +27,12 @@ public:
 	// Setters & Getters
 	float  operator[](index i) const;
 	float& operator[](index i);
+	SEVector3f translation() const;
+	SEVector3f rotation() const;
+	SEVector3f scales() const;
+	SEMatrix4f translationMatrix() const;
+	SEMatrix4f rotationMatrix() const;
+	SEMatrix4f scaleMatrix() const;
 
 	SEComponent *clone() const { return new SEComTransform(*this); }
 

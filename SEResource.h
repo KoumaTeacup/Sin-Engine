@@ -2,7 +2,6 @@
 #define SERESOURCE_H
 
 #include <unordered_map>
-#include <string>
 
 #include "SESystem.h"
 

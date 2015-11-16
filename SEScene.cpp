@@ -1,58 +1,62 @@
 #include "SEScene.h"
 
-#include "SELog.h"
 #include "SEComCamera.h"
+#include "SEComListener.h"
+#include "SEComCollider.h"
 #include "SESin.h"
+#include "SEEvent.h"
 
-unsigned SEScene::load(SEGameObject *obj) {
-	if (!validate(*obj)) return 0;
-	SEGameObject *pObj = new SEGameObject(*obj);
-	gameObjs.push_back(std::list<SEGameObject*>(1, pObj));
-	if ((*pObj)[COM_CAMERA]) {
-		cameraObjs.push_back(pObj);
-	}
-	if (pObj->getCompNum() > COM_NUM) {
-		for (int i = COM_NUM; i < pObj->getCompNum(); ++i) {
-			if ((*pObj)[i]->getType() == COM_LISTENER)
-				listeners.push_back(static_cast<SEComListener*>((*pObj)[i]));
-		}
-	}
+unsigned SEScene::load(SEGameObject *pObj) {
+	if (!validate(*pObj)) return 0;
+	gameObjs.push_back(*pObj);
+	SEGameObject &obj = gameObjs.back();
 	return gameObjs.size();
 }
 
-bool SEScene::instantiate(unsigned id, unsigned num) {
-	SEGameObject* pObj = gameObjs[id].front();
+SEGameObject* SEScene::instantiate(unsigned obj) {
 #ifdef SE_DEBUG
-	char log[256];
-	const char* name = pObj->toString();
-	if (--id >= gameObjs.size()) {
+	if (obj > gameObjs.size()) {
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR,
 			"Invalid game object id can not be instantiated.");
-		return false;
+		return NULL;
 	}
+	char log[256];
+#endif
+	SEGameObject *pObj = new SEGameObject(gameObjs[--obj]);
+#ifdef SE_DEBUG
+	const char* name = pObj->toString();
 	if ((*pObj)[COM_CAMERA]) {
 		sprintf(log, "%s> Same camera object instantiation won't draw more than once", name);
 		SE_LogManager.append(se_debug::LOGTYPE_WARNNING, log);
 	}
 #endif
-	for (; num > 0; --num) {
-		pObj = new SEGameObject(*gameObjs[id].front());
-#ifdef SE_DEBUG
-		if (!pObj) {
-			sprintf(log, "Not enougn memory for %s instantiation.", name);
-			SE_LogManager.append(se_debug::LOGTYPE_ERROR, log);
-			return false;
-		}
-#endif
-		gameObjs[id].push_back(pObj);
-	}
+	gameInsts.insert(pObj);
 #ifdef SE_DEBUG
 	free((void*)name);
 #endif
-
-	return true;
+	if ((*pObj)[COM_CAMERA]) cameras.insert(static_cast<SEComCamera*>((*pObj)[COM_CAMERA]));
+	if (pObj->getCompNum() > COM_NUM) {
+		for (int i = COM_NUM; i < pObj->getCompNum(); ++i) {
+			if ((*pObj)[i]->getType() == COM_LISTENER)
+				listeners.insert(static_cast<SEComListener*>((*pObj)[i]));
+			else if ((*pObj)[i]->getType() == COM_COLLIDER)
+				colliders.insert(static_cast<SEComCollider*>((*pObj)[i]));
+		}
+	}
+	return pObj;
 }
 
+void SEScene::destroy(SEGameObject *pInst) {
+	if ((*pInst)[COM_CAMERA]) cameras.erase(static_cast<SEComCamera*>((*pInst)[COM_CAMERA]));
+	if (pInst->getCompNum() > COM_NUM) {
+		for (int i = COM_NUM; i < pInst->getCompNum(); ++i) {
+			if ((*pInst)[i]->getType() == COM_LISTENER)
+				listeners.erase(static_cast<SEComListener*>((*pInst)[i]));
+		}
+	}
+	delete pInst;
+	gameInsts.erase(pInst);
+}
 
 bool SEScene::validate(SEGameObject &obj) const {
 #ifdef SE_DEBUG
@@ -84,12 +88,7 @@ bool SEScene::validate(SEGameObject &obj) const {
 	return true;
 }
 
-void SEScene::clear() {
-	for (auto i : gameObjs) {
-		for (auto j : i)
-			delete j;
-		i.clear();
-	}
+void SEScene::unload() {
 	gameObjs.clear();
 }
 
@@ -100,67 +99,75 @@ void SEScene::handle(SEEvent &event) {
 	}
 }
 
+void SEScene::collisionDetection() {
+	for (auto i = colliders.begin(); i != colliders.end(); ++i) {
+		if ((*i)->isEnabled())
+			for (auto j = i; j != colliders.end(); ++j)
+				if (i != j && (*j)->isEnabled())
+					if ((*i)->testWith(*j)) {
+						SEGameObject *pObjs[2];
+						pObjs[0] = &(*i)->getOwner();
+						pObjs[1] = &(*j)->getOwner();
+						SEEvent event("", 0.0f, 2, pObjs, EVENT_COLLIDE);
+						SE_EventManager.broadcast(event);
+					}
+	}
+}
+
 void SEScene::init() {
-	for (auto i : gameObjs) {
-		for (auto j : i)
-			if(j->isEnabled()) j->onInit();
+	for (auto i : gameInsts) {
+		i->onInit();
 	}
 }
 
 void SEScene::update() {
-	for (auto i : gameObjs) {
-		for (auto j : i)
-			if(j->isEnabled()) j->onUpdate();
+	for (auto i : gameInsts) {
+		if (i->isEnabled()) i->onUpdate();
 	}
 }
 
 void SEScene::draw() {
-	for (auto c : cameraObjs) {
-		SEComponent *pCamera = (*c)[COM_CAMERA];
+	for (auto pCamera : cameras) {
 		if (pCamera->isEnabled()) {
 			SIN.setActiveCamera(pCamera);
-			static_cast<SEComCamera*>(pCamera)->preDraw();
-			for (auto i : gameObjs) {
-				for (auto j : i)
-					if(j->isEnabled()) j->onDraw();
+			pCamera->preDraw();
+			for (auto i : gameInsts) {
+				if (i->isEnabled()) i->onDraw();
 			}
 		}
 	}
 }
 
 void SEScene::postUpdate() {
-	for (auto i : gameObjs) {
-		for (auto j : i)
-			if (j->isEnabled()) j->onPostUpdate();
+	for (auto i : gameInsts) {
+		if (i->isEnabled()) i->onPostUpdate();
 	}
 }
 
 void SEScene::pause() {
-	sceneFlags |= SCENE_PAUSE;
-	for (auto i : gameObjs) {
-		for (auto j : i)
-			if (j->isEnabled()) j->onPause();
+	for (auto i : gameInsts) {
+		if (i->isEnabled()) i->onPause();
 	}
 }
 
 void SEScene::resume() {
-	for (auto i : gameObjs) {
-		for (auto j : i)
-			if(j->isEnabled()) j->onResume();
+	for (auto i : gameInsts) {
+		if (i->isEnabled()) i->onResume();
 	}
 }
 
 void SEScene::release() {
-	for (auto i : gameObjs) {
-		for (auto j : i)
-			if(j->isEnabled()) j->onRelease();
-	}
+	for (auto i : gameInsts)
+		delete i;
+	gameInsts.clear();
+	cameras.clear();
+	listeners.clear();
+	colliders.clear();
+	SE_EventManager.clear();
 }
 
 void SEScene::resize() {
-	for (auto c : cameraObjs)
-		if (c->isEnabled()) {
-			SEComCamera* pCamera = static_cast<SEComCamera*>((*c)[COM_CAMERA]);
+	for (auto pCamera : cameras)
+		if (pCamera->isEnabled())
 			pCamera->onResize();
-		}
 }

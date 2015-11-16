@@ -6,7 +6,6 @@
 // Any class derived from Listener must implement handle()
 class SEComController : public SEComListener {
 public:
-
 	void handle(SEEvent &event);
 
 	SEComponent *clone() const { return new SEComController(*this); }

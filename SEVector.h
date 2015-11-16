@@ -62,10 +62,6 @@ public:
 	// setter&getter
 	void	initData(T vx = 0, T vy = 0, T vz = 0, T vw = 0);
 
-	// friends
-	//friend vector<DIM, T> operator*(T lhs, const vector<DIM,T> &rhs) { return rhs * lhs; }
-	//friend vector<DIM, T> operator*(const matrix<DIM, T> &lhs, const vector<DIM, T> &rhs);
-
 private:
 	// member variable
 	T data[DIM];

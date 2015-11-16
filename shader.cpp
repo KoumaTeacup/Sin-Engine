@@ -12,7 +12,8 @@ SEShader::SEShader(std::string name, resourceType type) :
 	SEFile(name, type), 
 	programId(glCreateProgram()),
 	vertShaderId(0),
-	fragShaderId(0) {
+	fragShaderId(0),
+	linked(false) {
 }
 
 SEShader::~SEShader() {
@@ -20,6 +21,18 @@ SEShader::~SEShader() {
 }
 
 bool SEShader::load(const char* shaderFile) {
+
+	// Determine the shader type.
+	GLuint shaderId;
+	const char* ext = strrchr(shaderFile, '.') + 1;
+	if (strcmp(ext,"vert") == 0) {
+		if (vertShaderId) return true;
+		shaderId = vertShaderId = glCreateShader(GL_VERTEX_SHADER);
+	}
+	else if (strcmp(ext,"frag") == 0) {
+		if (fragShaderId) return true;
+		shaderId = fragShaderId = glCreateShader(GL_FRAGMENT_SHADER);
+	}
 
 #ifdef SE_DEBUG
 	char log[64];
@@ -29,18 +42,6 @@ bool SEShader::load(const char* shaderFile) {
 	// Read file.
 	char *src = readFile(shaderFile);
 	if (!src) return false;
-	//const char *psrc[1] = { src };
-
-	// Determine the shader type.
-	GLuint shaderId;
-	const char* ext = strrchr(shaderFile, '.') + 1;
-	if (strcmp(ext,"vert") == 0) {
-		shaderId = vertShaderId = glCreateShader(GL_VERTEX_SHADER);
-	}
-	else if (strcmp(ext,"frag") == 0) {
-		shaderId = fragShaderId = glCreateShader(GL_FRAGMENT_SHADER);
-	}
-
 	// Create shader and attach to the program.
 	glAttachShader(programId, shaderId);
 	glShaderSource(shaderId, 1, &src, NULL);
@@ -67,13 +68,11 @@ bool SEShader::load(const char* shaderFile) {
 }
 
 void SEShader::onInit() {
+	if (linked) return;
 	glBindAttribLocation(programId, 0, "vertex");
 	glBindAttribLocation(programId, 1, "normal");
 	glBindAttribLocation(programId, 2, "uv");
 	glBindAttribLocation(programId, 3, "tangent");
-
-	// Unbind vao.
-	glBindVertexArray(0);
 
 #ifdef SE_DEBUG
 	if (!link())
@@ -83,7 +82,7 @@ void SEShader::onInit() {
 #else
 	link();
 #endif
-
+	linked = true;
 }
 
 void SEShader::onRelease() {

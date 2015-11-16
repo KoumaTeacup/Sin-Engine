@@ -90,6 +90,12 @@
     <ClCompile Include="SEComController.cpp">
       <Filter>User\Components\Listeners</Filter>
     </ClCompile>
+    <ClCompile Include="SEComRigidBody.cpp">
+      <Filter>User\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SEComCollider.cpp">
+      <Filter>User\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SEVector.h">
@@ -159,6 +165,12 @@
       <Filter>User\Components\Listeners</Filter>
     </ClInclude>
     <ClInclude Include="SEComTemp.h">
+      <Filter>User\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SEComRigidBody.h">
+      <Filter>User\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SEComCollider.h">
       <Filter>User\Components</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,14 @@
 #include <GL\glew.h>
+#include <string>
 
 #include "SEUtility.h"
+
 #include "SELog.h"
+#include "SEComCamera.h"
+#include "SEComTransform.h"
+#include "SEComRenderer.h"
+#include "SEComRigidBody.h"
+#include "SEComCollider.h"
 
 using namespace se_system;
 
@@ -24,6 +31,28 @@ void SEUtility::update() {
 
 	// Clear framebuffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void SEUtility::typeToString(char *str, componentType type) const {
+	// NEW COMPONENT TO DOs
+	switch (type) {
+	case COM_TRANSFORM: sprintf(str, "Transform"); break;
+	case COM_CAMERA:	sprintf(str, "Camera"); break;
+	case COM_RENDERER:	sprintf(str, "Renderer"); break;
+	case COM_RIGIDBODY:	sprintf(str, "RigidBody"); break;
+	case COM_COLLIDER:	sprintf(str, "Collider"); break;
+	}
+}
+
+SEComponent *SEUtility::typeToPointer(componentType type, std::string name, std::string tag) const {
+	switch (type) {
+	case COM_TRANSFORM: return new SEComTransform(name, tag);
+	case COM_CAMERA:	return new SEComCamera(name, tag);
+	case COM_RENDERER:	return new SEComRenderer(name, tag);
+	case COM_RIGIDBODY:	return new SEComRigidBody(name, tag);
+	case COM_COLLIDER:	return new SEComCollider(name, tag);
+	}
+	return NULL;
 }
 
 void SEUtility::setFPSLimit(int limit) {

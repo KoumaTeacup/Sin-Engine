@@ -2,7 +2,6 @@
 #define CAMERA_H
 
 #include "SEComponent.h"
-#include "SEFile.h"
 #include "SEMatrix.h"
 
 #define CAMERA_FOCUS_MODE			0x01

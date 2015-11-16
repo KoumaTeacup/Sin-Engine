@@ -1,14 +1,12 @@
-#include <SFML\Window.hpp>
-#include <GL\glew.h>
-
 #include "SEEvent.h"
 
 #include "SESin.h"
-#include "SEGameObject.h"
+#include "SEScene.h"
+#include "SEUtility.h"
 
 using namespace se_system;
 
-void SEEventManager::update(sf::Window &window) {
+void SEEventManager::updateWindowEvent(sf::Window &window) {
 	// handle sfml events
 	sf::Event sfEvent;
 	SEEvent event;
@@ -17,7 +15,7 @@ void SEEventManager::update(sf::Window &window) {
 		switch (sfEvent.type) {
 		case sf::Event::Closed:
 			// end the current scene
-			SIN.getActiveScene()->endScene();
+			SIN.endScene();
 			break;
 		case sf::Event::Resized:
 			SIN.getActiveScene()->resize();
@@ -47,7 +45,9 @@ void SEEventManager::update(sf::Window &window) {
 			break;
 		}
 	}
+}
 
+void SEEventManager::distribute() {
 	auto i = eventQueue.begin();
 	while (i != eventQueue.end()){
 		i->delay -= SE_Utility.getFrameTime();

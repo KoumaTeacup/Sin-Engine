@@ -1,10 +1,11 @@
 #include "SEComRenderer.h"
+
+#include "SELog.h"
 #include "SEResource.h"
+#include "SEComCamera.h"
 #include "SEGameObject.h"
 #include "SEComTransform.h"
-#include "SELog.h"
 #include "shader.h"
-#include "SEMatrix.h"
 #include "SESin.h"
 
 SEComRenderer::SEComRenderer(std::string name,	std::string tag, SEGameObject* owner) :
@@ -42,9 +43,6 @@ void SEComRenderer::onInit() {
 #endif
 		return;
 	}
-	// Bind vertex array.
-	vao->onInit();
-
 	// Using default shader if not specified by user.
 	if (!shader->getFile()) {
 		attach("default.vert");

@@ -5,10 +5,23 @@
 
 #include "SESystem.h"
 
-#include "SELog.h"
-#include "SEUtility.h"
-#include "SEScene.h"
-#include "SEEvent.h"
+namespace se_data { 
+	class SEFilePointer; 
+	template <unsigned DIM, typename T> class vector; 
+}
+typedef se_data::SEFilePointer			SE_File;
+typedef se_data::vector<2U, unsigned>	SEVector2ui;
+typedef sf::Keyboard::Key	SE_KEY;
+typedef sf::Joystick::Axis	SE_Axis;
+
+struct SEEvent;
+class SEComponent;
+class SEComCamera;
+class SEComRenderer;
+class SEComTransform;
+class SEComRigidBody;
+class SEComCollider;
+class SEScene;
 
 #define SIN			SESin::getObj()
 #define SIN_Release	SESin::getObj().cleanUp();SESin::release()
@@ -17,6 +30,8 @@
 #define SE_CAMERA		SIN.getCamera(this)
 #define SE_TRANSFORM	SIN.getTransform(this)
 #define SE_RENDERER		SIN.getRenderer(this)
+#define SE_RIGIDBODY	SIN.getRigidBody(this)
+#define SE_COLLIDER		SIN.getCollider(this)
 #define SE_COMPONENT(x)	SIN.getComponent(this, x)
 
 #define PI 3.1415926536f
@@ -29,38 +44,44 @@ public:
 	bool init();
 	void cleanUp();
 
-	void begin(SEScene &scene);
+	void beginScene(SEScene &scene);
+	void pauseScene();
+	void resumeScene();
+	void endScene();
 
 	// Log methods
-	void logConfig(char bits = SE_LOG_ENABLED) const { SE_LogConfig(bits); }
-	void assert(bool exp, const char* msg = "User assertion failed.") const { SE_Assert(exp, msg); }
+	void logConfig(char bits) const;
+	void assert(bool exp, const char* msg) const;
 
 	// Utility methods
-	void	setFPSLimit(int limit) const { SE_Utility.setFPSLimit(limit); }
-	float	getFrameTime() const { return SE_Utility.getFrameTime(); }
+	void	setFPSLimit(int limit) const;
+	float	getFrameTime() const;
 
 	// Resource methods
-	SE_File load(const char* filename) const { return SE_Resource.load(filename); }
+	// SE_File load(const char* filename) const;
 
 	// Event methods
-	void broadcast(SEEvent e) const  { SE_Broadcast(e); }
+	void broadcast(SEEvent e) const;
 
 	// Input methods
-	bool isKeyPressed(SE_KEY key) { return SE_InputManager.isKeyPressed(key); }
-	bool isKeyPressed(int index, int button) { return SE_InputManager.isKeyPressed(index, button); }
-	float getJoystickPos(int index, SE_Axis axis) { return SE_InputManager.getJoystickPos(index, axis); }
+	bool isKeyPressed(SE_KEY key);
+	bool isKeyPressed(int index, int button);
+	float getJoystickPos(int index, SE_Axis axis);
 
+	// New Components TO DOs
 	// Component Access
 	// Debug mode does one more step of check
-	SEComCamera		&getCamera(SEComponent *comp) const;
-	SEComRenderer	&getRenderer(SEComponent *comp) const;
-	SEComTransform	&getTransform(SEComponent *comp) const;
-	SEComponent		&getComponent(SEComponent *comp, int id) const;
+	SEComCamera		&getCamera(const SEComponent *comp) const;
+	SEComRenderer	&getRenderer(const SEComponent *comp) const;
+	SEComTransform	&getTransform(const SEComponent *comp) const;
+	SEComRigidBody	&getRigidBody(const SEComponent *comp) const;
+	SEComCollider	&getCollider(const SEComponent *comp) const;
+	SEComponent		&getComponent(const SEComponent *comp, int id) const;
 
 	// Setters & Getters
-	void			setActiveCamera(SEComponent* pCam) { activeCamera = static_cast<SEComCamera*>(pCam); }
+	void			setActiveCamera(SEComponent* pCam);
+	SEVector2ui		getWindowSize() const;
 	SEComCamera*	getActiveCamera() const { return activeCamera; }
-	SEVector2ui		getWindowSize() const { return SEVector2ui(window.getSize().x, window.getSize().y); }
 	SEScene*		getActiveScene() const { return activeScene; }
 
 	// Functional Methods
@@ -68,6 +89,8 @@ public:
 
 private:
 	SESin();
+
+	bool activeSceneState;
 
 	sf::ContextSettings glSettings;
 	sf::Window window;

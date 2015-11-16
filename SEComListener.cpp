@@ -2,8 +2,6 @@
 
 #include "SEEvent.h"
 
-
-
 SEComListener::SEComListener(std::string name, std::string tag, SEGameObject * owner) :
 	SEComponent(COM_LISTENER, name, tag, owner){
 }

@@ -1,8 +1,9 @@
 #include "SEComController.h"
 
 #include "SEEvent.h"
-#include "SEGameObject.h"
+#include "SEInput.h"
 #include "SESin.h"
+#include "SEComTransform.h"
 
 void SEComController::handle(SEEvent &event) {
 	switch (event.type) {
@@ -13,9 +14,14 @@ void SEComController::handle(SEEvent &event) {
 }
 
 void SEComController::onUpdate() {
-	float x = SIN.getJoystickPos(0, SE_JOYSTICK_X);
-	float y = SIN.getJoystickPos(0, SE_JOYSTICK_Y);
+	//float x = SIN.getJoystickPos(0, SE_JOYSTICK_X);
+	//float y = SIN.getJoystickPos(0, SE_JOYSTICK_Y);
 
-	SE_TRANSFORM[tx] += x/100;
-	SE_TRANSFORM[ty] -= y/100;
+	//SE_TRANSFORM[tx] += x/100;
+	//SE_TRANSFORM[ty] -= y/100;
+
+	if (SIN.isKeyPressed(SE_KEY_LEFT))
+		SE_TRANSFORM[tx] -= 0.5f;
+	if (SIN.isKeyPressed(SE_KEY_RIGHT))
+		SE_TRANSFORM[tx] += 0.5f;
 }

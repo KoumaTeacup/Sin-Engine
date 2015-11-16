@@ -10,13 +10,17 @@ se_data::SEFilePointer SEResource::load(const char* filename) {
 	// Determine file type.
 	std::string name(std::string(filename).substr(0, std::string(filename).find('.')));
 	const char* ext = strrchr(filename, '.') + 1;
+	std::string resourceName(filename);
+
+	if (strcmp(ext, "vert") == 0 || strcmp(ext, "frag") == 0)
+		resourceName = name + ".shader";
 
 	// Check Existance
-	if (userResources.find(name) == userResources.end()) {
+	if (userResources.find(resourceName) == userResources.end()) {
 		if (strcmp(ext, "vert") == 0 || strcmp(ext, "frag") == 0)
-			userResources[name] = new se_data::SEShader(name, se_data::RESTYPE_SHADER);
+			userResources[resourceName] = new se_data::SEShader(resourceName, se_data::RESTYPE_SHADER);
 		else if (strcmp(ext, "vao") == 0)
-			userResources[name] = new se_data::SEVAO(name, se_data::RESTYPE_VERTEX_ARRAY);
+			userResources[resourceName] = new se_data::SEVAO(resourceName, se_data::RESTYPE_VERTEX_ARRAY);
 		//else if (strcmp(ext, "bmp") == 0)
 			//userResources[name] = new SETexture(name, RESTYPE_TEXTURE);
 #ifdef SE_DEBUG
@@ -30,8 +34,8 @@ se_data::SEFilePointer SEResource::load(const char* filename) {
 	}
 
 	// load file
-	if (userResources[name]->load(filename))
-		return se_data::SEFilePointer(userResources[name]);
+	if (userResources[resourceName]->load(filename))
+		return se_data::SEFilePointer(userResources[resourceName]);
 
 #ifdef SE_DEBUG
 	char log[64];

@@ -142,7 +142,6 @@ bool SEVAO::load(const char* filename) {
 }
 
 void SEVAO::onInit(){
-	glBindVertexArray(id);
 }
 
 void SEVAO::onRelease() {

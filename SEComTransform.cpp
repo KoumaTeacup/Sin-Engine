@@ -21,12 +21,7 @@ SEComTransform& SEComTransform::operator=(const SEComTransform & rhs) {
 
 void SEComTransform::onDraw() {
 	SEComponent::onDraw();
-	modelTr =
-		SE_MATRIX_TRANSLATE4(data[trans][x], data[trans][y], data[trans][z]) *
-		SE_MATRIX_ROTATE4(se_data::AXIS_Z, data[rotate][z]) *
-		SE_MATRIX_ROTATE4(se_data::AXIS_X, data[rotate][x]) *
-		SE_MATRIX_ROTATE4(se_data::AXIS_Y, data[rotate][y]) *
-		SE_MATRIX_SCALE4(data[scale][x], data[scale][y], data[scale][z]);
+	modelTr = translationMatrix()*rotationMatrix()*scaleMatrix();
 }
 
 float SEComTransform::operator[](index i) const {
@@ -75,3 +70,28 @@ float& SEComTransform::operator[](index i) {
 	}
 }
 
+SEVector3f SEComTransform::translation() const {
+	return SEVector3f(data[trans][x], data[trans][y], data[trans][z]);
+}
+
+SEVector3f SEComTransform::rotation() const {
+	return SEVector3f(data[rotate][x], data[rotate][y], data[rotate][z]);
+}
+
+SEVector3f SEComTransform::scales() const {
+	return SEVector3f(data[scale][x], data[scale][y], data[scale][z]);
+}
+
+SEMatrix4f SEComTransform::translationMatrix() const {
+	return SE_MATRIX_TRANSLATE4(data[trans][x], data[trans][y], data[trans][z]);
+}
+
+SEMatrix4f SEComTransform::rotationMatrix() const {
+	return 	SE_MATRIX_ROTATE4(se_data::AXIS_Z, data[rotate][z]) *
+		SE_MATRIX_ROTATE4(se_data::AXIS_X, data[rotate][x]) *
+		SE_MATRIX_ROTATE4(se_data::AXIS_Y, data[rotate][y]);
+}
+
+SEMatrix4f SEComTransform::scaleMatrix() const {
+	return SE_MATRIX_SCALE4(data[scale][x], data[scale][y], data[scale][z]);
+}

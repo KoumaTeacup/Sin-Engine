@@ -7,7 +7,6 @@
 
 #define SE_Shader(x) static_cast<se_data::SEShader*>((x)->getFile())
 
-
 enum TYPE_UNIFORM {
 	UNIFORM_INT,
 	UNIFORM_FLOAT,
@@ -23,9 +22,6 @@ public:
 
 	// Inherited methods override
 	bool load(const char* shaderFile);
-	void onInit();
-	void onRelease();
-	void onDraw();
 
 	bool link()		const;
 	bool validate() const;
@@ -33,9 +29,15 @@ public:
 
 	const char*	toString() const { return SEFile::toString(); }
 
+protected:
+	void onInit();
+	void onRelease();
+	void onDraw();
+
 private:
 	GLuint programId;
 	GLuint vertShaderId, fragShaderId;
+	bool linked;
 
 	char* readFile(const char* filename) const;
 };

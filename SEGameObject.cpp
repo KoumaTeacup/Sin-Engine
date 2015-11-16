@@ -1,5 +1,8 @@
 #include "SEGameObject.h"
+
 #include "SEComTemp.h"
+#include "SEUtility.h"
+#include "SELog.h"
 
 int SEGameObject::num = 0;
 
@@ -65,7 +68,6 @@ SEComponent*& SEGameObject::operator[](unsigned index) {
 }
 
 int SEGameObject::attach(componentType type, std::string name, std::string tag) {
-	// New Component TO DOs
 	if (type >= COM_NUM) {
 #ifdef SE_DEBUG
 		char log[256];
@@ -80,59 +82,26 @@ int SEGameObject::attach(componentType type, std::string name, std::string tag) 
 #ifdef SE_DEBUG
 		char log[256], typeStr[32];
 		const char *name = toString();
-		switch(type) {
-		case COM_TRANSFORM: sprintf(typeStr, "Transform"); break;
-		case COM_CAMERA:	sprintf(typeStr, "Camera"); break;
-		case COM_RENDERER:	sprintf(typeStr, "Renderer"); break;
-		}
+		SE_Utility.typeToString(typeStr, type);
 		sprintf(log, "%s can't have more than one %s component", name, typeStr);
 		free((void*)name);
 		SE_LogManager.append(se_debug::LOGTYPE_WARNNING, log);
 #endif
 		delete components[type];
 	}
-	SEComponent *pCom = NULL;
-	switch (type) {
-	case COM_TRANSFORM: pCom = new SEComTransform(name, tag); break;
-	case COM_CAMERA:	pCom = new SEComCamera(name, tag); break;
-	case COM_RENDERER:	pCom = new SEComRenderer(name ,tag); break;
-	}
-	components[type] = pCom;
+	components[type] = SE_Utility.typeToPointer(type);
 
 	return components.size() - 1;
 }
 
 int SEGameObject::attach(SEComponent *pCom) {
-	// New Components TO DOs
-	SEComponent *newComp;
 	if (!pCom) return -1;
 	if (pCom->getType() < COM_NUM) {
-#ifdef SE_DEBUG
-		char log[256], typeStr[32];
-		const char *name = toString();
-#endif
-		switch (pCom->getType()) {
-		case COM_TRANSFORM:
-#ifdef SE_DEBUG
-			sprintf(typeStr, "Transform");
-#endif
-			newComp = new SEComTransform(*static_cast<SEComTransform*>(pCom));
-			break;
-		case COM_CAMERA:
-#ifdef SE_DEBUG
-			sprintf(typeStr, "Camera");
-#endif
-			newComp = new SEComCamera(*static_cast<SEComCamera*>(pCom));
-			break;
-		case COM_RENDERER:
-#ifdef SE_DEBUG
-			sprintf(typeStr, "Renderer");
-#endif
-			newComp = new SEComRenderer(*static_cast<SEComRenderer*>(pCom));
-			break;
-		}
 		if (components[pCom->getType()]) {
 #ifdef SE_DEBUG
+			char log[256], typeStr[32];
+			const char *name = toString();
+			SE_Utility.typeToString(typeStr, pCom->getType());
 			sprintf(log, "%s can't have more than one %s component", name, typeStr);
 			free((void*)name);
 			SE_LogManager.append(se_debug::LOGTYPE_WARNNING, log);
@@ -140,10 +109,14 @@ int SEGameObject::attach(SEComponent *pCom) {
 			delete components[pCom->getType()];
 		}
 
-		components[pCom->getType()] = newComp;
+		components[pCom->getType()] = pCom->clone();
 	}
-	else components.push_back(pCom);
+	else components.push_back(pCom->clone());
 	return components.size() - 1;
+}
+
+void SEGameObject::detach(componentType type) {
+	delete components[type]; components[type] = NULL; 
 }
 
 void SEGameObject::resetOwner() {
@@ -154,12 +127,12 @@ void SEGameObject::resetOwner() {
 
 void SEGameObject::onInit() {
 	for (auto i : components)
-		if(i && i->isEnabled()) i->onInit();
+		if(i) i->onInit();
 }
 
 void SEGameObject::onRelease() {
 	for (auto i : components)
-		if (i && i->isEnabled()) i->onRelease();
+		if (i) i->onRelease();
 }
 
 void SEGameObject::onUpdate() {

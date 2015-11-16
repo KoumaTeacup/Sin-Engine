@@ -1,6 +1,19 @@
 #include <GL\glew.h>
 
 #include "SESin.h"
+
+#include "SEGameObject.h"
+#include "SELog.h"
+#include "SEUtility.h"
+#include "SEResource.h"
+#include "SEScene.h"
+#include "SEEvent.h"
+#include "SEInput.h"
+#include "SEComCamera.h"
+#include "SEComRenderer.h"
+#include "SEComTransform.h"
+#include "SEComRigidBody.h"
+#include "SEComCollider.h"
 #include "SEComTemp.h"
 
 SESin::SESin():activeScene(NULL), activeCamera(NULL) {
@@ -9,16 +22,6 @@ SESin::SESin():activeScene(NULL), activeCamera(NULL) {
 	glSettings.antialiasingLevel = 4;
 	glSettings.majorVersion = 3;
 	glSettings.minorVersion = 0;
-}
-
-void SESin::cleanUp() {
-	// Release all global managers
-#ifdef SE_DEBUG
-	SE_LogManager.print();
-	SE_LogManager_Release;
-#endif
-	SE_Utility_Release;
-	SE_Resource_Release;
 }
 
 bool SESin::init(){
@@ -44,31 +47,100 @@ bool SESin::init(){
 	return true;
 }
 
-void SESin::begin(SEScene &scene) {
+void SESin::cleanUp() {
+	// Release all global managers
+#ifdef SE_DEBUG
+	SE_LogManager.print();
+	SE_LogManager_Release;
+#endif
+	SE_Utility_Release;
+	SE_Resource_Release;
+}
+
+void SESin::beginScene(SEScene &scene) {
 	activeScene = &scene;
+	activeSceneState = true;
 
 	scene.init();
 	// run the main loop
 	while (!scene.isEnd())
 	{
-		// Process window/input events
-		SE_EventManager.update(window);
-
-		scene.update();
-
-		scene.draw();
-		
-		window.display();
-
-		scene.postUpdate();
-
-		SE_Utility.update();
+		if (activeSceneState && scene.isPause()) {
+			scene.pause();
+			activeSceneState = false;
+		}
+		if (!activeSceneState && !scene.isPause()) {
+			scene.resume();
+			activeSceneState = true;
+		}
+		if (activeSceneState) {
+			// Process window/input events
+			SE_EventManager.updateWindowEvent(window);
+			// Process local events
+			scene.update();
+			// Collision Dectection
+			scene.collisionDetection();
+			// Distribute & handle events
+			SE_EventManager.distribute();
+			// Draw scene
+			scene.draw();
+			// Swap buffer
+			window.display();
+			// Post draw business
+			scene.postUpdate();
+			// Leave current frame
+			SE_Utility.update();
+		}
 	}
 
 	scene.release();
 }
 
-SEComCamera &SESin::getCamera(SEComponent * comp) const{
+void SESin::pauseScene() {
+	activeScene->sceneFlags |= SCENE_PAUSE;
+}
+
+void SESin::resumeScene() {
+	activeScene->sceneFlags &= ~SCENE_PAUSE;
+}
+
+void SESin::endScene() {
+	activeScene->sceneFlags |= SCENE_END;
+}
+
+void SESin::logConfig(char bits = SE_LOG_ENABLED) const {
+	SE_LogConfig(bits);
+}
+
+void SESin::assert(bool exp, const char* msg = "User assertion failed.") const {
+	SE_Assert(exp, msg);
+}
+
+void SESin::setFPSLimit(int limit) const {
+	SE_Utility.setFPSLimit(limit);
+}
+
+float SESin::getFrameTime() const{
+	return SE_Utility.getFrameTime();
+}
+
+void SESin::broadcast(SEEvent e) const {
+	SE_Broadcast(e);
+}
+
+bool SESin::isKeyPressed(SE_KEY key) {
+	return SE_InputManager.isKeyPressed(key);
+}
+
+bool SESin::isKeyPressed(int index, int button) {
+	return SE_InputManager.isKeyPressed(index, button);
+}
+
+float SESin::getJoystickPos(int index, SE_Axis axis) {
+	return SE_InputManager.getJoystickPos(index, axis);
+}
+
+SEComCamera &SESin::getCamera(const SEComponent * comp) const{
 	SEGameObject &pObj = comp->getOwner();
 #ifdef SE_DEBUG
 	if (!pObj[COM_CAMERA]) {
@@ -84,7 +156,7 @@ SEComCamera &SESin::getCamera(SEComponent * comp) const{
 		return (*static_cast<SEComCamera*>(pObj[COM_CAMERA]));
 }
 
-SEComRenderer &SESin::getRenderer(SEComponent * comp) const {
+SEComRenderer &SESin::getRenderer(const SEComponent * comp) const {
 	SEGameObject &pObj = comp->getOwner();
 #ifdef SE_DEBUG
 	if (!pObj[COM_CAMERA]) {
@@ -100,7 +172,7 @@ SEComRenderer &SESin::getRenderer(SEComponent * comp) const {
 		return (*static_cast<SEComRenderer*>(pObj[COM_RENDERER]));
 }
 
-SEComTransform &SESin::getTransform(SEComponent * comp) const {
+SEComTransform &SESin::getTransform(const SEComponent * comp) const {
 	SEGameObject &pObj = comp->getOwner();
 #ifdef SE_DEBUG
 	if (!pObj[COM_TRANSFORM]) {
@@ -116,7 +188,39 @@ SEComTransform &SESin::getTransform(SEComponent * comp) const {
 		return (*static_cast<SEComTransform*>(pObj[COM_TRANSFORM]));
 }
 
-SEComponent &SESin::getComponent(SEComponent * comp, int id) const {
+SEComRigidBody & SESin::getRigidBody(const SEComponent * comp) const {
+	SEGameObject &pObj = comp->getOwner();
+#ifdef SE_DEBUG
+	if (!pObj[COM_RIGIDBODY]) {
+		char log[256];
+		const char *name = comp->toString();
+		sprintf(log, "%s> Accessing invalid RigidBody component.", name);
+		SE_LogManager.append(se_debug::LOGTYPE_WARNNING, log);
+		free((void*)name);
+		return SEComRigidBody(NULL);
+	}
+	else
+#endif
+		return (*static_cast<SEComRigidBody*>(pObj[COM_RIGIDBODY]));
+}
+
+SEComCollider & SESin::getCollider(const SEComponent * comp) const {
+	SEGameObject &pObj = comp->getOwner();
+#ifdef SE_DEBUG
+	if (!pObj[COM_COLLIDER]) {
+		char log[256];
+		const char *name = comp->toString();
+		sprintf(log, "%s> Accessing invalid Collider component.", name);
+		SE_LogManager.append(se_debug::LOGTYPE_WARNNING, log);
+		free((void*)name);
+		return SEComCollider(NULL);
+	}
+	else
+#endif
+		return (*static_cast<SEComCollider*>(pObj[COM_COLLIDER]));
+}
+
+SEComponent &SESin::getComponent(const SEComponent * comp, int id) const {
 	SEGameObject &pObj = comp->getOwner();
 #ifdef SE_DEBUG
 	if (pObj[id]->getType() == COM_UNDEFINED) {
@@ -130,4 +234,12 @@ SEComponent &SESin::getComponent(SEComponent * comp, int id) const {
 	else
 #endif
 		return (*pObj[id]);
+}
+
+void SESin::setActiveCamera(SEComponent * pCam) {
+	activeCamera = static_cast<SEComCamera*>(pCam);
+}
+
+SEVector2ui SESin::getWindowSize() const {
+	return SEVector2ui(window.getSize().x, window.getSize().y);
 }

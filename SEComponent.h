@@ -3,8 +3,6 @@
 
 #include "SEObject.h"
 
-#include "SEResource.h"
-
 class SEGameObject;
 
 // New Component TO DOs
@@ -12,11 +10,10 @@ class SEGameObject;
 // Transform < Renderer : worldspace matrix construction.
 enum componentType {
 	COM_TRANSFORM = 0,
-	COM_CAMERA,
-	//COM_CONTROLLER,
-	//COM_COLLIDER,
+	COM_CAMERA, 
+	COM_COLLIDER,
 	COM_RENDERER,
-	//COM_RIGID,
+	COM_RIGIDBODY,
 	//COM_ANIMATOR,
 	COM_NUM,
 	
@@ -31,6 +28,7 @@ enum componentType {
 };
 
 class SEComponent : public se_system::SEObject {
+	friend SEGameObject;
 public:
 
 	// Internal Constructor
@@ -57,6 +55,7 @@ public:
 	// Derived class must implement this clone function to return a copy of itself.
 	virtual SEComponent *clone() const = 0;
 
+protected:
 	// Inherited pure virtuals.
 	virtual void onInit() {}
 	virtual void onRelease() {}

@@ -5,13 +5,12 @@
 
 #include "SEObject.h"
 
-#include "SEComponent.h"
-#include "SEComRenderer.h"
-#include "SEComTransform.h"
-#include "SEComCamera.h"
-#include "SEComListener.h"
+class SEComponent;
+enum componentType;
+class SEScene;
 
 class SEGameObject : public se_system::SEObject{
+	friend SEScene;
 public:
 	SEGameObject(std::string name = std::string(), std::string tag = std::string());
 	SEGameObject(const SEGameObject& rhs);
@@ -27,6 +26,7 @@ public:
 		std::string name = std::string(), 
 		std::string tag = std::string());
 	int attach(SEComponent *com);
+	void detach(componentType type);
 
 	virtual const char* toString() const;
 
@@ -34,6 +34,7 @@ public:
 	int getCompNum() { return components.size(); }
 	void resetOwner();
 
+protected:
 	// Inherited virtual methods.
 	virtual void onInit();
 	virtual void onRelease();
