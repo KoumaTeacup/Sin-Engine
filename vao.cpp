@@ -1,4 +1,3 @@
-#include <fstream>
 #include <vector>
 
 #include "vao.h"
@@ -8,7 +7,7 @@
 
 using namespace se_data;
 
-SEVAO::SEVAO(std::string name, resourceType type):SEFile(name, type), mode(0) {
+SEVAO::SEVAO(std::string name, resourceType type):SEFile(name, type), mode(0), vertexCount(0) {
 }
 
 SEVAO::~SEVAO() {
@@ -21,8 +20,8 @@ bool SEVAO::load(const char* filename) {
 	sprintf(log, "Loading VAO file %s...", filename);
 	SE_LogManager.append(se_debug::LOGTYPE_GENERAL, log);
 #endif
-	std::ifstream ifs(filename);
-	if (!ifs.is_open()) {
+	FILE *f = fopen(filename, "r");
+	if (!f) {
 #ifdef SE_DEBUG
 		SE_LogManager.append(se_debug::LOGTYPE_CONTINUE, "failed.");
 		char log[64];
@@ -33,51 +32,47 @@ bool SEVAO::load(const char* filename) {
 	}
 
 	// Load VBOs
+	std::vector<SEVector3f> pnt_t;
 	std::vector<SEVector3f> pnt;
+	std::vector<SEVector3f> nrm_t;
 	std::vector<SEVector3f> nrm;
+	std::vector<SEVector2f> tex_t;
 	std::vector<SEVector2f> tex;
 	std::vector<SEVector3f> tan;
-	std::vector<SEVector3i> tri;
-	std::vector<SEVector4i> quad;
 	SEVector2f input2f;
 	SEVector3f input3f;
 	SEVector3i input3i;
-	SEVector4i input4i;
 
-	char buf[64];
-	char sentry = ifs.peek();
-	while (sentry != EOF) {
-		ifs.getline(buf, 64);
-		if (buf[0] != '#') continue;
-		do {
-			if (strcmp(buf, "#pnt")==0) {
-				ifs >> input3f[0] >> input3f[1] >> input3f[2];
-				pnt.push_back(input3f);
+	char buf[1024];
+	int flag = fscanf(f, "%s", buf);
+	while (flag!=EOF ) {
+		if (strcmp(buf, "#") == 0) fgets(buf, 1024, f);
+		else if (strcmp(buf, "g") == 0) fgets(buf, 1024, f);
+		else if (strcmp(buf, "s") == 0) fgets(buf, 1024, f);
+		else if (strcmp(buf, "v") == 0) {
+			fscanf(f, "%f %f %f\n", &input3f[0], &input3f[1], &input3f[2]);
+			pnt_t.push_back(input3f);
+		}else if (strcmp(buf, "vt") == 0) {
+			fscanf(f, "%f %f\n", &input2f[0], &input2f[1]);
+			tex_t.push_back(input2f);
+		}else if (strcmp(buf, "vn") == 0) {
+			fscanf(f, "%f %f %f\n", &input3f[0], &input3f[1], &input3f[2]);
+			nrm_t.push_back(input3f);
+		}else if (strcmp(buf, "f") == 0) {
+			for (int i = 0; i < 4; ++i) {
+				fscanf(f, " %d/%d/%d", &input3i[0], &input3i[1], &input3i[2]);
+				input3i -= SEVector3i(1, 1, 1);
+				pnt.push_back(pnt_t[input3i[0]]);
+				tex.push_back(tex_t[input3i[1]]);
+				nrm.push_back(nrm_t[input3i[2]]);
+				++vertexCount;
 			}
-			else if (strcmp(buf, "#nrm")==0) {
-				ifs >> input3f[0] >> input3f[1] >> input3f[2];
-				nrm.push_back(input3f);
-			}
-			else if (strcmp(buf, "#tex")==0) {
-				ifs >> input2f[0] >> input2f[1];
-				tex.push_back(input2f);
-			}
-			else if (strcmp(buf, "#tan")==0) {
-				ifs >> input3f[0] >> input3f[1] >> input3f[2];
-				tan.push_back(input3f);
-			}
-			else if (strcmp(buf, "#tri")==0) {
-				ifs >> input3i[0] >> input3i[1] >> input3i[2];
-				tri.push_back(input3i);
-			}
-			else if (strcmp(buf, "#quad")==0) {
-				ifs >> input4i[0] >> input4i[1] >> input4i[2] >> input4i[3];
-				quad.push_back(input4i);
-			}
-			sentry = ifs.ignore().peek();
-		} while (sentry != EOF && sentry != '#');
+		}
+		flag = fscanf(f, "%s", buf);
 	}
-	ifs.close();
+	fclose(f);
+
+	// process data
 
 	// Generate VAO.
 	glGenVertexArrays(1, &id);
@@ -105,7 +100,7 @@ bool SEVAO::load(const char* filename) {
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * tex.size(), &tex[0][0], GL_STATIC_DRAW);
 		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	if (tan.size() > 0) {
@@ -118,23 +113,6 @@ bool SEVAO::load(const char* filename) {
 	}
 	glBindVertexArray(0);
 
-	int *pIndices;
-	// Generate IBO.
-	if (tri.size() > 0) {
-		mode = 3;
-		indicesCount = tri.size();
-		pIndices = &tri[0][0];
-	}
-	if (quad.size() > 0) {
-		mode = 4;
-		indicesCount = quad.size();
-		pIndices = &quad[0][0];
-	}
-	glGenBuffers(1, &ibo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * mode * indicesCount, pIndices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 #ifdef SE_DEBUG
 	SE_LogManager.append(se_debug::LOGTYPE_CONTINUE, "success.");
 #endif;
@@ -149,12 +127,10 @@ void SEVAO::onRelease() {
 
 void SEVAO::onDraw() {
 	glBindVertexArray(id);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
-	glDrawElements(GL_TRIANGLES, indicesCount * mode, GL_UNSIGNED_INT, 0);
+	glDrawArrays(GL_QUADS, 0, vertexCount);
 
 	glBindVertexArray(0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	// Unbind shader.
 	glUseProgram(0);

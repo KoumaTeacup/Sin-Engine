@@ -19,7 +19,7 @@ se_data::SEFilePointer SEResource::load(const char* filename) {
 	if (userResources.find(resourceName) == userResources.end()) {
 		if (strcmp(ext, "vert") == 0 || strcmp(ext, "frag") == 0)
 			userResources[resourceName] = new se_data::SEShader(resourceName, se_data::RESTYPE_SHADER);
-		else if (strcmp(ext, "vao") == 0)
+		else if (strcmp(ext, "obj") == 0)
 			userResources[resourceName] = new se_data::SEVAO(resourceName, se_data::RESTYPE_VERTEX_ARRAY);
 		//else if (strcmp(ext, "bmp") == 0)
 			//userResources[name] = new SETexture(name, RESTYPE_TEXTURE);

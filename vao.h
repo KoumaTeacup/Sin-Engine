@@ -23,10 +23,10 @@ protected:
 	void onDraw();
 
 private:
-	GLuint id, ibo;
+	GLuint id;
 	// True for triangles, false for quads.
 	GLuint mode;
-	GLsizei indicesCount;
+	GLsizei vertexCount;
 };
 
 }
