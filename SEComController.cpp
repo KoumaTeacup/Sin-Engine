@@ -24,4 +24,8 @@ void SEComController::onUpdate() {
 		SE_TRANSFORM[tx] -= 0.5f;
 	if (SIN.isKeyPressed(SE_KEY_RIGHT))
 		SE_TRANSFORM[tx] += 0.5f;
+	if (SIN.isKeyPressed(SE_KEY_UP))
+		SE_TRANSFORM[ry] -= 0.5f;
+	if (SIN.isKeyPressed(SE_KEY_DOWN))
+		SE_TRANSFORM[ry] += 0.5f;
 }

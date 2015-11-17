@@ -59,7 +59,7 @@ public:
 	// Local methods.
 
 	void set(SECollider col) { colliders.insert(col.calculateSqRadius()); }
-	bool testWith(const SEComCollider *col) const;
+	SEVector3f testWith(const SEComCollider *col) const;
 
 	SEComponent *clone() const { return new SEComCollider(*this); }
 

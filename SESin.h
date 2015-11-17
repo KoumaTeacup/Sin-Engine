@@ -5,6 +5,8 @@
 
 #include "SESystem.h"
 
+#define FLOAT_OFFSET 0.01f
+
 namespace se_data { 
 	class SEFilePointer; 
 	template <unsigned DIM, typename T> class vector; 

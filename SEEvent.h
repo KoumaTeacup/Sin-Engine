@@ -5,6 +5,7 @@
 
 #include <list>
 #include "SESystem.h"
+#include "SEVector.h"
 
 class SEGameObject;
 
@@ -28,19 +29,24 @@ struct SEEvent {
 	int numOfObjects;
 	SEGameObject **pObjs;
 
-	union {
+	union infoType{
 		sf::Event::KeyEvent				key;
 		sf::Event::JoystickButtonEvent	button;
 		sf::Event::JoystickMoveEvent	move;
 		
-		char							info[64];
-	};
+		SEVector3f						collisionDirction;
+		char							infoString[64];
+
+		infoType() { memset(this, 0, sizeof(infoType)); }
+		infoType(const infoType &rhs) { memcpy(this, &rhs, sizeof(infoType)); }
+		infoType& operator=(const infoType& rhs) { memcpy(this, &rhs, sizeof(infoType)); }
+	} info;
 
 	SEEvent(const char* i = "", float d = 0.0f, int num = 0, SEGameObject **obj = NULL, eventType t = EVENT_DEFAULT) :
 		type(t),
 		delay(d),
 		numOfObjects(num){
-		strcpy(info, i);
+		strcpy(info.infoString, i);
 		if (num > 0) {
 			pObjs = new SEGameObject*[num];
 			for (int i = 0; i < num; ++i) pObjs[i] = obj[i];

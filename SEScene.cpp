@@ -100,15 +100,17 @@ void SEScene::handle(SEEvent &event) {
 }
 
 void SEScene::collisionDetection() {
+	SEVector3f dir;
 	for (auto i = colliders.begin(); i != colliders.end(); ++i) {
 		if ((*i)->isEnabled())
 			for (auto j = i; j != colliders.end(); ++j)
 				if (i != j && (*j)->isEnabled())
-					if ((*i)->testWith(*j)) {
+					if ((dir = (*i)->testWith(*j)).lengthSqaure() < FLOAT_OFFSET) {
 						SEGameObject *pObjs[2];
 						pObjs[0] = &(*i)->getOwner();
 						pObjs[1] = &(*j)->getOwner();
 						SEEvent event("", 0.0f, 2, pObjs, EVENT_COLLIDE);
+						event.info.collisionDirction = dir;
 						SE_EventManager.broadcast(event);
 					}
 	}

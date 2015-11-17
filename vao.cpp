@@ -120,6 +120,8 @@ bool SEVAO::load(const char* filename) {
 }
 
 void SEVAO::onInit(){
+
+
 }
 
 void SEVAO::onRelease() {
@@ -130,7 +132,7 @@ void SEVAO::onDraw() {
 
 	glDrawArrays(GL_QUADS, 0, vertexCount);
 
-	glBindVertexArray(0);
+	glBindVertexArray(0); 
 
 	// Unbind shader.
 	glUseProgram(0);

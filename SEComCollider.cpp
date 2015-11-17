@@ -14,7 +14,7 @@ SEComCollider& SEComCollider::operator=(const SEComCollider &rhs) {
 	return *this;
 }
 
-bool SEComCollider::testWith(const SEComCollider * col) const
+SEVector3f SEComCollider::testWith(const SEComCollider * col) const
 {
 	SEVector3f selfPos, otherPos, dis, normal;
 	float radius;
@@ -27,119 +27,130 @@ bool SEComCollider::testWith(const SEComCollider * col) const
 			case SECollider::point:
 				switch (j.type) {
 				case SECollider::box:
-					return j.isPointInBox(selfPos - otherPos,
-						SIN.getTransform(col).rotationMatrix());
+					if (j.isPointInBox(selfPos - otherPos,
+						SIN.getTransform(col).rotationMatrix())) return otherPos - selfPos;
 
 				case SECollider::sphere: dis *= -1.0f;
-					if (dis.lengthSqaure() > j.sqRadius) return false;
-					else return true;
+					if (dis.lengthSqaure() > j.sqRadius) return SEVector3f(0.0f, 0.0f, 0.0f);
+					else return otherPos - selfPos;
 
 				case SECollider::AABB: dis *= -1.0f;
-					if (dis.lengthSqaure() > j.sqRadius) return false;
-					return j.isPointInAABB(dis);
+					if (dis.lengthSqaure() > j.sqRadius) return SEVector3f(0.0f, 0.0f, 0.0f);
+					if (j.isPointInAABB(dis)) return otherPos - selfPos;
+					else return SEVector3f(0.0f, 0.0f, 0.0f);
 
-				default: return false;
+				default: return SEVector3f(0.0f, 0.0f, 0.0f);
 				}
 				break;
 			case SECollider::plane:
 				switch (j.type) {
 				case SECollider::box:
 					normal = i.shape.normal;
-					return j.isBoxIntersectWithPlane(
+					if (j.isBoxIntersectWithPlane(
 						SE_TRANSFORM.rotationMatrix()*SEVector4f(normal[0], normal[1], normal[2]),
 						SEVector4f(dis[0], dis[1], dis[2]),
-						SIN.getTransform(col).rotationMatrix());
+						SIN.getTransform(col).rotationMatrix())) return otherPos - selfPos;
+					else return SEVector3f(0.0f, 0.0f, 0.0f);
 
 				case SECollider::sphere:
 					normal = i.shape.normal;
 					radius = normal * dis;
-					if (radius* radius > j.sqRadius) return false;
-					else return true;
+					if (radius* radius > j.sqRadius) return SEVector3f(0.0f, 0.0f, 0.0f);
+					else return otherPos - selfPos;
 
 				case SECollider::AABB:
 					normal = i.shape.normal;
-					return j.isAABBIntersectWithPlane(normal, dis);
+					if (j.isAABBIntersectWithPlane(normal, dis)) return otherPos - selfPos;
+					else return SEVector3f(0.0f, 0.0f, 0.0f);
 
-				default:return false;
+				default:return SEVector3f(0.0f, 0.0f, 0.0f);
 				}
 			case SECollider::box: break;
 				switch (j.type) {
 				case SECollider::point:
-					return i.isPointInBox(otherPos - selfPos,
-						SE_TRANSFORM.rotationMatrix());
+					if (i.isPointInBox(otherPos - selfPos, SE_TRANSFORM.rotationMatrix()))
+						return otherPos - selfPos;
+					else return SEVector3f(0.0f, 0.0f, 0.0f);
 
 				case SECollider::plane:
 					normal = j.shape.normal;
-					return i.isBoxIntersectWithPlane(
+					if (i.isBoxIntersectWithPlane(
 						SIN.getTransform(col).rotationMatrix()*SEVector4f(normal[0], normal[1], normal[2]),
 						SEVector4f(dis[0], dis[1], dis[2]),
-						SE_TRANSFORM.rotationMatrix());
+						SE_TRANSFORM.rotationMatrix())) return otherPos - selfPos;
+					else return SEVector3f(0.0f, 0.0f, 0.0f);
 
 				case SECollider::box:
 				case SECollider::sphere:
 
-				default:return false;
+				default:return SEVector3f(0.0f, 0.0f, 0.0f);
 				}
 			case SECollider::sphere:
 				switch (j.type) {
 				case SECollider::point: dis *= -1.0f;
-					if (dis.lengthSqaure() > i.sqRadius) return false;
-					else return true;
+					if (dis.lengthSqaure() > i.sqRadius) return SEVector3f(0.0f, 0.0f, 0.0f);
+					else return otherPos - selfPos;
 
 				case SECollider::plane:
 					normal = j.shape.normal;
 					radius = normal * dis;
-					if (radius* radius > i.sqRadius) return false;
-					else return true;
+					if (radius* radius > i.sqRadius) return SEVector3f(0.0f, 0.0f, 0.0f);
+					else return otherPos - selfPos;
 
 				case SECollider::box:
 
 				case SECollider::sphere:
 					radius = i.shape.radius + j.shape.radius;
-					if (dis.lengthSqaure() > radius * radius) return false;
-					else return true;
+					if (dis.lengthSqaure() > radius * radius) return SEVector3f(0.0f, 0.0f, 0.0f);
+					else return otherPos - selfPos;
 
 				case SECollider::AABB:
 					radius = i.shape.radius + j.shape.radius;
-					if (dis.lengthSqaure() > radius * radius) return false;
-					return i.isAABBInSphere(dis, j.shape.lhw);
+					if (dis.lengthSqaure() > radius * radius) return SEVector3f(0.0f, 0.0f, 0.0f);
+					if (i.isAABBInSphere(dis, j.shape.lhw)) return otherPos - selfPos;
+					else return SEVector3f(0.0f, 0.0f, 0.0f);
 
-				default: return false;
+				default: return SEVector3f(0.0f, 0.0f, 0.0f);
 				}
 
 			case SECollider::AABB:
 				switch (j.type) {
 				case SECollider::point:
-					if (dis.lengthSqaure() > i.sqRadius) return false;
-					return i.isPointInAABB(dis);
+					if (dis.lengthSqaure() > i.sqRadius) return SEVector3f(0.0f, 0.0f, 0.0f);
+					if (i.isPointInAABB(dis))return otherPos - selfPos;
+					else return SEVector3f(0.0f, 0.0f, 0.0f);
 
 				case SECollider::plane:
 					normal = j.shape.normal;
-					return i.isAABBIntersectWithPlane(normal, dis);
+					if (i.isAABBIntersectWithPlane(normal, dis))return otherPos - selfPos;
+					else return SEVector3f(0.0f, 0.0f, 0.0f);
 
 				case SECollider::box:
 				case SECollider::sphere: dis *= -1.0f;
 					radius = i.shape.radius + j.shape.radius;
-					if (dis.lengthSqaure() > radius * radius) return false;
-					return j.isAABBInSphere(dis, i.shape.lhw);
+					if (dis.lengthSqaure() > radius * radius) return SEVector3f(0.0f, 0.0f, 0.0f);
+					if (j.isAABBInSphere(dis, i.shape.lhw))return otherPos - selfPos;
+					else return SEVector3f(0.0f, 0.0f, 0.0f);
 
 				case SECollider::AABB:
 					radius = i.shape.radius + j.shape.radius;
-					if (dis.lengthSqaure() > radius * radius) return false;
-					return i.isAABBInAABB(dis, j.shape.lhw);
+					if (dis.lengthSqaure() > radius * radius) return SEVector3f(0.0f, 0.0f, 0.0f);
+					if (i.isAABBInAABB(dis, j.shape.lhw))return otherPos - selfPos;
+					else return SEVector3f(0.0f, 0.0f, 0.0f);
 
-				default:return false;
+				default:return SEVector3f(0.0f, 0.0f, 0.0f);
 				}
-			default: return false;
+			default: return SEVector3f(0.0f, 0.0f, 0.0f);
 			}
 		}
+	return SEVector3f(0.0f, 0.0f, 0.0f);
 }
 
 void SEComCollider::onUpdate() {
 
 }
 
-SECollider::SECollider(const SECollider & rhs):
+SECollider::SECollider(const SECollider & rhs) :
 	type(rhs.type),
 	shape(rhs.shape),
 	offset(rhs.offset),
