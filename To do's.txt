@@ -1,0 +1,5 @@
+support for both triangle model reader and quad model reader
+test for collision
+BRDF lighting
+serialization
+
