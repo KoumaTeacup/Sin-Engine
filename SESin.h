@@ -6,6 +6,7 @@
 #include "SESystem.h"
 
 #define FLOAT_OFFSET 0.01f
+#define MIPMAP_LEVEL 5
 
 namespace se_data { 
 	class SEFilePointer; 

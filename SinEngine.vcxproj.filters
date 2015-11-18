@@ -96,6 +96,9 @@
     <ClCompile Include="SEComCollider.cpp">
       <Filter>User\Components</Filter>
     </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SEVector.h">
@@ -172,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="SEComCollider.h">
       <Filter>User\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@ namespace se_data {
 
 class SEVAO : public SEFile{
 public:
-	SEVAO(std::string name, resourceType type);
+	SEVAO(std::string name);
 	~SEVAO();
 
 	// Inherited methods override
@@ -21,6 +21,7 @@ protected:
 	void onInit();
 	void onRelease();
 	void onDraw();
+	void onPostUpdate();
 
 private:
 	GLuint id;

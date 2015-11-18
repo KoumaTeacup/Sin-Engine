@@ -13,7 +13,7 @@ SEComCamera::SEComCamera(std::string name, std::string tag, SEGameObject* owner)
 	viewPortHeight(SIN.getWindowSize()[1]),
 	viewAngle(40),
 	frontClip(0.1f),
-	backClip(1000.0f),
+	backClip(10000.0f),
 	up(SEVector3f(0.0f, 1.0f, 0.0f)){
 }
 

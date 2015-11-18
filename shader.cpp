@@ -8,8 +8,8 @@
 
 using namespace se_data;
 
-SEShader::SEShader(std::string name, resourceType type) :
-	SEFile(name, type), 
+SEShader::SEShader(std::string name) :
+	SEFile(name, RESTYPE_SHADER),
 	programId(glCreateProgram()),
 	vertShaderId(0),
 	fragShaderId(0),
@@ -90,6 +90,11 @@ void SEShader::onRelease() {
 
 void SEShader::onDraw() {
 	glUseProgram(programId);
+}
+
+void SEShader::onPostUpdate() {
+	// Unbind shader.
+	glUseProgram(0);
 }
 
 bool SEShader::link() const {

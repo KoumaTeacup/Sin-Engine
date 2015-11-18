@@ -44,6 +44,10 @@ bool SESin::init(){
 	}
 #endif
 
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_TEXTURE_2D);
 	return true;
 }
 

@@ -39,6 +39,7 @@ private:
 
 class SEFilePointer {
 public:
+	SEFilePointer();
 	SEFilePointer(SEFile* pF);
 	SEFilePointer(const SEFilePointer& rhs);
 

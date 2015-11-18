@@ -7,7 +7,7 @@
 
 using namespace se_data;
 
-SEVAO::SEVAO(std::string name, resourceType type):SEFile(name, type), mode(0), vertexCount(0) {
+SEVAO::SEVAO(std::string name):SEFile(name, RESTYPE_VERTEX_ARRAY), mode(0), vertexCount(0) {
 }
 
 SEVAO::~SEVAO() {
@@ -15,6 +15,7 @@ SEVAO::~SEVAO() {
 }
 
 bool SEVAO::load(const char* filename) {
+
 #ifdef SE_DEBUG
 	char log[64];
 	sprintf(log, "Loading VAO file %s...", filename);
@@ -24,7 +25,6 @@ bool SEVAO::load(const char* filename) {
 	if (!f) {
 #ifdef SE_DEBUG
 		SE_LogManager.append(se_debug::LOGTYPE_CONTINUE, "failed.");
-		char log[64];
 		sprintf(log, "Failed to open file \"%s\".", filename);
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR, log);
 #endif
@@ -43,6 +43,9 @@ bool SEVAO::load(const char* filename) {
 	SEVector3f input3f;
 	SEVector3i input3i;
 
+
+	SEVector2i input2i;
+
 	char buf[1024];
 	int flag = fscanf(f, "%s", buf);
 	while (flag!=EOF ) {
@@ -59,12 +62,13 @@ bool SEVAO::load(const char* filename) {
 			fscanf(f, "%f %f %f\n", &input3f[0], &input3f[1], &input3f[2]);
 			nrm_t.push_back(input3f);
 		}else if (strcmp(buf, "f") == 0) {
-			for (int i = 0; i < 4; ++i) {
-				fscanf(f, " %d/%d/%d", &input3i[0], &input3i[1], &input3i[2]);
-				input3i -= SEVector3i(1, 1, 1);
-				pnt.push_back(pnt_t[input3i[0]]);
-				tex.push_back(tex_t[input3i[1]]);
-				nrm.push_back(nrm_t[input3i[2]]);
+			for (int i = 0; i < 3; ++i) {
+				//fscanf(f, " %d/%d/%d", &input3i[0], &input3i[1], &input3i[2]);
+				fscanf(f, " %d/%d", &input2i[0], &input2i[1]);
+				input2i -= SEVector2i(1, 1);
+				pnt.push_back(pnt_t[input2i[0]]);
+				tex.push_back(tex_t[input2i[1]]);
+				//nrm.push_back(nrm_t[input3i[2]]);
 				++vertexCount;
 			}
 		}
@@ -120,8 +124,6 @@ bool SEVAO::load(const char* filename) {
 }
 
 void SEVAO::onInit(){
-
-
 }
 
 void SEVAO::onRelease() {
@@ -130,10 +132,9 @@ void SEVAO::onRelease() {
 void SEVAO::onDraw() {
 	glBindVertexArray(id);
 
-	glDrawArrays(GL_QUADS, 0, vertexCount);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+}
 
-	glBindVertexArray(0); 
-
-	// Unbind shader.
-	glUseProgram(0);
+void SEVAO::onPostUpdate() {
+	glBindVertexArray(0);
 }

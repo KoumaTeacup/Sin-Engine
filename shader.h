@@ -17,7 +17,7 @@ enum TYPE_UNIFORM {
 namespace se_data{
 class SEShader : public SEFile {
 public:
-	SEShader(std::string name, resourceType type);
+	SEShader(std::string name);
 	~SEShader();
 
 	// Inherited methods override
@@ -33,6 +33,7 @@ protected:
 	void onInit();
 	void onRelease();
 	void onDraw();
+	void onPostUpdate();
 
 private:
 	GLuint programId;

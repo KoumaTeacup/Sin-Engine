@@ -3,6 +3,7 @@
 #include "SELog.h"
 #include "shader.h"
 #include "vao.h"
+#include "texture.h"
 
 using namespace se_system;
 
@@ -18,11 +19,12 @@ se_data::SEFilePointer SEResource::load(const char* filename) {
 	// Check Existance
 	if (userResources.find(resourceName) == userResources.end()) {
 		if (strcmp(ext, "vert") == 0 || strcmp(ext, "frag") == 0)
-			userResources[resourceName] = new se_data::SEShader(resourceName, se_data::RESTYPE_SHADER);
+			userResources[resourceName] = new se_data::SEShader(resourceName);
 		else if (strcmp(ext, "obj") == 0)
-			userResources[resourceName] = new se_data::SEVAO(resourceName, se_data::RESTYPE_VERTEX_ARRAY);
-		//else if (strcmp(ext, "bmp") == 0)
-			//userResources[name] = new SETexture(name, RESTYPE_TEXTURE);
+			userResources[resourceName] = new se_data::SEVAO(resourceName);
+		else if (strcmp(ext, "png") == 0 || strcmp(ext, "bmp") == 0 ||
+			strcmp(ext, "jpg") == 0 || strcmp(ext, "gif") == 0)
+			userResources[resourceName] = new se_data::SETexture(resourceName, 1);
 #ifdef SE_DEBUG
 		else {
 			char log[64];

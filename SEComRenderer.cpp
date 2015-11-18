@@ -6,17 +6,18 @@
 #include "SEGameObject.h"
 #include "SEComTransform.h"
 #include "shader.h"
+#include "vao.h"
+#include "texture.h"
 #include "SESin.h"
 
 SEComRenderer::SEComRenderer(std::string name,	std::string tag, SEGameObject* owner) :
-	SEComponent(COM_RENDERER, name, tag, owner),
-	shader(NULL),
-	vao(NULL) {}
+	SEComponent(COM_RENDERER, name, tag, owner) {}
 
 SEComRenderer::SEComRenderer(const SEComRenderer& rhs) :
 	SEComponent::SEComponent(rhs),
 	shader(rhs.shader),
-	vao(rhs.vao) {}
+	vao(rhs.vao),
+	texture(rhs.texture){}
 
 SEComRenderer::~SEComRenderer() {
 }
@@ -26,6 +27,7 @@ SEComRenderer& SEComRenderer::operator=(const SEComRenderer & rhs) {
 	if (rhs.getType() == getType()) {
 		shader = rhs.shader;
 		vao = rhs.vao;
+		texture = rhs.texture;
 	}
 	return *this;
 }
@@ -61,6 +63,7 @@ void SEComRenderer::onDraw()
 	SEComponent::onDraw();
 	if (!vao->getFile()) return;
 	// Bind shader.
+	if (texture->getFile()) texture->onDraw();
 	shader->onDraw();
 
 	// Load worldspace stransfromation from transform component.
@@ -72,12 +75,28 @@ void SEComRenderer::onDraw()
 		SE_Shader(shader)->setVal(UNIFORM_MATRIX, "ProjTr", &camera->projTr);
 	}
 
+	// Load Texture Sampler
+	unsigned unit = 1;
+	SE_Shader(shader)->setVal(UNIFORM_INT, "DiffuseMap", &unit);
+
 	// Bind VAO&IBO -> draw model -> Unbind.
 	vao->onDraw();
+
+	vao->onPostUpdate();
+	shader->onPostUpdate();
+	if (texture->getFile()) texture->onPostUpdate();
 }
 
 void SEComRenderer::attach(const char* filename) {
 	SE_File file = SE_Resource.load(filename);
+	if (!file->getFile()) return;
 	if (file->getType() == se_data::RESTYPE_VERTEX_ARRAY) vao = file;
 	else if (file->getType() == se_data::RESTYPE_SHADER) shader = file;
+	else if (file->getType() == se_data::RESTYPE_TEXTURE) texture = file;
+}
+
+void SEComRenderer::detach() {
+	shader = SE_File();
+	vao = SE_File();
+	texture = SE_File();
 }

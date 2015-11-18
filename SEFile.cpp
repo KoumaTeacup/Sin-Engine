@@ -20,6 +20,8 @@ const char* SEFile::toString() const {
 }
 
 // class SEFilePointer
+SEFilePointer::SEFilePointer(): pFile(NULL){}
+
 SEFilePointer::SEFilePointer(SEFile *pF) : pFile(pF) {
 	if(pF) ++(pF->refCount);
 }

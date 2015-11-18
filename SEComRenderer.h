@@ -16,6 +16,7 @@ public:
 
 	// Local methods.
 	void attach(const char* filename);
+	void detach();
 
 	SEComponent *clone() const { return new SEComRenderer(*this); }
 
@@ -30,5 +31,6 @@ protected:
 private:
 	SE_File shader;
 	SE_File	vao;
+	SE_File texture;
 };
 #endif
