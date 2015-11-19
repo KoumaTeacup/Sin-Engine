@@ -2,6 +2,7 @@
 #define SEVAO_H
 
 #include "GL\glew.h"
+#include <vector>
 
 #include "SEFile.h"
 
@@ -26,7 +27,7 @@ protected:
 private:
 	GLuint id;
 	// True for triangles, false for quads.
-	GLuint mode;
+	std::vector<unsigned> modeIndex;
 	GLsizei vertexCount;
 };
 
