@@ -8,7 +8,7 @@
 
 using namespace se_data;
 
-SEVAO::SEVAO(std::string name):SEFile(name, RESTYPE_VERTEX_ARRAY), vertexCount(0) {
+SEVAO::SEVAO(std::string name):SEFile(name, RESTYPE_VERTEX_ARRAY) {
 }
 
 SEVAO::~SEVAO() {
@@ -45,8 +45,7 @@ bool SEVAO::load(const char* filename) {
 	SEVector3i input3i;
 
 	char *pch;
-	int mode = 3;
-	int modeCurr = 0;
+	int modeCount, vertexCount = 0, mode = 3;
 
 	char buf[1024];
 	while (ifs.peek() != EOF) {
@@ -75,14 +74,12 @@ bool SEVAO::load(const char* filename) {
 			char str[5][32];
 			memset(str, 0, sizeof(char) * 5 * 32);
 			pch = strtok(buf, " "); 
-			modeCurr = 0;
+			modeCount = 0;
 			while (pch) {
-				strcpy(str[modeCurr++], pch);
+				strcpy(str[modeCount++], pch);
 				pch = strtok(NULL, " ");
 			}
-			for (int j = 0; j < modeCurr; ++j) {
-				//int face = fscanf(f, " %d/%d/%d", &input3i[0], &input3i[1], &input3i[2]);
-				//fscanf(f, " %d/%d", &input2i[0], &input2i[1]);
+			for (int j = 0; j < modeCount; ++j) {
 				pch = strtok(str[j], "/");
 				int i = 0;
 				while (pch) {
@@ -93,16 +90,15 @@ bool SEVAO::load(const char* filename) {
 				if (input3i[0] >= 0) pnt.push_back(pnt_t[input3i[0]]);
 				if (input3i[1] >= 0) tex.push_back(tex_t[input3i[1]]);
 				if (input3i[2] >= 0) nrm.push_back(nrm_t[input3i[2]]);
-				++vertexCount;
 			}
-			if (modeCurr != mode) {
-				modeIndex.push_back(vertexCount-modeCurr);
-				mode = modeCurr;
-				vertexCount = 0;
+			if (modeCount != mode) {
+				modeIndex.push_back(vertexCount);
+				vertexCount = mode = modeCount;
 			}
+			else vertexCount += modeCount;
 		}
 	}
-	modeIndex.push_back(vertexCount - modeCurr);
+	modeIndex.push_back(vertexCount);
 	ifs.close();
 
 	// process data
@@ -162,10 +158,10 @@ void SEVAO::onDraw() {
 	glBindVertexArray(id);
 	int j = 0;
 	for (auto i = modeIndex.begin(); i != modeIndex.end(); ++i) {
-		glDrawArrays(GL_TRIANGLES, j, *i);
+		glDrawArrays(GL_LINES, j, *i);
 		j += *i;
 		if (++i == modeIndex.end()) break;
-		glDrawArrays(GL_QUADS, j, *i);
+		glDrawArrays(GL_LINES, j, *i);
 		j += *i;
 	}
 }

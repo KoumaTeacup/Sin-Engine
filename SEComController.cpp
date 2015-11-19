@@ -14,10 +14,11 @@ void SEComController::handle(SEEvent &event) {
 }
 
 void SEComController::onUpdate() {
-	//float x = SIN.getJoystickPos(0, SE_JOYSTICK_X);
-	//float y = SIN.getJoystickPos(0, SE_JOYSTICK_Y);
+	SE_TRANSFORM[tx] += SIN.getJoystickPos(0, SE_JOYSTICK_X)/100;
+	SE_TRANSFORM[ty] -= SIN.getJoystickPos(0, SE_JOYSTICK_Y)/100;
+	SE_TRANSFORM[ry] += SIN.getJoystickPos(0, SE_JOYSTICK_Z)/300;
 
-	//SE_TRANSFORM[tx] += x/100;
+	//[tx] += x/100;
 	//SE_TRANSFORM[ty] -= y/100;
 
 	if (SIN.isKeyPressed(SE_KEY_LEFT))

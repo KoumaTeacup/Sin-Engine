@@ -1,4 +1,4 @@
-﻿Build started 11/18/2015 5:55:59 PM.
+﻿Build started 11/18/2015 9:01:54 PM.
      1>Project "C:\Users\s.chen\Documents\GitHub\Sin-Engine\SinEngine.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\s.chen\Documents\GitHub\Sin-Engine\glew\include" /I"C:\Users\s.chen\Documents\GitHub\Sin-Engine\freeglut\include" /I"C:\Users\s.chen\Documents\GitHub\Sin-Engine\sfml\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D SE_DEBUG /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt vao.cpp
@@ -31,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.45
+Time Elapsed 00:00:01.46

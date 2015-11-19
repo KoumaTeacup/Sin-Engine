@@ -28,7 +28,6 @@ private:
 	GLuint id;
 	// True for triangles, false for quads.
 	std::vector<unsigned> modeIndex;
-	GLsizei vertexCount;
 };
 
 }
