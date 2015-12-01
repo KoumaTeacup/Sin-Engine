@@ -25,6 +25,7 @@ public:
 
 	bool link()		const;
 	bool validate() const;
+	GLuint getProgramId() { return programId; }
 	void setVal(TYPE_UNIFORM type, const char* varName, void *data);
 
 	const char*	toString() const { return SEFile::toString(); }

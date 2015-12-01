@@ -17,6 +17,9 @@
 namespace se_data {
 
 template <unsigned DIM, typename T> class matrix;
+template <unsigned DIM, typename T> class vector;
+
+template <unsigned DIM, typename T> vector<DIM, T> operator*(T lhs, const vector<DIM, T> &rhs);
 
 template <unsigned DIM, typename T>
 class vector {
@@ -35,6 +38,8 @@ public:
 		memcpy(data, rhs.data, DIM * sizeof(T));
 		return *this;
 	}
+
+	friend vector<DIM, T> operator* <>(T lhs, const vector<DIM, T> &rhs);
 
 	// operation overload
 	vector<DIM, T>	operator-()								const;	//negation
@@ -55,7 +60,7 @@ public:
 	bool			operator!=(const vector<DIM, T> &rhs)	const;
 
 	// member function
-	void	unify() { *this /= length(); }
+	vector<DIM,T>&	unify() { return *this /= length(); }
 	T		length() const { return sqrt(lengthSqaure()); }
 	T		lengthSqaure() const;
 
@@ -233,6 +238,12 @@ T vector<DIM, T>::operator[](int index) const {
 	}
 #endif
 	return data[index];
+}
+
+template <unsigned DIM, typename T>
+vector<DIM, T> operator*(T lhs, const vector<DIM, T>& rhs)
+{
+	return rhs * lhs;
 }
 
 }// namespace se_debug

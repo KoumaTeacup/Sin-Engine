@@ -120,44 +120,44 @@ void SEGameObject::detach(componentType type) {
 }
 
 void SEGameObject::resetOwner() {
-	for (auto i : components) {
-		if (i) i->setOwner(this);
+	for (auto i = components.rbegin(); i != components.rend(); ++i) {
+		if (*i) (*i)->setOwner(this);
 	}
 }
 
 void SEGameObject::onInit() {
-	for (auto i : components)
-		if(i) i->onInit();
+	for (auto i = components.rbegin(); i != components.rend(); ++i)
+		if(*i) (*i)->onInit();
 }
 
 void SEGameObject::onRelease() {
-	for (auto i : components)
-		if (i) i->onRelease();
+	for (auto i = components.rbegin(); i != components.rend(); ++i)
+		if (*i) (*i)->onRelease();
 }
 
 void SEGameObject::onUpdate() {
-	for (auto i : components)
-		if (i && i->isEnabled()) i->onUpdate();
+	for (auto i = components.rbegin(); i != components.rend(); ++i)
+		if (*i && (*i)->isEnabled()) (*i)->onUpdate();
 }
 
 void SEGameObject::onDraw() {
-	for (auto i : components)
-		if (i && i->isEnabled()) i->onDraw();
+	for (auto i = components.rbegin(); i != components.rend(); ++i)
+		if (*i && (*i)->isEnabled()) (*i)->onDraw();
 }
 
 void SEGameObject::onPostUpdate() {
-	for (auto i : components)
-		if (i && i->isEnabled()) i->onPostUpdate();
+	for (auto i = components.rbegin(); i != components.rend(); ++i)
+		if (*i && (*i)->isEnabled()) (*i)->onPostUpdate();
 }
 
 void SEGameObject::onPause() {
-	for (auto i : components)
-		if (i && i->isEnabled()) i->onPause();
+	for (auto i = components.rbegin(); i != components.rend(); ++i)
+		if (*i && (*i)->isEnabled()) (*i)->onPause();
 }
 
 void SEGameObject::onResume() {
-	for (auto i : components)
-		if (i && i->isEnabled()) i->onResume();
+	for (auto i = components.rbegin(); i != components.rend(); ++i)
+		if (*i && (*i)->isEnabled()) (*i)->onResume();
 }
 
 const char* SEGameObject::toString() const {

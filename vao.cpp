@@ -33,6 +33,7 @@ bool SEVAO::load(const char* filename) {
 	}
 
 	// Load VBOs
+	std::vector<int>		verId;
 	std::vector<SEVector3f> pnt_t;
 	std::vector<SEVector3f> pnt;
 	std::vector<SEVector3f> nrm_t;
@@ -56,17 +57,14 @@ bool SEVAO::load(const char* filename) {
 		else if (strcmp(buf, "usemtl") == 0) ifs.getline(buf, 1024);
 		else if (strcmp(buf, "v") == 0) {
 			ifs >> input3f[0] >> input3f[1] >> input3f[2];
-			ifs.getline(buf, 1024);
 			pnt_t.push_back(input3f);
 		}
 		else if (strcmp(buf, "vt") == 0) {
 			ifs >> input2f[0] >> input2f[1];
-			ifs.getline(buf, 1024);
 			tex_t.push_back(input2f);
 		}
 		else if (strcmp(buf, "vn") == 0) {
 			ifs >> input3f[0] >> input3f[1] >> input3f[2];
-			ifs.getline(buf, 1024);
 			nrm_t.push_back(input3f);
 		}
 		else if (strcmp(buf, "f") == 0) {
@@ -90,6 +88,7 @@ bool SEVAO::load(const char* filename) {
 				if (input3i[0] >= 0) pnt.push_back(pnt_t[input3i[0]]);
 				if (input3i[1] >= 0) tex.push_back(tex_t[input3i[1]]);
 				if (input3i[2] >= 0) nrm.push_back(nrm_t[input3i[2]]);
+				verId.push_back(input3i[0]);
 			}
 			if (modeCount != mode) {
 				modeIndex.push_back(vertexCount);
@@ -108,36 +107,44 @@ bool SEVAO::load(const char* filename) {
 	glBindVertexArray(id);
 
 	GLuint vbo;
+	if (verId.size() > 0) {
+		glGenBuffers(1, &vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(int) * verId.size(), &verId[0], GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribIPointer(0, 1, GL_UNSIGNED_INT, 0, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
 	if (pnt.size() > 0) {
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * pnt.size(), &pnt[0][0], GL_STATIC_DRAW);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	if (nrm.size() > 0) {
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * nrm.size(), &nrm[0][0], GL_STATIC_DRAW);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	if (tex.size() > 0) {
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * tex.size(), &tex[0][0], GL_STATIC_DRAW);
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(3);
+		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 0, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	if (tan.size() > 0) {
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * tan.size(), &tan[0][0], GL_STATIC_DRAW);
-		glEnableVertexAttribArray(3);
-		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(4);
+		glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	glBindVertexArray(0);
@@ -158,10 +165,10 @@ void SEVAO::onDraw() {
 	glBindVertexArray(id);
 	int j = 0;
 	for (auto i = modeIndex.begin(); i != modeIndex.end(); ++i) {
-		glDrawArrays(GL_LINES, j, *i);
+		glDrawArrays(GL_TRIANGLES, j, *i);
 		j += *i;
 		if (++i == modeIndex.end()) break;
-		glDrawArrays(GL_LINES, j, *i);
+		glDrawArrays(GL_QUADS, j, *i);
 		j += *i;
 	}
 }

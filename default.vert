@@ -1,5 +1,6 @@
 #version 330
 
+in int	id;
 in vec3 vertex;
 in vec3 normal;
 in vec2 uv;

@@ -163,7 +163,7 @@ SEComCamera &SESin::getCamera(const SEComponent * comp) const{
 SEComRenderer &SESin::getRenderer(const SEComponent * comp) const {
 	SEGameObject &pObj = comp->getOwner();
 #ifdef SE_DEBUG
-	if (!pObj[COM_CAMERA]) {
+	if (!pObj[COM_RENDERER]) {
 		char log[256];
 		const char *name = comp->toString();
 		sprintf(log, "%s> Accessing invalid Renderer component.", name);

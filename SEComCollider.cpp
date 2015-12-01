@@ -18,8 +18,8 @@ SEVector3f SEComCollider::testWith(const SEComCollider * col) const
 {
 	SEVector3f selfPos, otherPos, dis, normal;
 	float radius;
-	for (auto i : colliders)
-		for (auto j : col->colliders) {
+	for (auto &i : colliders)
+		for (auto &j : col->colliders) {
 			selfPos = SE_TRANSFORM.translation() + i.offset;
 			otherPos = SIN.getTransform(col).translation() + j.offset;
 			dis = otherPos - selfPos;

@@ -221,6 +221,7 @@ bool matrix<DIM, T>::operator!=(const matrix<DIM, T> &rhs) const {
 template <unsigned DIM, typename T>
 void matrix<DIM, T>::identify(T val) {
 	for (int i = 0; i < DIM; ++i) {
+		for (int j = 0; j < DIM; ++j) data[i][j] = 0.0f;
 		data[i][i] = val;
 	}
 }

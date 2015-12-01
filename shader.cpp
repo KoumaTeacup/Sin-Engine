@@ -69,10 +69,11 @@ bool SEShader::load(const char* shaderFile) {
 
 void SEShader::onInit() {
 	if (linked) return;
-	glBindAttribLocation(programId, 0, "vertex");
-	glBindAttribLocation(programId, 1, "normal");
-	glBindAttribLocation(programId, 2, "uv");
-	glBindAttribLocation(programId, 3, "tangent");
+	glBindAttribLocation(programId, 0, "id");
+	glBindAttribLocation(programId, 1, "vertex");
+	glBindAttribLocation(programId, 2, "normal");
+	glBindAttribLocation(programId, 3, "uv");
+	glBindAttribLocation(programId, 4, "tangent");
 
 #ifdef SE_DEBUG
 	if (!link())

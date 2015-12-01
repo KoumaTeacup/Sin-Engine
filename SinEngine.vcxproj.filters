@@ -31,6 +31,9 @@
     <Filter Include="User\Components\Listeners">
       <UniqueIdentifier>{acf7446c-e6b9-47f6-8d2b-83243d33ff81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ClothSimulation">
+      <UniqueIdentifier>{727bbe66-e030-4996-8715-c1f81aa8fac0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SEGameObject.cpp">
@@ -98,6 +101,18 @@
     </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="cloth.cpp">
+      <Filter>ClothSimulation</Filter>
+    </ClCompile>
+    <ClCompile Include="particle.cpp">
+      <Filter>ClothSimulation</Filter>
+    </ClCompile>
+    <ClCompile Include="SEComUser.cpp">
+      <Filter>User\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="clothMain.cpp">
+      <Filter>ClothSimulation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +194,15 @@
     <ClInclude Include="texture.h">
       <Filter>Data</Filter>
     </ClInclude>
+    <ClInclude Include="particle.h">
+      <Filter>ClothSimulation</Filter>
+    </ClInclude>
+    <ClInclude Include="cloth.h">
+      <Filter>ClothSimulation</Filter>
+    </ClInclude>
+    <ClInclude Include="SEComUser.h">
+      <Filter>User\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.frag">
@@ -186,6 +210,12 @@
     </None>
     <None Include="default.vert">
       <Filter>Shaders</Filter>
+    </None>
+    <None Include="cloth.vert">
+      <Filter>ClothSimulation</Filter>
+    </None>
+    <None Include="cloth.frag">
+      <Filter>ClothSimulation</Filter>
     </None>
   </ItemGroup>
 </Project>

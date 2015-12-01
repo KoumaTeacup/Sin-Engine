@@ -87,6 +87,14 @@ void SEComRenderer::onDraw()
 	if (texture->getFile()) texture->onPostUpdate();
 }
 
+GLuint SEComRenderer::getShaderId()
+{
+	if (shader->getFile()) {
+		return SE_Shader(shader)->getProgramId();
+	}
+	else return 0;
+}
+
 void SEComRenderer::attach(const char* filename) {
 	SE_File file = SE_Resource.load(filename);
 	if (!file->getFile()) return;

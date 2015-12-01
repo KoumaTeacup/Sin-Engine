@@ -7,12 +7,12 @@ class SEGameObject;
 
 // New Component TO DOs
 // ATTENTION: component order matters!
-// Transform < Renderer : worldspace matrix construction.
+// Transform > Renderer : worldspace matrix construction.
 enum componentType {
-	COM_TRANSFORM = 0,
+	COM_RENDERER = 0,
+	COM_TRANSFORM,
 	COM_CAMERA, 
 	COM_COLLIDER,
-	COM_RENDERER,
 	COM_RIGIDBODY,
 	//COM_ANIMATOR,
 	COM_NUM,

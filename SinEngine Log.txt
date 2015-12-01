@@ -1,16 +1,13 @@
 - Sin Engine -[General] Log Manager initialized.
 - Sin Engine -[General] utilityManager Initialized.
 - Sin Engine -[General] FPS limit set to 60
-- Sin Engine -[General] Loading VAO file mustang_gt500kr.obj...success.
-- Sin Engine -[General] Loading Game Object "test"...success.
-- Sin Engine -[Warnning] Game Object "test" can't have more than one Transform component
-- Sin Engine -[General] Loading texture file DM_turret.png...success.
-- Sin Engine -[Warnning] Game Object "test" can't have more than one Renderer component
-- Sin Engine -[General] Loading Game Object "test"...success.
+- Sin Engine -[General] Loading VAO file cloth_12x12.obj...success.
+- Sin Engine -[General] Loading texture file Digipen_flag.jpg...success.
+- Sin Engine -[General] Loading shader file cloth.vert...Success.
+- Sin Engine -[General] Loading shader file cloth.frag...Success.
+- Sin Engine -[General] Loading Game Object "middleFlag"...success.
 - Sin Engine -[General] Loading Game Object "mainCamera"...success.
 - Sin Engine -[Warnning] Game Object "mainCamera_copy001"> Same camera object instantiation won't draw more than once
-- Sin Engine -[General] Loading shader file default.vert...Success.
-- Sin Engine -[General] Loading shader file default.frag...Success.
 - Sin Engine -[General] Linking shader program...Success.
 - Sin Engine -[General] Validating shader program...Success.
-Current FPS: 12  
+Current FPS: 6  

@@ -145,7 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cloth.cpp" />
+    <ClCompile Include="clothMain.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="particle.cpp" />
     <ClCompile Include="SEComCamera.cpp" />
     <ClCompile Include="SEComCollider.cpp" />
     <ClCompile Include="SEComController.cpp" />
@@ -154,6 +157,7 @@
     <ClCompile Include="SEComRenderer.cpp" />
     <ClCompile Include="SEComRigidBody.cpp" />
     <ClCompile Include="SEComTransform.cpp" />
+    <ClCompile Include="SEComUser.cpp" />
     <ClCompile Include="SEEvent.cpp" />
     <ClCompile Include="SEFile.cpp" />
     <ClCompile Include="SEGameObject.cpp" />
@@ -169,6 +173,8 @@
     <ClCompile Include="vao.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cloth.h" />
+    <ClInclude Include="particle.h" />
     <ClInclude Include="SampleStructure.h" />
     <ClInclude Include="SEComCamera.h" />
     <ClInclude Include="SEComCollider.h" />
@@ -179,6 +185,7 @@
     <ClInclude Include="SEComRigidBody.h" />
     <ClInclude Include="SEComTemp.h" />
     <ClInclude Include="SEComTransform.h" />
+    <ClInclude Include="SEComUser.h" />
     <ClInclude Include="SEEvent.h" />
     <ClInclude Include="SEFile.h" />
     <ClInclude Include="SEGameObject.h" />
@@ -197,6 +204,8 @@
     <ClInclude Include="vao.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cloth.frag" />
+    <None Include="cloth.vert" />
     <None Include="default.frag" />
     <None Include="default.vert" />
   </ItemGroup>

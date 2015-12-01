@@ -1,6 +1,9 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <GL\glew.h>
+#include <string>
+
 #include "SEComponent.h"
 #include "SEFile.h"
 
@@ -17,6 +20,11 @@ public:
 	// Local methods.
 	void attach(const char* filename);
 	void detach();
+
+	// Setters & Getters
+	GLuint getShaderId();
+	std::string getModelFilename() { return vao->getName(); }
+	std::string getTextureFilename() { return texture->getName(); }
 
 	SEComponent *clone() const { return new SEComRenderer(*this); }
 
