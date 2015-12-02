@@ -1,6 +1,5 @@
 f:\vs projects\sin-engine\debug\vc140.pdb
 f:\vs projects\sin-engine\debug\vc140.idb
-f:\vs projects\sin-engine\debug\secomcontroller.obj
 f:\vs projects\sin-engine\debug\secomlistener.obj
 f:\vs projects\sin-engine\debug\secomponent.obj
 f:\vs projects\sin-engine\debug\secomrenderer.obj
@@ -20,12 +19,15 @@ f:\vs projects\sin-engine\debug\seutility.obj
 f:\vs projects\sin-engine\debug\shader.obj
 f:\vs projects\sin-engine\debug\texture.obj
 f:\vs projects\sin-engine\debug\vao.obj
+f:\vs projects\sin-engine\debug\windupdater.obj
 f:\vs projects\sin-engine\debug\cloth.obj
 f:\vs projects\sin-engine\debug\clothmain.obj
+f:\vs projects\sin-engine\debug\freecamera.obj
 f:\vs projects\sin-engine\debug\main.obj
 f:\vs projects\sin-engine\debug\particle.obj
 f:\vs projects\sin-engine\debug\secomcamera.obj
 f:\vs projects\sin-engine\debug\secomcollider.obj
+f:\vs projects\sin-engine\debug\secomcontroller.obj
 f:\vs projects\sin-engine\debug\sinengine.ilk
 f:\vs projects\sin-engine\debug\sinengine.exe
 f:\vs projects\sin-engine\debug\sinengine.pdb

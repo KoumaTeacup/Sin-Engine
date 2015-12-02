@@ -24,6 +24,7 @@ protected:
 	void onRelease() {}
 
 	void onUpdate();
+	void onDraw();
 
 private:
 	// Internal methods

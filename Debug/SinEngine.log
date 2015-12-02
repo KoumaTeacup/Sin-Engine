@@ -1,11 +1,44 @@
-﻿Build started 12/1/2015 11:57:11 PM.
-     1>Project "C:\Users\s.chen\Documents\GitHub\Sin-Engine\SinEngine.vcxproj" on node 2 (Build target(s)).
+﻿Build started 12/2/2015 9:28:34 AM.
+     1>Project "F:\VS Projects\Sin-Engine\SinEngine.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\s.chen\Documents\GitHub\Sin-Engine\glew\include" /I"C:\Users\s.chen\Documents\GitHub\Sin-Engine\freeglut\include" /I"C:\Users\s.chen\Documents\GitHub\Sin-Engine\sfml\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D SE_DEBUG /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt cloth.cpp
+         D:\Dev Software\Visual Studio\VC\bin\CL.exe /c /I"F:\VS Projects\Sin-Engine\glew\include" /I"F:\VS Projects\Sin-Engine\freeglut\include" /I"F:\VS Projects\Sin-Engine\sfml\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D SE_DEBUG /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt cloth.cpp clothMain.cpp freeCamera.cpp main.cpp particle.cpp SEComCamera.cpp SEComCollider.cpp SEComController.cpp SEComListener.cpp SEComponent.cpp SEComRenderer.cpp SEComRigidBody.cpp SEComTransform.cpp SEComUser.cpp SEEvent.cpp SEFile.cpp SEGameObject.cpp SEInput.cpp SELog.cpp SEObject.cpp SEResource.cpp SEScene.cpp SESin.cpp SEUtility.cpp shader.cpp spring.cpp texture.cpp vao.cpp windUpdater.cpp
+         windUpdater.cpp
+         vao.cpp
+         texture.cpp
+         spring.cpp
+         shader.cpp
+         SEUtility.cpp
+         SESin.cpp
+         SEScene.cpp
+         SEResource.cpp
+         SEObject.cpp
+         SELog.cpp
+         SEInput.cpp
+         SEGameObject.cpp
+         SEFile.cpp
+         SEEvent.cpp
+         SEComUser.cpp
+         SEComTransform.cpp
+         SEComRigidBody.cpp
+         SEComRenderer.cpp
+         SEComponent.cpp
+         Generating Code...
+     1>f:\vs projects\sin-engine\segameobject.cpp(65): warning C4172: returning address of local variable or temporary: undefined
+     1>f:\vs projects\sin-engine\sesin.cpp(236): warning C4172: returning address of local variable or temporary
+         Compiling...
+         SEComListener.cpp
+         SEComController.cpp
+         SEComCollider.cpp
+         SEComCamera.cpp
+         particle.cpp
+         main.cpp
+         freeCamera.cpp
+         clothMain.cpp
          cloth.cpp
-     1>c:\users\s.chen\documents\github\sin-engine\cloth.cpp(102): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>f:\vs projects\sin-engine\cloth.cpp(109): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+         Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\s.chen\Documents\GitHub\Sin-Engine\Debug\SinEngine.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\s.chen\Documents\GitHub\Sin-Engine\sfml\lib" /LIBPATH:"C:\Users\s.chen\Documents\GitHub\Sin-Engine\freeglut\lib" /LIBPATH:"C:\Users\s.chen\Documents\GitHub\Sin-Engine\glew\lib" "sfml-window-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" opengl32.lib "sfml-system-d.lib" freeglut.lib glew32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\s.chen\Documents\GitHub\Sin-Engine\Debug\SinEngine.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\s.chen\Documents\GitHub\Sin-Engine\Debug\SinEngine.lib" /MACHINE:X86 Debug\cloth.obj
+         D:\Dev Software\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\VS Projects\Sin-Engine\Debug\SinEngine.exe" /INCREMENTAL /NOLOGO /LIBPATH:"F:\VS Projects\Sin-Engine\sfml\lib" /LIBPATH:"F:\VS Projects\Sin-Engine\freeglut\lib" /LIBPATH:"F:\VS Projects\Sin-Engine\glew\lib" "sfml-window-d.lib" "sfml-graphics-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" opengl32.lib "sfml-system-d.lib" freeglut.lib glew32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"F:\VS Projects\Sin-Engine\Debug\SinEngine.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\VS Projects\Sin-Engine\Debug\SinEngine.lib" /MACHINE:X86 Debug\cloth.obj
          Debug\clothMain.obj
          Debug\freeCamera.obj
          Debug\main.obj
@@ -30,12 +63,13 @@
          Debug\SESin.obj
          Debug\SEUtility.obj
          Debug\shader.obj
+         Debug\spring.obj
          Debug\texture.obj
          Debug\vao.obj
          Debug\windUpdater.obj
-         SinEngine.vcxproj -> C:\Users\s.chen\Documents\GitHub\Sin-Engine\Debug\SinEngine.exe
-     1>Done Building Project "C:\Users\s.chen\Documents\GitHub\Sin-Engine\SinEngine.vcxproj" (Build target(s)).
+         SinEngine.vcxproj -> F:\VS Projects\Sin-Engine\Debug\SinEngine.exe
+     1>Done Building Project "F:\VS Projects\Sin-Engine\SinEngine.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.56
+Time Elapsed 00:00:53.15

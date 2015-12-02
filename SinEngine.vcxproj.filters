@@ -120,6 +120,9 @@
     <ClCompile Include="windUpdater.cpp">
       <Filter>ClothSimulation</Filter>
     </ClCompile>
+    <ClCompile Include="spring.cpp">
+      <Filter>ClothSimulation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SEVector.h">
@@ -213,6 +216,9 @@
       <Filter>ClothSimulation</Filter>
     </ClInclude>
     <ClInclude Include="windUpdater.h">
+      <Filter>ClothSimulation</Filter>
+    </ClInclude>
+    <ClInclude Include="spring.h">
       <Filter>ClothSimulation</Filter>
     </ClInclude>
   </ItemGroup>

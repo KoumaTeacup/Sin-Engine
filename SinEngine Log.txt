@@ -8,6 +8,7 @@
 - Sin Engine -[General] Loading Game Object "middleFlag"...success.
 - Sin Engine -[General] Loading Game Object "mainCamera"...success.
 - Sin Engine -[Warnning] Game Object "mainCamera_copy001"> Same camera object instantiation won't draw more than once
+- Sin Engine -[General] Loading Game Object "windUpdater"...success.
 - Sin Engine -[General] Linking shader program...Success.
 - Sin Engine -[General] Validating shader program...Success.
-Current FPS: 13  
+Current FPS: 7  

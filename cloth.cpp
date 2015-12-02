@@ -6,6 +6,7 @@
 #include "SESin.h"
 #include "SEEvent.h"
 #include "SEComRenderer.h"
+#include "SEComTransform.h"
 
 Cloth::Cloth(int fix): 
 	SEComListener(),
@@ -29,10 +30,16 @@ void Cloth::handle(SEEvent &e)
 		return;
 	}
 	SEVector3f globalWind = e.info.collisionDirction;
+	SEComTransform &comTrans = SE_TRANSFORM;
+
+	SEVector4f globalWind4(globalWind[0], globalWind[1], globalWind[2], 0.0f);
+	globalWind4 *= SE_MATRIX_ROTATE4(se_data::AXIS_Y, -comTrans[ry]);
+
+	localWind = SEVector3f(globalWind4[0], globalWind4[1], globalWind4[2]);
 }
 
 void Cloth::onInit() {
-	std::ifstream ifs(SE_RENDERER.getModelFilename());
+	std::ifstream ifs(SE_RENDERER.getModelFilename().c_str());
 
 	char buf[1024];
 	SEVector3f pos;
@@ -131,6 +138,10 @@ void Cloth::onUpdate() {
 		particleTr[count++] = i.getTransMatrix();
 	}
 
+}
+
+void Cloth::onDraw()
+{
 	int id = SE_RENDERER.getShaderId();
 
 	glUseProgram(id);

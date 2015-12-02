@@ -9,6 +9,8 @@
 #include "SEComCamera.h"
 #include "cloth.h"
 #include "freeCamera.h"
+#include "windUpdater.h"
+#include "spring.h"
 
 int main()
 {
@@ -29,6 +31,8 @@ int main()
 		SEComController *comCtrl = NULL;
 		Cloth			*comCloth = NULL;
 		FreeCameraController *comCamController = NULL;
+		WindUpdater		*comWindUpdater = NULL;
+		Spring			*comSpring = NULL;
 
 		unsigned flagObject;
 		// Allocate Game Objs
@@ -39,6 +43,7 @@ int main()
 			comTran = new SEComTransform();
 			comCtrl = new SEComController();
 			comCloth = new Cloth(1);
+			comSpring = new Spring(0.0f);
 
 			// Configure Components
 			(*comTran)[ty] = 7.0f;
@@ -54,9 +59,16 @@ int main()
 			gameObj->attach(comTran);
 			gameObj->attach(comCloth);
 			gameObj->attach(comCtrl);
+			gameObj->attach(comSpring);
 
 			// Load Game Object
 			flagObject = scene1.load(gameObj);
+
+			delete gameObj;
+			delete comRend;
+			delete comTran;
+			delete comCtrl;
+			delete comCloth;
 		}
 
 		SEGameObject *pFlag;
@@ -68,6 +80,7 @@ int main()
 		pFlag = scene1.instantiate(flagObject);
 		flagTrans = static_cast<SEComTransform *>((*pFlag)[COM_TRANSFORM]);
 		(*flagTrans)[tz] = -10.0f;
+		(*flagTrans)[ry] = 180.0f;
 
 		pFlag = scene1.instantiate(flagObject);
 		flagTrans = static_cast<SEComTransform *>((*pFlag)[COM_TRANSFORM]);
@@ -88,20 +101,29 @@ int main()
 			comCam->setFocus(SEVector3f(0.0f, 0.0f, 0.0f));
 			comCam->setUp(SEVector3f(0.0f, 1.0f, 0.0f));
 			gameObj->attach(comCam);
-			delete comTran;
 			comTran = new SEComTransform;
-			(*comTran)[tz] = 30.0f;
+			(*comTran)[tx] = 30.0f;
 			gameObj->attach(comTran);
 			gameObj->attach(comCamController);
 
 			scene1.InstantiateOnce(gameObj);
+
+			delete gameObj;
+			delete comCam;
+			delete comCamController;
 		}
 
-		delete gameObj;
-		delete comRend;
-		delete comTran;
-		delete comCam;
-		delete comCtrl;
+		gameObj = new SEGameObject("windUpdater");
+		{
+			comWindUpdater = new WindUpdater();
+			gameObj->attach(comWindUpdater);
+
+			scene1.InstantiateOnce(gameObj);
+
+			delete gameObj;
+			delete comWindUpdater;
+		}
+
 	}
 	// Start Scene Loop
 	SIN.beginScene(scene1);

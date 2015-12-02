@@ -1,0 +1,47 @@
+﻿Build started 12/2/2015 9:15:38 AM.
+     1>Project "F:\VS Projects\Sin-Engine\SinEngine.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Dev Software\Visual Studio\VC\bin\CL.exe /c /I"F:\VS Projects\Sin-Engine\glew\include" /I"F:\VS Projects\Sin-Engine\freeglut\include" /I"F:\VS Projects\Sin-Engine\sfml\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _CRT_SECURE_NO_WARNINGS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt cloth.cpp
+         cloth.cpp
+     1>cloth.cpp(109): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+       Link:
+         D:\Dev Software\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\VS Projects\Sin-Engine\Release\SinEngine.exe" /NOLOGO /LIBPATH:"F:\VS Projects\Sin-Engine\sfml\lib" /LIBPATH:"F:\VS Projects\Sin-Engine\freeglut\lib" /LIBPATH:"F:\VS Projects\Sin-Engine\glew\lib" "sfml-window.lib" "sfml-graphics.lib" "sfml-audio.lib" "sfml-network.lib" opengl32.lib "sfml-system.lib" freeglut.lib glew32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"F:\VS Projects\Sin-Engine\Release\SinEngine.pdb" /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\VS Projects\Sin-Engine\Release\SinEngine.lib" /MACHINE:X86 /SAFESEH Release\cloth.obj
+         Release\clothMain.obj
+         Release\freeCamera.obj
+         Release\main.obj
+         Release\particle.obj
+         Release\SEComCamera.obj
+         Release\SEComCollider.obj
+         Release\SEComController.obj
+         Release\SEComListener.obj
+         Release\SEComponent.obj
+         Release\SEComRenderer.obj
+         Release\SEComRigidBody.obj
+         Release\SEComTransform.obj
+         Release\SEComUser.obj
+         Release\SEEvent.obj
+         Release\SEFile.obj
+         Release\SEGameObject.obj
+         Release\SEInput.obj
+         Release\SELog.obj
+         Release\SEObject.obj
+         Release\SEResource.obj
+         Release\SEScene.obj
+         Release\SESin.obj
+         Release\SEUtility.obj
+         Release\shader.obj
+         Release\spring.obj
+         Release\texture.obj
+         Release\vao.obj
+         Release\windUpdater.obj
+         Generating code
+         2 of 2566 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+           0 functions were new in current compilation
+           4 functions had inline decision re-evaluated but remain unchanged
+         Finished generating code
+         SinEngine.vcxproj -> F:\VS Projects\Sin-Engine\Release\SinEngine.exe
+     1>Done Building Project "F:\VS Projects\Sin-Engine\SinEngine.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:05.25

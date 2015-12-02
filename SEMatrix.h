@@ -269,7 +269,7 @@ matrix<DIM, T>	matrix<DIM, T>::TL(float x, float y, float z) {
 template <unsigned DIM, typename T>
 matrix<DIM, T>	matrix<DIM, T>::RT(axis a, float degree) {
 	matrix<DIM, T> result;
-	degree *= 3.1415926 / 180;
+	degree *= 3.1415926f / 180.0f;
 	result.identify();
 #ifdef SE_DEBUG
 	if (DIM < 3) {
