@@ -8,13 +8,15 @@
 #include "SEComTransform.h"
 #include "SEComCamera.h"
 #include "cloth.h"
-
+#include "freeCamera.h"
 
 int main()
 {
 	// Global configuration.
 	if (!SIN.init()) return -1;
 	SIN.setFPSLimit(60);
+
+	glDisable(GL_CULL_FACE);
 
 	//-------------------------------------------------------------------------------
 	//-------------------------------------------------------------------------------
@@ -26,7 +28,9 @@ int main()
 		SEComCamera		*comCam = NULL;
 		SEComController *comCtrl = NULL;
 		Cloth			*comCloth = NULL;
+		FreeCameraController *comCamController = NULL;
 
+		unsigned flagObject;
 		// Allocate Game Objs
 		gameObj = new SEGameObject("middleFlag");	// Visiable objs
 		{
@@ -48,22 +52,47 @@ int main()
 			// Attach Components
 			gameObj->attach(comRend);
 			gameObj->attach(comTran);
-			gameObj->attach(comCtrl);
 			gameObj->attach(comCloth);
-			//gameObj->attach(COM_RIGIDBODY);
+			gameObj->attach(comCtrl);
 
 			// Load Game Object
-			scene1.InstantiateOnce(gameObj);
+			flagObject = scene1.load(gameObj);
 		}
+
+		SEGameObject *pFlag;
+		SEComTransform *flagTrans;
+		pFlag = scene1.instantiate(flagObject);
+		flagTrans = static_cast<SEComTransform *>((*pFlag)[COM_TRANSFORM]);
+		(*flagTrans)[tz] = 10.0f;
+
+		pFlag = scene1.instantiate(flagObject);
+		flagTrans = static_cast<SEComTransform *>((*pFlag)[COM_TRANSFORM]);
+		(*flagTrans)[tz] = -10.0f;
+
+		pFlag = scene1.instantiate(flagObject);
+		flagTrans = static_cast<SEComTransform *>((*pFlag)[COM_TRANSFORM]);
+		(*flagTrans)[tx] = 10.0f;
+		(*flagTrans)[ry] = 90.0f;
+
+		pFlag = scene1.instantiate(flagObject);
+		flagTrans = static_cast<SEComTransform *>((*pFlag)[COM_TRANSFORM]);
+		(*flagTrans)[tx] = -10.0f;
+		(*flagTrans)[ry] = -90.0f;
 
 		gameObj = new SEGameObject("mainCamera"); // Camera obj
 		{
+			comCam = new SEComCamera();
+			comCamController = new FreeCameraController();
 			// Attach Default Components
-			gameObj->attach(COM_CAMERA);
+			comCam->setMode(CAMERA_FOCUS_MODE);
+			comCam->setFocus(SEVector3f(0.0f, 0.0f, 0.0f));
+			comCam->setUp(SEVector3f(0.0f, 1.0f, 0.0f));
+			gameObj->attach(comCam);
 			delete comTran;
 			comTran = new SEComTransform;
 			(*comTran)[tz] = 30.0f;
 			gameObj->attach(comTran);
+			gameObj->attach(comCamController);
 
 			scene1.InstantiateOnce(gameObj);
 		}

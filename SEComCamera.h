@@ -26,6 +26,7 @@ public:
 	void preDraw();
 	void setFocus(SEVector3f f) { focus = f; }
 	void setUp(SEVector3f u) { up = u; }
+	void setMode(char f) { flags |= f; }
 	void onResize();
 
 	// Public variables.

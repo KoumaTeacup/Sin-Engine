@@ -7,8 +7,8 @@
 
 void SEComController::handle(SEEvent &event) {
 	switch (event.type) {
-	case (EVENT_KEYPRESS) : break;
-	case (EVENT_KEYRELEASE) : break;
+	case EVENT_KEYPRESS : break;
+	case EVENT_KEYRELEASE : break;
 	default:break;
 	}
 }
@@ -26,7 +26,7 @@ void SEComController::onUpdate() {
 	if (SIN.isKeyPressed(SE_KEY_RIGHT))
 		SE_TRANSFORM[tx] += 0.5f;
 	if (SIN.isKeyPressed(SE_KEY_UP))
-		SE_TRANSFORM[ry] -= 0.05f;
+		SE_TRANSFORM[ry] -= 1.0f;
 	if (SIN.isKeyPressed(SE_KEY_DOWN))
-		SE_TRANSFORM[ry] += 0.05f;
+		SE_TRANSFORM[ry] += 1.0f;
 }

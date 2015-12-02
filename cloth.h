@@ -4,15 +4,17 @@
 #include <vector>
 
 #include "SEMatrix.h"
-#include "SEComUser.h"
+#include "SEComListener.h"
 
 #include "particle.h"
 
-class Cloth : public SEComUser {
+class Cloth : public SEComListener {
 	friend ClothParticle;
 public:
 	Cloth(int fix = 1);
 	~Cloth() {}
+
+	void handle(SEEvent &e);
 
 	SEComponent *clone() const { return new Cloth(*this); }
 

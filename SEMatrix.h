@@ -56,7 +56,7 @@ public:
 		T m20, T m21, T m22) {
 		data[0].initData(m00, m01, m02);
 		data[1].initData(m10, m11, m12);
-		data[1].initData(m20, m21, m22);
+		data[2].initData(m20, m21, m22);
 	}
 	matrix<DIM, T>(
 		T m00, T m01, T m02, T m03,
@@ -65,8 +65,8 @@ public:
 		T m30, T m31, T m32, T m33) {
 		data[0].initData(m00, m01, m02, m03);
 		data[1].initData(m10, m11, m12, m13);
-		data[1].initData(m20, m21, m22, m23);
-		data[1].initData(m30, m31, m32, m33);
+		data[2].initData(m20, m21, m22, m23);
+		data[3].initData(m30, m31, m32, m33);
 	}
 
 	// copy assignment
@@ -269,6 +269,7 @@ matrix<DIM, T>	matrix<DIM, T>::TL(float x, float y, float z) {
 template <unsigned DIM, typename T>
 matrix<DIM, T>	matrix<DIM, T>::RT(axis a, float degree) {
 	matrix<DIM, T> result;
+	degree *= 3.1415926 / 180;
 	result.identify();
 #ifdef SE_DEBUG
 	if (DIM < 3) {

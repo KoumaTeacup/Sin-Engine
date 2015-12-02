@@ -4,22 +4,31 @@
 #include "cloth.h"
 
 #include "SESin.h"
+#include "SEEvent.h"
 #include "SEComRenderer.h"
 
 Cloth::Cloth(int fix): 
-	SEComUser(),
+	SEComListener(),
 	damp(0.0f),
 	stiffness(0.2f),
 	fold_resist(0.4f),
 	fixedAxis(fix),
 	localGravity(0.0f, -9.8f, 0.0f),
 	localWind(2.0f, -10.0f, 18.0f),
-	windNoise(0.3),
+	windNoise(0.3f),
 	currentSolver(SOLVER_VERLET),
-	iteration(4),
+	iteration(1),
 	selfStarted(false){
 	solvers[SOLVER_EULER] = &ClothParticle::EulerSolver;
 	solvers[SOLVER_VERLET] = &ClothParticle::VerletSolver;
+}
+
+void Cloth::handle(SEEvent &e)
+{
+	if (strcmp(e.infoString, "windDir") != 0) {
+		return;
+	}
+	SEVector3f globalWind = e.info.collisionDirction;
 }
 
 void Cloth::onInit() {

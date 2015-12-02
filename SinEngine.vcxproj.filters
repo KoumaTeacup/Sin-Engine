@@ -114,6 +114,12 @@
     <ClCompile Include="clothMain.cpp">
       <Filter>ClothSimulation</Filter>
     </ClCompile>
+    <ClCompile Include="freeCamera.cpp">
+      <Filter>ClothSimulation</Filter>
+    </ClCompile>
+    <ClCompile Include="windUpdater.cpp">
+      <Filter>ClothSimulation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SEVector.h">
@@ -202,6 +208,12 @@
     </ClInclude>
     <ClInclude Include="SEComUser.h">
       <Filter>User\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="freeCamera.h">
+      <Filter>ClothSimulation</Filter>
+    </ClInclude>
+    <ClInclude Include="windUpdater.h">
+      <Filter>ClothSimulation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

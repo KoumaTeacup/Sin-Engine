@@ -58,6 +58,8 @@ void SEComCamera::preDraw() {
 		camX.unify();
 		camY.unify();
 		camZ.unify();
+		camX *= -1;
+		camZ *= -1;
 		SEMatrix4f viewRot(
 			camX[0], camX[1], camX[2], 0.0f,
 			camY[0], camY[1], camY[2], 0.0f,

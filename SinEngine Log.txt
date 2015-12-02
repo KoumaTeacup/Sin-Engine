@@ -10,4 +10,4 @@
 - Sin Engine -[Warnning] Game Object "mainCamera_copy001"> Same camera object instantiation won't draw more than once
 - Sin Engine -[General] Linking shader program...Success.
 - Sin Engine -[General] Validating shader program...Success.
-Current FPS: 6  
+Current FPS: 13  

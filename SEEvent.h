@@ -15,6 +15,7 @@ class SEGameObject;
 enum eventType {
 	EVENT_DEFAULT,
 	EVENT_COLLIDE,
+	EVENT_MOUSEMOVE,
 	EVENT_KEYPRESS,
 	EVENT_KEYRELEASE,
 	EVENT_BUTTONPRESS,
@@ -28,14 +29,18 @@ struct SEEvent {
 	float delay;
 	int numOfObjects;
 	SEGameObject **pObjs;
+	char infoString[64];
 
 	union infoType{
 		sf::Event::KeyEvent				key;
 		sf::Event::JoystickButtonEvent	button;
 		sf::Event::JoystickMoveEvent	move;
+		struct {
+			struct { int x, y; } pos;
+			struct { int x, y; } delta;
+		} mouseMove;
 		
 		SEVector3f						collisionDirction;
-		char							infoString[64];
 
 		infoType() { memset(this, 0, sizeof(infoType)); }
 		infoType(const infoType &rhs) { memcpy(this, &rhs, sizeof(infoType)); }
@@ -46,7 +51,7 @@ struct SEEvent {
 		type(t),
 		delay(d),
 		numOfObjects(num){
-		strcpy(info.infoString, i);
+		strcpy(infoString, i);
 		if (num > 0) {
 			pObjs = new SEGameObject*[num];
 			for (int i = 0; i < num; ++i) pObjs[i] = obj[i];
@@ -68,7 +73,8 @@ public:
 	void clear() { eventQueue.clear(); }
 
 private:
-	SEEventManager() {}
+	int oldMouseX, oldMouseY;
+	SEEventManager(): oldMouseX(-1), oldMouseY(-1) {}
 	std::list<SEEvent> eventQueue;
 };
 
