@@ -21,12 +21,6 @@
 
 namespace se_data {
 
-enum axis {
-	AXIS_X,
-	AXIS_Y,
-	AXIS_Z
-};
-
 template <unsigned DIM, typename T>
 class matrix {
 public:

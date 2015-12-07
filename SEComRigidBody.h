@@ -11,6 +11,9 @@ public:
 	SEComRigidBody(std::string name = std::string(),
 		std::string tag = std::string(),
 		SEGameObject *owner = NULL);
+	SEComRigidBody(float damp, std::string name = std::string(),
+		std::string tag = std::string(),
+		SEGameObject *owner = NULL);
 	SEComRigidBody(const SEComRigidBody &rhs);
 	~SEComRigidBody() {}
 
@@ -18,7 +21,12 @@ public:
 
 	// Local methods.
 
+	void applyForce(SEVector3f force);
+	void resetVelocity() { velocity = SEVector3f(); }
+	void resetVelocity(se_data::axis axis);
+
 	SEComponent *clone() const { return new SEComRigidBody(*this); }
+
 
 protected:
 	// Inherited pure virtuals.
@@ -30,6 +38,8 @@ protected:
 	void onPostUpdate();
 
 private:
+	float velocityDamp;
+	SEVector3f pendingForce;
 	float mass;
 	SEVector3f velocity;
 

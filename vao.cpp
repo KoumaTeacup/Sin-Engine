@@ -61,6 +61,7 @@ bool SEVAO::load(const char* filename) {
 		}
 		else if (strcmp(buf, "vt") == 0) {
 			ifs >> input2f[0] >> input2f[1];
+			input2f[1] = 1 - input2f[1];
 			tex_t.push_back(input2f);
 		}
 		else if (strcmp(buf, "vn") == 0) {

@@ -5,26 +5,64 @@
 
 SEComRigidBody::SEComRigidBody(std::string name, std::string tag, SEGameObject *owner) :
 	SEComponent(COM_RIGIDBODY, name, tag, owner),
+	mass(1.0f),
+	velocity(),
+	velocityDamp(0.02f),
+	pendingForce() {}
+
+SEComRigidBody::SEComRigidBody(float damp, std::string name, std::string tag, SEGameObject * owner) :
+	SEComponent(COM_RIGIDBODY, name, tag, owner),
 	mass(1),
-	velocity() {}
+	velocity(),
+	velocityDamp(damp),
+	pendingForce() {}
 
 SEComRigidBody::SEComRigidBody(const SEComRigidBody &rhs):
 	SEComponent(rhs),
 	mass(rhs.mass),
-	velocity() {}
+	velocity(rhs.velocity),
+	velocityDamp(rhs.velocityDamp),
+	pendingForce(rhs.pendingForce) {}
 
 SEComRigidBody& SEComRigidBody::operator=(const SEComRigidBody &rhs) {
 	SEComponent::operator=(rhs);
 	mass = rhs.mass;
+	velocity = rhs.velocity;
+	velocityDamp = rhs.velocityDamp;
+	pendingForce = rhs.pendingForce;
 	return *this;
 }
 
+void SEComRigidBody::applyForce(SEVector3f force) {
+	pendingForce += force / mass;
+}
+
+void SEComRigidBody::resetVelocity(se_data::axis axis) {
+	switch (axis) {
+	case se_data::AXIS_X:
+		velocity[0] = 0.0f;
+		break;
+	case se_data::AXIS_Y:
+		velocity[1] = 0.0f;
+		break;
+	case se_data::AXIS_Z:
+		velocity[2] = 0.0f;
+		break;
+	}
+}
+
 void SEComRigidBody::onUpdate() {
-	velocity += SEVector3f(0.0f, -PHY_G * SIN.getFrameTime(), 0.0f);
+	float ft = SIN.getFrameTime();
+	if (ft > 0.05) return;
+	velocity += (SEVector3f(0.0f, -PHY_G, 0.0f) + pendingForce) * ft;
 }
 
 void SEComRigidBody::onPostUpdate() {
-	SE_TRANSFORM[tx] += SIN.getFrameTime() * velocity[0];
-	SE_TRANSFORM[ty] += SIN.getFrameTime() * velocity[1];
-	SE_TRANSFORM[tz] += SIN.getFrameTime() * velocity[2];
+	float ft = SIN.getFrameTime();
+	if (ft > 0.05) return;
+	SE_TRANSFORM.translation() += ft * velocity;
+
+	SEVector3f dir = velocity;
+	dir.unify();
+	pendingForce = (-velocity ^ velocity.absolute() * velocityDamp) - 50.0f * mass * dir;
 }

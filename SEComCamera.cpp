@@ -70,9 +70,9 @@ void SEComCamera::preDraw() {
 	}
 	else {
 		SEMatrix4f viewRot =
-			SE_MATRIX_ROTATE4(se_data::AXIS_Y, -SIN.toRad(trans[ry])) *
-			SE_MATRIX_ROTATE4(se_data::AXIS_X, -SIN.toRad(trans[rx])) *
-			SE_MATRIX_ROTATE4(se_data::AXIS_Z, -SIN.toRad(trans[rz]));
+			SE_MATRIX_ROTATE4(se_data::AXIS_Y, -trans[ry]) *
+			SE_MATRIX_ROTATE4(se_data::AXIS_X, -trans[rx]) *
+			SE_MATRIX_ROTATE4(se_data::AXIS_Z, -trans[rz]);
 		viewTr = viewRot * SE_MATRIX_TRANSLATE4(0.0f - trans[tx], 0.0f - trans[ty], 0.0f - trans[tz]);
 	}
 

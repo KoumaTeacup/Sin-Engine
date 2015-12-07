@@ -12,6 +12,9 @@ public:
 	SEComRenderer(std::string name = std::string(),
 		std::string tag = std::string(),
 		SEGameObject* onwer = NULL);
+	SEComRenderer(float a, std::string name = std::string(),
+		std::string tag = std::string(),
+		SEGameObject* onwer = NULL);
 	SEComRenderer(const SEComRenderer& rhs);
 	~SEComRenderer();
 
@@ -25,6 +28,7 @@ public:
 	GLuint getShaderId();
 	std::string getModelFilename() { return vao->getName(); }
 	std::string getTextureFilename() { return texture->getName(); }
+	void TextureRepeat(float time);
 
 	SEComponent *clone() const { return new SEComRenderer(*this); }
 
@@ -37,6 +41,7 @@ protected:
 	void onDraw();
 
 private:
+	float alpha;
 	SE_File shader;
 	SE_File	vao;
 	SE_File texture;

@@ -142,7 +142,7 @@ bool SEShader::validate() const {
 	return true;
 }
 
-void SEShader::setVal(TYPE_UNIFORM type, const char* varName, void *data) {
+void SEShader::setVal(TYPE_UNIFORM type, const char* varName, const void *data, int num) const {
 	GLint glLocation = glGetUniformLocation(programId, varName);
 
 	switch (type) {
@@ -152,11 +152,17 @@ void SEShader::setVal(TYPE_UNIFORM type, const char* varName, void *data) {
 	case UNIFORM_FLOAT:
 		glUniform1f(glLocation, *(float*)data);
 		break;
-	case UNIFORM_VECTOR:
-		glUniform4fv(glLocation, 1, &(*(SEVector4f*)data)[0]);
+	case UNIFORM_VECTOR3:
+		glUniform3fv(glLocation, num, &(*(SEVector3f*)data)[0]);
 		break;
-	case UNIFORM_MATRIX:
-		glUniformMatrix4fv(glLocation, 1, GL_TRUE, &(*(SEMatrix4f*)data)[0][0]);
+	case UNIFORM_VECTOR4:
+		glUniform4fv(glLocation, num, &(*(SEVector4f*)data)[0]);
+		break;
+	case UNIFORM_MATRIX3:
+		glUniformMatrix3fv(glLocation, num, GL_FALSE, &(*(SEMatrix3f*)data)[0][0]);
+		break;
+	case UNIFORM_MATRIX4:
+		glUniformMatrix4fv(glLocation, num, GL_TRUE, &(*(SEMatrix4f*)data)[0][0]);
 		break;
 	}
 }

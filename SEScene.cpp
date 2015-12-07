@@ -1,8 +1,10 @@
 #include "SEScene.h"
 
+#include "SEComTransform.h"
 #include "SEComCamera.h"
 #include "SEComListener.h"
 #include "SEComCollider.h"
+#include "SEComLight.h"
 #include "SESin.h"
 #include "SEEvent.h"
 
@@ -13,12 +15,12 @@ unsigned SEScene::load(SEGameObject *pObj) {
 	return gameObjs.size();
 }
 
-SEGameObject* SEScene::instantiate(unsigned obj) {
+unsigned SEScene::instantiate(unsigned obj) {
 #ifdef SE_DEBUG
-	if (obj > gameObjs.size()) {
+	if (obj > gameObjs.size() || obj == 0) {
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR,
 			"Invalid game object id can not be instantiated.");
-		return NULL;
+		return 0;
 	}
 	char log[256];
 #endif
@@ -26,27 +28,47 @@ SEGameObject* SEScene::instantiate(unsigned obj) {
 #ifdef SE_DEBUG
 	const char* name = pObj->toString();
 	if ((*pObj)[COM_CAMERA]) {
-		sprintf(log, "%s> Same camera object instantiation won't draw more than once", name);
+		sprintf(log, "%s> Instantiate same camera object may lead to redundant draw", name);
 		SE_LogManager.append(se_debug::LOGTYPE_WARNNING, log);
 	}
-#endif
-	gameInsts.insert(pObj);
-#ifdef SE_DEBUG
 	free((void*)name);
 #endif
+
 	if ((*pObj)[COM_CAMERA]) cameras.insert(static_cast<SEComCamera*>((*pObj)[COM_CAMERA]));
-	if (pObj->getCompNum() > COM_NUM) {
-		for (int i = COM_NUM; i < pObj->getCompNum(); ++i) {
+	if ((*pObj)[COM_COLLIDER]) colliders.insert(static_cast<SEComCollider*>((*pObj)[COM_COLLIDER]));
+	if ((*pObj)[COM_LIGHT]) lights.insert(static_cast<SEComLight*>((*pObj)[COM_LIGHT]));
+
+	if (pObj->getCompNum() > COM_NUM)
+		for (int i = COM_NUM; i < pObj->getCompNum(); ++i)
 			if ((*pObj)[i]->getType() == COM_LISTENER)
 				listeners.insert(static_cast<SEComListener*>((*pObj)[i]));
-			else if ((*pObj)[i]->getType() == COM_COLLIDER)
-				colliders.insert(static_cast<SEComCollider*>((*pObj)[i]));
-		}
+
+	unsigned id;
+	gameInsts.push_back(pObj);
+	if (idBase.size() > 0) {
+		id = idBase.front();
+		idBase.pop_front();
 	}
-	return pObj;
+	else {
+		id = currentId++;
+	}
+
+	idMaps[id] = --gameInsts.end();
+
+	if (afterInit) pObj->onInit();
+	
+	return id;
 }
 
-void SEScene::destroy(SEGameObject *pInst) {
+void SEScene::destroy(unsigned id) {
+	SEGameObject *pInst = getInst(id);
+#ifdef SE_DEBUG
+	if (!pInst) {
+		SE_LogManager.append(se_debug::LOGTYPE_ERROR,
+			"Game instance can't be found, nothing was destroyed.");
+		return;
+	}
+#endif
 	if ((*pInst)[COM_CAMERA]) cameras.erase(static_cast<SEComCamera*>((*pInst)[COM_CAMERA]));
 	if (pInst->getCompNum() > COM_NUM) {
 		for (int i = COM_NUM; i < pInst->getCompNum(); ++i) {
@@ -55,7 +77,10 @@ void SEScene::destroy(SEGameObject *pInst) {
 		}
 	}
 	delete pInst;
-	gameInsts.erase(pInst);
+
+	gameInsts.erase(idMaps[id]);
+	idBase.push_back(id);
+	idMaps.erase(id);
 }
 
 bool SEScene::validate(SEGameObject &obj) const {
@@ -105,7 +130,7 @@ void SEScene::collisionDetection() {
 		if ((*i)->isEnabled())
 			for (auto j = i; j != colliders.end(); ++j)
 				if (i != j && (*j)->isEnabled())
-					if ((dir = (*i)->testWith(*j)).lengthSqaure() < FLOAT_OFFSET) {
+					if ((dir = (*i)->testWith(*j)).lengthSqaure() > 0.0f) {
 						SEGameObject *pObjs[2];
 						pObjs[0] = &(*i)->getOwner();
 						pObjs[1] = &(*j)->getOwner();
@@ -120,6 +145,7 @@ void SEScene::init() {
 	for (auto i : gameInsts) {
 		i->onInit();
 	}
+	afterInit = true;
 }
 
 void SEScene::update() {
@@ -129,6 +155,15 @@ void SEScene::update() {
 }
 
 void SEScene::draw() {
+	lightsInfo.clear();
+	for (auto i : lights)
+		if (i->isEnabled()) {
+			SEVector3f decay = i->getDecay();
+			SEVector3f color = i->getColor();
+			SEVector3f pos = static_cast<SEComTransform*>(i->getOwner()[COM_TRANSFORM])->translation();
+			lightsInfo.push_back(SEMatrix3f(pos, color, decay));
+		}
+
 	for (auto pCamera : cameras) {
 		if (pCamera->isEnabled()) {
 			SIN.setActiveCamera(pCamera);
@@ -165,6 +200,8 @@ void SEScene::release() {
 	cameras.clear();
 	listeners.clear();
 	colliders.clear();
+	idBase.clear();
+	idMaps.clear();
 	SE_EventManager.clear();
 }
 
@@ -172,4 +209,16 @@ void SEScene::resize() {
 	for (auto pCamera : cameras)
 		if (pCamera->isEnabled())
 			pCamera->onResize();
+}
+
+SEGameObject * SEScene::getInst(unsigned id)
+{
+#ifdef SE_DEBUG
+	if (idMaps.find(id) == idMaps.end()) {
+		SE_LogManager.append(se_debug::LOGTYPE_ERROR,
+			"Accessing invalid Game instance id.");
+		return NULL;
+	}
+#endif
+	return *idMaps[id];
 }

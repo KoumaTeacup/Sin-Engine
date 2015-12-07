@@ -18,6 +18,7 @@ namespace se_system{
 class SEUtility :public SESystem<SEUtility>{
 	friend SESystem<SEUtility>;
 public:
+	void backFaceCulling() const;
 	void setFPSLimit(int limit);
 
 	void update();

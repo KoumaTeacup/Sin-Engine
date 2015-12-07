@@ -8,12 +8,15 @@ class SEGameObject;
 // New Component TO DOs
 // ATTENTION: component order matters!
 // Transform > Renderer : worldspace matrix construction.
+// Transform > Constraint : local space update.
 enum componentType {
 	COM_RENDERER = 0,
+	COM_CONSTRAINT,
 	COM_TRANSFORM,
 	COM_CAMERA, 
 	COM_COLLIDER,
 	COM_RIGIDBODY,
+	COM_LIGHT,
 	//COM_ANIMATOR,
 	COM_NUM,
 	
@@ -48,7 +51,6 @@ public:
 	// Setters & Getters
 	componentType	getType() const				{ return type; }
 	SEGameObject&	getOwner() const			{ return *owner; }
-	void			setOwner(SEGameObject *o)	{ owner = o; }
 
 	const virtual char* toString() const;
 

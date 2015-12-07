@@ -1,22 +1,38 @@
 #include "SEComTransform.h"
 
+#include "SEGameObject.h"
+#include "SESin.h"
+#include "SEComConstraint.h"
+
 SEComTransform::SEComTransform(std::string name, std::string tag, SEGameObject* owner):
-	SEComponent(COM_TRANSFORM, name, tag, owner) {
-	data[scale][x] = data[scale][y] = data[scale][z] = 1.0f;
-}
+	SEComponent(COM_TRANSFORM, name, tag, owner),
+	scale(1.0f,1.0f,1.0f){}
+
+SEComTransform::SEComTransform(SEVector3f t, SEVector3f r, SEVector3f s, std::string name, std::string tag, SEGameObject * owner) :
+	SEComponent(COM_TRANSFORM, name, tag, owner),
+	trans(t), rot(r), scale(s) {}
 
 SEComTransform::SEComTransform(const SEComTransform & rhs) :
 	SEComponent::SEComponent(rhs),
-	data(rhs.data) {}
+	trans(rhs.trans),
+	rot(rhs.rot),
+	scale(rhs.scale){}
 
 SEComTransform::~SEComTransform() {
 }
 
 SEComTransform& SEComTransform::operator=(const SEComTransform & rhs) {
 	SEComponent::operator=(rhs);
-	if(rhs.getType() == getType())
-		data = rhs.data;
+	trans = rhs.trans;
+	rot = rhs.rot;
+	scale = rhs.scale;
 	return *this;
+}
+
+void SEComTransform::onInit() {
+	if (getOwner()[COM_CONSTRAINT]) {
+		SE_CONSTRAINT.setLocalTransform(trans, rot, scale);
+	}
 }
 
 void SEComTransform::onDraw() {
@@ -26,15 +42,15 @@ void SEComTransform::onDraw() {
 
 float SEComTransform::operator[](index i) const {
 	switch (i) {
-	case tx: return data[trans][x];
-	case ty: return data[trans][y];
-	case tz: return data[trans][z];
-	case rx: return data[rotate][x];
-	case ry: return data[rotate][y];
-	case rz: return data[rotate][z];
-	case sx: return data[scale][x];
-	case sy: return data[scale][y];
-	case sz: return data[scale][z];
+	case tx: return trans[0];
+	case ty: return trans[1];
+	case tz: return trans[2];
+	case rx: return rot[0];
+	case ry: return rot[1];
+	case rz: return rot[2];
+	case sx: return scale[0];
+	case sy: return scale[1];
+	case sz: return scale[2];
 	default: 
 #ifdef SE_DEBUG
 		char log[256];
@@ -49,15 +65,15 @@ float SEComTransform::operator[](index i) const {
 
 float& SEComTransform::operator[](index i) {
 	switch (i) {
-	case tx: return data[trans][x];
-	case ty: return data[trans][y];
-	case tz: return data[trans][z];
-	case rx: return data[rotate][x];
-	case ry: return data[rotate][y];
-	case rz: return data[rotate][z];
-	case sx: return data[scale][x];
-	case sy: return data[scale][y];
-	case sz: return data[scale][z];
+	case tx: return trans[0];
+	case ty: return trans[1];
+	case tz: return trans[2];
+	case rx: return rot[0];
+	case ry: return rot[1];
+	case rz: return rot[2];
+	case sx: return scale[0];
+	case sy: return scale[1];
+	case sz: return scale[2];
 	default:
 #ifdef SE_DEBUG
 		char log[256];
@@ -66,32 +82,20 @@ float& SEComTransform::operator[](index i) {
 		SE_LogManager.append(se_debug::LOGTYPE_ERROR, log);
 		free((void*)name);
 #endif
-		return data[0][0];
+		return SEVector3f()[0];
 	}
 }
 
-SEVector3f SEComTransform::translation() const {
-	return SEVector3f(data[trans][x], data[trans][y], data[trans][z]);
-}
-
-SEVector3f SEComTransform::rotation() const {
-	return SEVector3f(data[rotate][x], data[rotate][y], data[rotate][z]);
-}
-
-SEVector3f SEComTransform::scales() const {
-	return SEVector3f(data[scale][x], data[scale][y], data[scale][z]);
-}
-
 SEMatrix4f SEComTransform::translationMatrix() const {
-	return SE_MATRIX_TRANSLATE4(data[trans][x], data[trans][y], data[trans][z]);
+	return SE_MATRIX_TRANSLATE4(trans[0], trans[1], trans[2]);
 }
 
 SEMatrix4f SEComTransform::rotationMatrix() const {
-	return 	SE_MATRIX_ROTATE4(se_data::AXIS_Z, data[rotate][z]) *
-		SE_MATRIX_ROTATE4(se_data::AXIS_X, data[rotate][x]) *
-		SE_MATRIX_ROTATE4(se_data::AXIS_Y, data[rotate][y]);
+	return 	SE_MATRIX_ROTATE4(se_data::AXIS_Y, rot[1]) *
+		SE_MATRIX_ROTATE4(se_data::AXIS_X, rot[0]) *
+		SE_MATRIX_ROTATE4(se_data::AXIS_Z, rot[2]);
 }
 
 SEMatrix4f SEComTransform::scaleMatrix() const {
-	return SE_MATRIX_SCALE4(data[scale][x], data[scale][y], data[scale][z]);
+	return SE_MATRIX_SCALE4(scale[0], scale[1], scale[2]);
 }

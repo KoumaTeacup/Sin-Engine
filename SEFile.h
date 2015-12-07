@@ -3,6 +3,9 @@
 
 #include "SEObject.h"
 
+#define SE_Shader(x) (*static_cast<se_data::SEShader*>((x)->getFile()))
+#define SE_Texture(x) (*static_cast<se_data::SETexture*>((x)->getFile()))
+
 namespace se_data {
 
 enum resourceType {

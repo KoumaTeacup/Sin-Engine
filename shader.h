@@ -5,13 +5,13 @@
 
 #include "SEFile.h"
 
-#define SE_Shader(x) static_cast<se_data::SEShader*>((x)->getFile())
-
 enum TYPE_UNIFORM {
 	UNIFORM_INT,
 	UNIFORM_FLOAT,
-	UNIFORM_VECTOR,
-	UNIFORM_MATRIX
+	UNIFORM_VECTOR3,
+	UNIFORM_VECTOR4,
+	UNIFORM_MATRIX3,
+	UNIFORM_MATRIX4
 };
 
 namespace se_data{
@@ -25,8 +25,8 @@ public:
 
 	bool link()		const;
 	bool validate() const;
-	GLuint getProgramId() { return programId; }
-	void setVal(TYPE_UNIFORM type, const char* varName, void *data);
+	GLuint getProgramId() const { return programId; }
+	void setVal(TYPE_UNIFORM type, const char* varName, const void *data, int num = 1) const;
 
 	const char*	toString() const { return SEFile::toString(); }
 

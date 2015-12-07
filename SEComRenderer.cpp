@@ -11,7 +11,10 @@
 #include "SESin.h"
 
 SEComRenderer::SEComRenderer(std::string name,	std::string tag, SEGameObject* owner) :
-	SEComponent(COM_RENDERER, name, tag, owner) {}
+	SEComponent(COM_RENDERER, name, tag, owner), alpha(0.01f) {}
+
+SEComRenderer::SEComRenderer(float a, std::string name, std::string tag, SEGameObject* owner) :
+	SEComponent(COM_RENDERER, name, tag, owner), alpha(a) {}
 
 SEComRenderer::SEComRenderer(const SEComRenderer& rhs) :
 	SEComponent::SEComponent(rhs),
@@ -38,8 +41,7 @@ void SEComRenderer::onInit() {
 #ifdef SE_DEBUG
 		char log[256];
 		const char* name = toString();
-		sprintf(log,
-			"%s > Mesh file not found, render may cancel.",	name);
+		sprintf(log, "%s > Mesh file not found, render may cancel.", name);
 		free((void*)name);
 		SE_LogManager.append(se_debug::LOGTYPE_WARNNING, log);
 #endif
@@ -63,36 +65,64 @@ void SEComRenderer::onDraw()
 	SEComponent::onDraw();
 	if (!vao->getFile()) return;
 	// Bind shader.
-	if (texture->getFile()) texture->onDraw();
 	shader->onDraw();
+
+	se_data::SEShader &_shader = SE_Shader(shader);
+
+	if (texture->getFile()) {
+		texture->onDraw();
+		// Load Texture Sampler
+		unsigned unit = 1;
+		_shader.setVal(UNIFORM_INT, "DiffuseMap", &unit);
+
+		float repeat = SE_Texture(texture).getRepeat();
+		_shader.setVal(UNIFORM_FLOAT, "TextureRepeat", &repeat);
+		
+	}
 
 	// Load worldspace stransfromation from transform component.
 	if (getOwner()[COM_TRANSFORM])
-		SE_Shader(shader)->setVal(UNIFORM_MATRIX, "ModelTr", &SE_TRANSFORM.modelTr);
+		_shader.setVal(UNIFORM_MATRIX4, "ModelTr", &SE_TRANSFORM.modelTr);
 	SEComCamera* camera = SIN.getActiveCamera();
 	if (camera) {
-		SE_Shader(shader)->setVal(UNIFORM_MATRIX, "ViewTr", &camera->viewTr);
-		SE_Shader(shader)->setVal(UNIFORM_MATRIX, "ProjTr", &camera->projTr);
+		_shader.setVal(UNIFORM_MATRIX4, "ViewTr", &camera->viewTr);
+		_shader.setVal(UNIFORM_MATRIX4, "ProjTr", &camera->projTr);
+
+		SEVector3f camPos = static_cast<SEComTransform*>(camera->getOwner()[COM_TRANSFORM])->translation();
+		_shader.setVal(UNIFORM_VECTOR3, "EyePos", &camPos);
 	}
 
-	// Load Texture Sampler
-	unsigned unit = 1;
-	SE_Shader(shader)->setVal(UNIFORM_INT, "DiffuseMap", &unit);
+	_shader.setVal(UNIFORM_FLOAT, "Alpha", &alpha);
+
+	int numOfLight = SIN.getActiveLightsNum();
+	_shader.setVal(UNIFORM_INT, "NumOfLights", &numOfLight);
+
+	_shader.setVal(
+		UNIFORM_MATRIX3,
+		"LightInfo",
+		&SIN.getActiveLightsInfo().front(),
+		numOfLight);
 
 	// Bind VAO&IBO -> draw model -> Unbind.
 	vao->onDraw();
 
 	vao->onPostUpdate();
-	shader->onPostUpdate();
+
 	if (texture->getFile()) texture->onPostUpdate();
+
+	shader->onPostUpdate();
 }
 
 GLuint SEComRenderer::getShaderId()
 {
 	if (shader->getFile()) {
-		return SE_Shader(shader)->getProgramId();
+		return SE_Shader(shader).getProgramId();
 	}
 	else return 0;
+}
+
+void SEComRenderer::TextureRepeat(float time) {
+	SE_Texture(texture).setRepeat(time);
 }
 
 void SEComRenderer::attach(const char* filename) {

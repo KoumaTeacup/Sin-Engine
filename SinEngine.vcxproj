@@ -145,14 +145,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cloth.cpp" />
-    <ClCompile Include="clothMain.cpp" />
-    <ClCompile Include="freeCamera.cpp" />
+    <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="hull.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="particle.cpp" />
     <ClCompile Include="SEComCamera.cpp" />
     <ClCompile Include="SEComCollider.cpp" />
+    <ClCompile Include="SEComConstraint.cpp" />
     <ClCompile Include="SEComController.cpp" />
+    <ClCompile Include="SEComLight.cpp" />
     <ClCompile Include="SEComListener.cpp" />
     <ClCompile Include="SEComponent.cpp" />
     <ClCompile Include="SEComRenderer.cpp" />
@@ -170,19 +171,21 @@
     <ClCompile Include="SESin.cpp" />
     <ClCompile Include="SEUtility.cpp" />
     <ClCompile Include="shader.cpp" />
-    <ClCompile Include="spring.cpp" />
     <ClCompile Include="texture.cpp" />
+    <ClCompile Include="turret.cpp" />
+    <ClCompile Include="ufo.cpp" />
     <ClCompile Include="vao.cpp" />
-    <ClCompile Include="windUpdater.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cloth.h" />
-    <ClInclude Include="freeCamera.h" />
-    <ClInclude Include="particle.h" />
+    <ClInclude Include="bullet.h" />
+    <ClInclude Include="enemy.h" />
+    <ClInclude Include="hull.h" />
     <ClInclude Include="SampleStructure.h" />
     <ClInclude Include="SEComCamera.h" />
     <ClInclude Include="SEComCollider.h" />
+    <ClInclude Include="SEComConstraint.h" />
     <ClInclude Include="SEComController.h" />
+    <ClInclude Include="SEComLight.h" />
     <ClInclude Include="SEComListener.h" />
     <ClInclude Include="SEComponent.h" />
     <ClInclude Include="SEComRenderer.h" />
@@ -204,14 +207,12 @@
     <ClInclude Include="SEUtility.h" />
     <ClInclude Include="SEVector.h" />
     <ClInclude Include="shader.h" />
-    <ClInclude Include="spring.h" />
     <ClInclude Include="texture.h" />
+    <ClInclude Include="turret.h" />
+    <ClInclude Include="ufo.h" />
     <ClInclude Include="vao.h" />
-    <ClInclude Include="windUpdater.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="cloth.frag" />
-    <None Include="cloth.vert" />
     <None Include="default.frag" />
     <None Include="default.vert" />
   </ItemGroup>

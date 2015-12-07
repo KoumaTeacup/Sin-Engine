@@ -7,16 +7,18 @@ SEComCollider::SEComCollider(std::string name, std::string tag, SEGameObject *ow
 	SEComponent(COM_COLLIDER, name, tag, owner) {}
 
 SEComCollider::SEComCollider(const SEComCollider &rhs) :
-	SEComponent(rhs) {}
+	SEComponent(rhs),
+	colliders(rhs.colliders) {}
 
 SEComCollider& SEComCollider::operator=(const SEComCollider &rhs) {
 	SEComponent::operator=(rhs);
+	colliders = rhs.colliders;
 	return *this;
 }
 
 SEVector3f SEComCollider::testWith(const SEComCollider * col) const
 {
-	SEVector3f selfPos, otherPos, dis, normal;
+	SEVector3f selfPos, otherPos, dis, normal, reset = SEVector3f();
 	float radius;
 	for (auto &i : colliders)
 		for (auto &j : col->colliders) {
@@ -60,8 +62,8 @@ SEVector3f SEComCollider::testWith(const SEComCollider * col) const
 
 				case SECollider::AABB:
 					normal = i.shape.normal;
-					if (j.isAABBIntersectWithPlane(normal, dis)) return otherPos - selfPos;
-					else return SEVector3f(0.0f, 0.0f, 0.0f);
+					reset += (j.isAABBIntersectWithPlane(normal, dis));
+					continue;
 
 				default:return SEVector3f(0.0f, 0.0f, 0.0f);
 				}
@@ -122,8 +124,8 @@ SEVector3f SEComCollider::testWith(const SEComCollider * col) const
 
 				case SECollider::plane:
 					normal = j.shape.normal;
-					if (i.isAABBIntersectWithPlane(normal, dis))return otherPos - selfPos;
-					else return SEVector3f(0.0f, 0.0f, 0.0f);
+					reset += (i.isAABBIntersectWithPlane(normal, -dis));
+					continue;
 
 				case SECollider::box:
 				case SECollider::sphere: dis *= -1.0f;
@@ -143,7 +145,7 @@ SEVector3f SEComCollider::testWith(const SEComCollider * col) const
 			default: return SEVector3f(0.0f, 0.0f, 0.0f);
 			}
 		}
-	return SEVector3f(0.0f, 0.0f, 0.0f);
+	return reset;
 }
 
 void SEComCollider::onUpdate() {
@@ -236,15 +238,16 @@ bool SECollider::isPointInBox(SEVector3f point, SEMatrix4f rotM) const {
 	return true;
 }
 
-bool SECollider::isAABBIntersectWithPlane(SEVector3f normal, SEVector3f dis) const {
+SEVector3f SECollider::isAABBIntersectWithPlane(SEVector3f normal, SEVector3f dis) const {
 	SEVector3f lhw = shape.lhw / 2.0f;
 	float sign = dis*normal;
-	if (sign*sign > sqRadius) return false;
+	if (sign*sign > sqRadius) return SEVector3f(0.0f, 0.0f, 0.0f);
 	lhw[0] = dis[0] > 0 ? -lhw[0] : lhw[0];
 	lhw[1] = dis[1] > 0 ? -lhw[1] : lhw[1];
 	lhw[2] = dis[2] > 0 ? -lhw[2] : lhw[2];
-	if ((dis + lhw) * normal * sign < 0) return true;
-	return false;
+	float closestSign = (dis + lhw) * normal;
+	if (closestSign * sign < 0) return -closestSign * normal;
+	return SEVector3f(0.0f, 0.0f, 0.0f);
 }
 
 bool SECollider::isBoxIntersectWithPlane(SEVector4f normal, SEVector4f dis, SEMatrix4f rotM) const {

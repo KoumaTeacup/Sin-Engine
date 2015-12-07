@@ -4,6 +4,7 @@
 #include <SFML\Window.hpp>
 
 #include "SESystem.h"
+#include "SEMatrix.h"
 
 #define FLOAT_OFFSET 0.01f
 #define MIPMAP_LEVEL 5
@@ -24,6 +25,8 @@ class SEComRenderer;
 class SEComTransform;
 class SEComRigidBody;
 class SEComCollider;
+class SEComLight;
+class SEComConstraint;
 class SEScene;
 
 #define SIN			SESin::getObj()
@@ -35,6 +38,8 @@ class SEScene;
 #define SE_RENDERER		SIN.getRenderer(this)
 #define SE_RIGIDBODY	SIN.getRigidBody(this)
 #define SE_COLLIDER		SIN.getCollider(this)
+#define SE_LIGHT		SIN.getLight(this)
+#define SE_CONSTRAINT	SIN.getConstraint(this)
 #define SE_COMPONENT(x)	SIN.getComponent(this, x)
 
 #define PI 3.1415926536f
@@ -59,12 +64,14 @@ public:
 	// Utility methods
 	void	setFPSLimit(int limit) const;
 	float	getFrameTime() const;
+	void	backFaceCulling() const;
 
 	// Resource methods
 	// SE_File load(const char* filename) const;
 
 	// Event methods
 	void broadcast(SEEvent e) const;
+	SEVector2ui getMousePosition() const;
 
 	// Input methods
 	bool isKeyPressed(SE_KEY key);
@@ -79,6 +86,8 @@ public:
 	SEComTransform	&getTransform(const SEComponent *comp) const;
 	SEComRigidBody	&getRigidBody(const SEComponent *comp) const;
 	SEComCollider	&getCollider(const SEComponent *comp) const;
+	SEComLight		&getLight(const SEComponent *comp) const;
+	SEComConstraint	&getConstraint(const SEComponent *comp) const;
 	SEComponent		&getComponent(const SEComponent *comp, int id) const;
 
 	// Setters & Getters
@@ -86,12 +95,18 @@ public:
 	SEVector2ui		getWindowSize() const;
 	SEComCamera*	getActiveCamera() const { return activeCamera; }
 	SEScene*		getActiveScene() const { return activeScene; }
+	unsigned		getActiveLightsNum() const;
+
+	const std::vector<SEMatrix3f> &getActiveLightsInfo() const;
 
 	// Functional Methods
 	float toRad(float degree) const { return degree / 180.0f*PI; }
+	float toDegree(float rad) const { return rad * 180.0f / PI; }
 
 private:
 	SESin();
+
+	SEVector2i windowSize;
 
 	bool activeSceneState;
 

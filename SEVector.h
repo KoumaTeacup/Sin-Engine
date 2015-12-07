@@ -16,6 +16,12 @@
 
 namespace se_data {
 
+enum axis {
+	AXIS_X,
+	AXIS_Y,
+	AXIS_Z
+};
+
 template <unsigned DIM, typename T> class matrix;
 template <unsigned DIM, typename T> class vector;
 
@@ -49,6 +55,7 @@ public:
 	vector<DIM, T>	operator*(T rhs)						const;	//scalar mult.
 	T				operator*(const vector<DIM, T> &rhs)	const;	//dot product
 	vector<DIM, T>	operator/(T rhs)						const;	//scalar div.
+	vector<DIM, T>	operator^(const vector<DIM, T> &rhs)	const;	//component product.
 	vector<DIM, T>&	operator+=(const vector<DIM, T> &rhs);
 	vector<DIM, T>&	operator-=(const vector<DIM, T> &rhs);
 	vector<DIM, T>&	operator*=(T rhs);
@@ -60,7 +67,8 @@ public:
 	bool			operator!=(const vector<DIM, T> &rhs)	const;
 
 	// member function
-	vector<DIM,T>&	unify() { return *this /= length(); }
+	vector<DIM, T>&	unify() { T l = length(); if (l != 0) return *this /= l; else return *this; }
+	vector<DIM, T>	absolute();
 	T		length() const { return sqrt(lengthSqaure()); }
 	T		lengthSqaure() const;
 
@@ -202,6 +210,15 @@ bool vector<DIM, T>::operator!=(const vector<DIM, T> &rhs) const {
 }
 
 template<unsigned DIM, typename T>
+vector<DIM, T> vector<DIM, T>::absolute() {
+	vector<DIM, T> result;
+	for (int i = 0; i < DIM; ++i) {
+		result[i] = (data[i] < 0 ? -1 : 1)*data[i];
+	}
+	return result;
+}
+
+template<unsigned DIM, typename T>
 T vector<DIM, T>::lengthSqaure() const
 {
 	T result = T();
@@ -238,6 +255,18 @@ T vector<DIM, T>::operator[](int index) const {
 	}
 #endif
 	return data[index];
+}
+
+template<unsigned DIM, typename T>
+vector<DIM, T> vector<DIM, T>::operator^(const vector<DIM, T>& rhs) const
+{
+	vector<DIM, T> result;
+
+	for (int i = 0; i < DIM; ++i) {
+		result[i] = data[i] * rhs[i];
+	}
+
+	return result;
 }
 
 template <unsigned DIM, typename T>

@@ -17,6 +17,10 @@ public:
 	SEComTransform(std::string name = std::string(),
 		std::string tag = std::string(),
 		SEGameObject* owner = NULL);
+	SEComTransform(SEVector3f t, SEVector3f r, SEVector3f s,
+		std::string name = std::string(),
+		std::string tag = std::string(),
+		SEGameObject* owner = NULL);
 	SEComTransform(const SEComTransform& rhs);
 	~SEComTransform();
 
@@ -27,9 +31,14 @@ public:
 	// Setters & Getters
 	float  operator[](index i) const;
 	float& operator[](index i);
-	SEVector3f translation() const;
-	SEVector3f rotation() const;
-	SEVector3f scales() const;
+
+	SEVector3f&			translation() { return trans; }
+	const SEVector3f	translation() const { return trans; }
+	SEVector3f&			rotation() { return rot; }
+	const SEVector3f	rotation() const { return rot; }
+	SEVector3f&			scales() { return scale; }
+	const SEVector3f	scales() const {return scale; }
+
 	SEMatrix4f translationMatrix() const;
 	SEMatrix4f rotationMatrix() const;
 	SEMatrix4f scaleMatrix() const;
@@ -38,17 +47,15 @@ public:
 
 protected:
 	// Inherited pure virtuals.
-	void onInit() {}
+	void onInit();
 	void onRelease() {}
 
 	// Inherited virtuals.
 	void onDraw();
 
 private:
-	enum modelTr {trans = 0, rotate, scale};
-	enum axis {x = 0, y, z};
-
-	SEMatrix3f data;
+	
+	SEVector3f trans, rot, scale;
 
 };
 

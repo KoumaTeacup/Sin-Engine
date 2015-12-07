@@ -8,6 +8,7 @@ using namespace se_data;
 SETexture::SETexture(std::string name, unsigned u) :
 	SEFile(name, RESTYPE_TEXTURE),
 	id(0),
+	repeat(1.0f),
 	unit(u),
 	target(GL_TEXTURE_2D) {}
 

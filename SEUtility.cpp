@@ -9,6 +9,8 @@
 #include "SEComRenderer.h"
 #include "SEComRigidBody.h"
 #include "SEComCollider.h"
+#include "SEComLight.h"
+#include "SEComConstraint.h"
 
 using namespace se_system;
 
@@ -41,6 +43,8 @@ void SEUtility::typeToString(char *str, componentType type) const {
 	case COM_RENDERER:	sprintf(str, "Renderer"); break;
 	case COM_RIGIDBODY:	sprintf(str, "RigidBody"); break;
 	case COM_COLLIDER:	sprintf(str, "Collider"); break;
+	case COM_LIGHT:		sprintf(str, "Light"); break;
+	case COM_CONSTRAINT:sprintf(str, "Constraint"); break;
 	}
 }
 
@@ -51,8 +55,16 @@ SEComponent *SEUtility::typeToPointer(componentType type, std::string name, std:
 	case COM_RENDERER:	return new SEComRenderer(name, tag);
 	case COM_RIGIDBODY:	return new SEComRigidBody(name, tag);
 	case COM_COLLIDER:	return new SEComCollider(name, tag);
+	case COM_LIGHT:		return new SEComLight(name, tag);
+	case COM_CONSTRAINT:return new SEComConstraint(name, tag);
 	}
 	return NULL;
+}
+
+void se_system::SEUtility::backFaceCulling() const
+{
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 }
 
 void SEUtility::setFPSLimit(int limit) {

@@ -34,6 +34,9 @@
     <Filter Include="ClothSimulation">
       <UniqueIdentifier>{727bbe66-e030-4996-8715-c1f81aa8fac0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="testGame">
+      <UniqueIdentifier>{ecd6a175-ccdf-416d-9f48-27b7321f0db1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SEGameObject.cpp">
@@ -102,26 +105,29 @@
     <ClCompile Include="texture.cpp">
       <Filter>Data</Filter>
     </ClCompile>
-    <ClCompile Include="cloth.cpp">
-      <Filter>ClothSimulation</Filter>
-    </ClCompile>
-    <ClCompile Include="particle.cpp">
-      <Filter>ClothSimulation</Filter>
-    </ClCompile>
     <ClCompile Include="SEComUser.cpp">
       <Filter>User\Components</Filter>
     </ClCompile>
-    <ClCompile Include="clothMain.cpp">
-      <Filter>ClothSimulation</Filter>
+    <ClCompile Include="SEComLight.cpp">
+      <Filter>User\Components</Filter>
     </ClCompile>
-    <ClCompile Include="freeCamera.cpp">
-      <Filter>ClothSimulation</Filter>
+    <ClCompile Include="hull.cpp">
+      <Filter>testGame</Filter>
     </ClCompile>
-    <ClCompile Include="windUpdater.cpp">
-      <Filter>ClothSimulation</Filter>
+    <ClCompile Include="SEComConstraint.cpp">
+      <Filter>User\Components</Filter>
     </ClCompile>
-    <ClCompile Include="spring.cpp">
-      <Filter>ClothSimulation</Filter>
+    <ClCompile Include="turret.cpp">
+      <Filter>testGame</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>testGame</Filter>
+    </ClCompile>
+    <ClCompile Include="ufo.cpp">
+      <Filter>testGame</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>testGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,23 +209,29 @@
     <ClInclude Include="texture.h">
       <Filter>Data</Filter>
     </ClInclude>
-    <ClInclude Include="particle.h">
-      <Filter>ClothSimulation</Filter>
-    </ClInclude>
-    <ClInclude Include="cloth.h">
-      <Filter>ClothSimulation</Filter>
-    </ClInclude>
     <ClInclude Include="SEComUser.h">
       <Filter>User\Components</Filter>
     </ClInclude>
-    <ClInclude Include="freeCamera.h">
-      <Filter>ClothSimulation</Filter>
+    <ClInclude Include="SEComLight.h">
+      <Filter>User\Components</Filter>
     </ClInclude>
-    <ClInclude Include="windUpdater.h">
-      <Filter>ClothSimulation</Filter>
+    <ClInclude Include="hull.h">
+      <Filter>testGame</Filter>
     </ClInclude>
-    <ClInclude Include="spring.h">
-      <Filter>ClothSimulation</Filter>
+    <ClInclude Include="SEComConstraint.h">
+      <Filter>User\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="turret.h">
+      <Filter>testGame</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>testGame</Filter>
+    </ClInclude>
+    <ClInclude Include="ufo.h">
+      <Filter>testGame</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>testGame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,12 +240,6 @@
     </None>
     <None Include="default.vert">
       <Filter>Shaders</Filter>
-    </None>
-    <None Include="cloth.vert">
-      <Filter>ClothSimulation</Filter>
-    </None>
-    <None Include="cloth.frag">
-      <Filter>ClothSimulation</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -7,6 +7,8 @@
 
 #include "SEMatrix.h"
 
+
+
 struct SECollider {
 	enum shapeType {
 		none,
@@ -25,24 +27,29 @@ struct SECollider {
 
 		colliderShape() { memset(this, 0, sizeof(colliderShape)); }
 		colliderShape(const colliderShape &rhs) { memcpy(this, &rhs, sizeof(colliderShape)); }
+		colliderShape(const SEVector3f &vec3) { normal = vec3; }
+		colliderShape(float f) { radius = f; }
 		colliderShape& operator=(const colliderShape& rhs) {
 			memcpy(this, &rhs, sizeof(colliderShape));
 		}
-	} shape;
+	}shape;
 
 	SEVector3f offset;
 	float sqRadius;
 
 	// methods
 	SECollider() : type(none), sqRadius(0.0f), shape() {}
+	SECollider(shapeType t, colliderShape s, SEVector3f o = SEVector3f()) :
+		type(t), sqRadius(0.0f), shape(s), offset(o) {}
 	SECollider(const SECollider &rhs);
+
 	bool operator<(const SECollider &rhs) const { return this < &rhs; }
 	SECollider& calculateSqRadius();
 	bool isPointInAABB(SEVector3f point) const;
 	bool isAABBInAABB(SEVector3f dis, SEVector3f lhw) const;
 	bool isAABBInSphere(SEVector3f dis, SEVector3f lhw) const;
 	bool isPointInBox(SEVector3f point, SEMatrix4f tranM) const;
-	bool isAABBIntersectWithPlane(SEVector3f normal, SEVector3f dis) const;
+	SEVector3f isAABBIntersectWithPlane(SEVector3f normal, SEVector3f dis) const;
 	bool isBoxIntersectWithPlane(SEVector4f normal, SEVector4f dis, SEMatrix4f rotM) const;
 };
 

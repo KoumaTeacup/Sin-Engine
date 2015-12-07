@@ -17,6 +17,10 @@ public:
 
 	const char* toString() const { return SEFile::toString(); }
 
+	// Getter & Setter
+	float getRepeat() { return repeat; }
+	void setRepeat(float time) { repeat = time; }
+
 protected:
 	void onInit();
 	void onRelease();
@@ -26,6 +30,7 @@ protected:
 private:
 	GLuint id;
 	GLenum target;
+	float repeat;
 	unsigned unit;
 	sf::Image texture;
 	sf::Texture tex;

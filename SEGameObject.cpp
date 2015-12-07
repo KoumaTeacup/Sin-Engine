@@ -83,7 +83,7 @@ int SEGameObject::attach(componentType type, std::string name, std::string tag) 
 		char log[256], typeStr[32];
 		const char *name = toString();
 		SE_Utility.typeToString(typeStr, type);
-		sprintf(log, "%s can't have more than one %s component", name, typeStr);
+		sprintf(log, "%s can't have more than one %s component, former discarded", name, typeStr);
 		free((void*)name);
 		SE_LogManager.append(se_debug::LOGTYPE_WARNNING, log);
 #endif
@@ -102,7 +102,7 @@ int SEGameObject::attach(SEComponent *pCom) {
 			char log[256], typeStr[32];
 			const char *name = toString();
 			SE_Utility.typeToString(typeStr, pCom->getType());
-			sprintf(log, "%s can't have more than one %s component", name, typeStr);
+			sprintf(log, "%s can't have more than one %s component, former discarded", name, typeStr);
 			free((void*)name);
 			SE_LogManager.append(se_debug::LOGTYPE_WARNNING, log);
 #endif
@@ -121,7 +121,7 @@ void SEGameObject::detach(componentType type) {
 
 void SEGameObject::resetOwner() {
 	for (auto i = components.rbegin(); i != components.rend(); ++i) {
-		if (*i) (*i)->setOwner(this);
+		if (*i) (*i)->owner = this;
 	}
 }
 

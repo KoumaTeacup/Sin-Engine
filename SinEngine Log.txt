@@ -1,14 +1,34 @@
 - Sin Engine -[General] Log Manager initialized.
 - Sin Engine -[General] utilityManager Initialized.
 - Sin Engine -[General] FPS limit set to 60
-- Sin Engine -[General] Loading VAO file cloth_12x12.obj...success.
-- Sin Engine -[General] Loading texture file Digipen_flag.jpg...success.
-- Sin Engine -[General] Loading shader file cloth.vert...Success.
-- Sin Engine -[General] Loading shader file cloth.frag...Success.
-- Sin Engine -[General] Loading Game Object "middleFlag"...success.
-- Sin Engine -[General] Loading Game Object "mainCamera"...success.
-- Sin Engine -[Warnning] Game Object "mainCamera_copy001"> Same camera object instantiation won't draw more than once
-- Sin Engine -[General] Loading Game Object "windUpdater"...success.
+- Sin Engine -[General] Loading VAO file room.obj...success.
+- Sin Engine -[General] Loading texture file DM_Room.jpg...success.
+- Sin Engine -[General] Loading Game Object "room"...success.
+- Sin Engine -[General] Loading VAO file hull.obj...success.
+- Sin Engine -[General] Loading texture file DM_turret.png...success.
+- Sin Engine -[General] Loading Game Object "hull"...success.
+- Sin Engine -[General] Loading VAO file bullet.obj...success.
+- Sin Engine -[General] Loading texture file DM_bullet.jpg...success.
+- Sin Engine -[General] Loading Game Object "bullet"...success.
+- Sin Engine -[General] Loading VAO file turret.obj...success.
+- Sin Engine -[General] Loading texture file DM_turret.png...success.
+- Sin Engine -[General] Loading Game Object "turret"...success.
+- Sin Engine -[General] Loading VAO file gun.obj...success.
+- Sin Engine -[General] Loading texture file DM_turret.png...success.
+- Sin Engine -[General] Loading Game Object "gun"...success.
+- Sin Engine -[General] Loading Game Object "thirdPersonCamera"...success.
+- Sin Engine -[Warnning] Game Object "thirdPersonCamera_copy001"> Instantiate same camera object may lead to redundant draw
+- Sin Engine -[General] Loading Game Object "roomLight"...success.
+- Sin Engine -[General] Loading VAO file UFO.obj...success.
+- Sin Engine -[General] Loading texture file DM_UFO.png...success.
+- Sin Engine -[General] Loading Game Object "ufoObject"...success.
+- Sin Engine -[General] Loading Game Object "enemyFactory"...success.
+- Sin Engine -[General] Loading shader file default.vert...Success.
+- Sin Engine -[General] Loading shader file default.frag...Success.
 - Sin Engine -[General] Linking shader program...Success.
 - Sin Engine -[General] Validating shader program...Success.
-Current FPS: 7  
+- Sin Engine -[Error] Invalid game object id can not be instantiated.
+- Sin Engine -[Error] Invalid game object id can not be instantiated.
+- Sin Engine -[Error] Invalid game object id can not be instantiated.
+- Sin Engine -[Error] Invalid game object id can not be instantiated.
+Current FPS: 8  

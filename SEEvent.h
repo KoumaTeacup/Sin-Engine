@@ -32,6 +32,11 @@ struct SEEvent {
 	char infoString[64];
 
 	union infoType{
+		int userInt;
+		float userFloat;
+		SEVector3f userVec3;
+		SEVector4f userVec4;
+
 		sf::Event::KeyEvent				key;
 		sf::Event::JoystickButtonEvent	button;
 		sf::Event::JoystickMoveEvent	move;
@@ -58,6 +63,18 @@ struct SEEvent {
 		}
 	}
 
+	SEEvent(const SEEvent &rhs) :
+		type(rhs.type),
+		delay(rhs.delay),
+		numOfObjects(rhs.numOfObjects),
+		info(rhs.info) {
+		strcpy(infoString, rhs.infoString);
+		if (numOfObjects > 0) {
+			pObjs = new SEGameObject*[numOfObjects];
+			for (int i = 0; i < numOfObjects; ++i) pObjs[i] = rhs.pObjs[i];
+		}
+	}
+
 	~SEEvent() { if (numOfObjects > 0) delete[] pObjs; }
 };
 
@@ -71,6 +88,9 @@ public:
 	void distribute();
 
 	void clear() { eventQueue.clear(); }
+
+	// Getter & Setter
+	SEVector2ui getMousePosition() const { return SEVector2ui(oldMouseX, oldMouseY); }
 
 private:
 	int oldMouseX, oldMouseY;

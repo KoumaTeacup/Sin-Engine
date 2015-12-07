@@ -14,9 +14,11 @@
 #include "SEComTransform.h"
 #include "SEComRigidBody.h"
 #include "SEComCollider.h"
+#include "SEComLight.h"
+#include "SEComConstraint.h"
 #include "SEComTemp.h"
 
-SESin::SESin():activeScene(NULL), activeCamera(NULL) {
+SESin::SESin():activeScene(NULL), activeCamera(NULL), windowSize(800, 600) {
 	glSettings.depthBits = 24;
 	glSettings.stencilBits = 8;
 	glSettings.antialiasingLevel = 4;
@@ -32,7 +34,7 @@ bool SESin::init(){
 #endif
 
 	// create the window
-	window.create(sf::VideoMode(800, 600), "Sin Engine", sf::Style::Default, glSettings);
+	window.create(sf::VideoMode(windowSize[0], windowSize[1]), "Sin Engine", sf::Style::Default, glSettings);
 	window.setVerticalSyncEnabled(true);
 
 	// Initialize glew
@@ -128,8 +130,17 @@ float SESin::getFrameTime() const{
 	return SE_Utility.getFrameTime();
 }
 
+void SESin::backFaceCulling() const
+{
+	SE_Utility.backFaceCulling();
+}
+
 void SESin::broadcast(SEEvent e) const {
 	SE_Broadcast(e);
+}
+
+SEVector2ui SESin::getMousePosition() const { 
+	return SE_EventManager.getMousePosition(); 
 }
 
 bool SESin::isKeyPressed(SE_KEY key) {
@@ -224,6 +235,38 @@ SEComCollider & SESin::getCollider(const SEComponent * comp) const {
 		return (*static_cast<SEComCollider*>(pObj[COM_COLLIDER]));
 }
 
+SEComLight & SESin::getLight(const SEComponent * comp) const {
+	SEGameObject &pObj = comp->getOwner();
+#ifdef SE_DEBUG
+	if (!pObj[COM_LIGHT]) {
+		char log[256];
+		const char *name = comp->toString();
+		sprintf(log, "%s> Accessing invalid Light component.", name);
+		SE_LogManager.append(se_debug::LOGTYPE_WARNNING, log);
+		free((void*)name);
+		return SEComLight(NULL);
+	}
+	else
+#endif
+		return (*static_cast<SEComLight*>(pObj[COM_LIGHT]));
+}
+
+SEComConstraint & SESin::getConstraint(const SEComponent * comp) const {
+	SEGameObject &pObj = comp->getOwner();
+#ifdef SE_DEBUG
+	if (!pObj[COM_CONSTRAINT]) {
+		char log[256];
+		const char *name = comp->toString();
+		sprintf(log, "%s> Accessing invalid Constraint component.", name);
+		SE_LogManager.append(se_debug::LOGTYPE_WARNNING, log);
+		free((void*)name);
+		return SEComConstraint(NULL);
+	}
+	else
+#endif
+		return (*static_cast<SEComConstraint*>(pObj[COM_CONSTRAINT]));
+}
+
 SEComponent &SESin::getComponent(const SEComponent * comp, int id) const {
 	SEGameObject &pObj = comp->getOwner();
 #ifdef SE_DEBUG
@@ -246,4 +289,14 @@ void SESin::setActiveCamera(SEComponent * pCam) {
 
 SEVector2ui SESin::getWindowSize() const {
 	return SEVector2ui(window.getSize().x, window.getSize().y);
+}
+
+unsigned SESin::getActiveLightsNum() const
+{
+	return activeScene->getLightsNum();
+}
+
+const std::vector<SEMatrix3f>& SESin::getActiveLightsInfo() const
+{
+	return activeScene->getLightsInfo();
 }
