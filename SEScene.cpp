@@ -70,6 +70,7 @@ void SEScene::destroy(unsigned id) {
 	}
 #endif
 	if ((*pInst)[COM_CAMERA]) cameras.erase(static_cast<SEComCamera*>((*pInst)[COM_CAMERA]));
+	if ((*pInst)[COM_COLLIDER]) colliders.erase(static_cast<SEComCollider*>((*pInst)[COM_COLLIDER]));
 	if (pInst->getCompNum() > COM_NUM) {
 		for (int i = COM_NUM; i < pInst->getCompNum(); ++i) {
 			if ((*pInst)[i]->getType() == COM_LISTENER)

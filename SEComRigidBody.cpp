@@ -55,6 +55,10 @@ void SEComRigidBody::onUpdate() {
 	float ft = SIN.getFrameTime();
 	if (ft > 0.05) return;
 	velocity += (SEVector3f(0.0f, -PHY_G, 0.0f) + pendingForce) * ft;
+
+	SEVector3f dir = velocity;
+	dir.unify();
+	pendingForce = (-velocity ^ velocity.absolute() * velocityDamp) - 50.0f * mass * dir;
 }
 
 void SEComRigidBody::onPostUpdate() {
@@ -62,7 +66,4 @@ void SEComRigidBody::onPostUpdate() {
 	if (ft > 0.05) return;
 	SE_TRANSFORM.translation() += ft * velocity;
 
-	SEVector3f dir = velocity;
-	dir.unify();
-	pendingForce = (-velocity ^ velocity.absolute() * velocityDamp) - 50.0f * mass * dir;
 }

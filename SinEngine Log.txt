@@ -18,17 +18,23 @@
 - Sin Engine -[General] Loading Game Object "gun"...success.
 - Sin Engine -[General] Loading Game Object "thirdPersonCamera"...success.
 - Sin Engine -[Warnning] Game Object "thirdPersonCamera_copy001"> Instantiate same camera object may lead to redundant draw
+- Sin Engine -[General] Loading VAO file plane.obj...success.
+- Sin Engine -[General] Loading texture file plane.jpg...success.
+- Sin Engine -[General] Loading shader file menu.vert...Success.
+- Sin Engine -[General] Loading shader file menu.frag...Success.
+- Sin Engine -[General] Loading Game Object "plane"...success.
 - Sin Engine -[General] Loading Game Object "roomLight"...success.
 - Sin Engine -[General] Loading VAO file UFO.obj...success.
 - Sin Engine -[General] Loading texture file DM_UFO.png...success.
 - Sin Engine -[General] Loading Game Object "ufoObject"...success.
+- Sin Engine -[General] Loading VAO file bot.obj...success.
+- Sin Engine -[General] Loading texture file DM_UFO.png...success.
+- Sin Engine -[General] Loading Game Object "botObject"...success.
 - Sin Engine -[General] Loading Game Object "enemyFactory"...success.
 - Sin Engine -[General] Loading shader file default.vert...Success.
 - Sin Engine -[General] Loading shader file default.frag...Success.
 - Sin Engine -[General] Linking shader program...Success.
 - Sin Engine -[General] Validating shader program...Success.
-- Sin Engine -[Error] Invalid game object id can not be instantiated.
-- Sin Engine -[Error] Invalid game object id can not be instantiated.
-- Sin Engine -[Error] Invalid game object id can not be instantiated.
-- Sin Engine -[Error] Invalid game object id can not be instantiated.
-Current FPS: 8  
+- Sin Engine -[General] Linking shader program...Success.
+- Sin Engine -[General] Validating shader program...Success.
+Current FPS: 7  

@@ -4,6 +4,11 @@
 #define MAX_UFO 4
 #define MAX_BOT 4
 
+#define UFO_LIFE 5
+#define BOT_LIFE 5
+
+#include <vector>
+
 #include "SEComListener.h"
 
 
@@ -21,6 +26,7 @@ protected:
 
 private:
 	unsigned ufo, bot, ufoId, botId;
+	std::vector<unsigned> ufos, bots;
 };
 
 #endif

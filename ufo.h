@@ -1,7 +1,6 @@
 #ifndef UFO_H
 #define UFO_H
 
-#define UFO_LIFE 10
 #define UFO_SPEED 1.0f
 
 #include "SEComListener.h"
@@ -9,6 +8,8 @@
 
 class UFO : public SEComListener {
 public:
+	unsigned hitCount;
+
 	UFO();
 	~UFO() {};
 

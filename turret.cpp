@@ -11,6 +11,7 @@
 void Turret::handle(SEEvent & e) {
 	if (e.type == EVENT_KEYPRESS &&
 		e.info.key.code == SE_KEYBOARD::Space) {
+		if (fireDalay < 1.0f) return;
 		unsigned inst = SIN.getActiveScene()->instantiate(bulletId);
 		SEGameObject *pObj = SIN.getActiveScene()->getInst(inst);
 		Bullet *ptr = static_cast<Bullet*>((*pObj)[componentId]);
@@ -26,6 +27,8 @@ void Turret::handle(SEEvent & e) {
 		e.info.userInt = inst;
 		SIN.broadcast(e);
 
+		fireDalay = 0.0f;
+
 		return;
 	}
 
@@ -36,6 +39,7 @@ void Turret::handle(SEEvent & e) {
 }
 
 void Turret::onUpdate() {
+	if (fireDalay <1.0f) fireDalay += SIN.getFrameTime();
 	SEVector2ui uPos = SIN.getMousePosition();
 	SEVector2ui uSize = SIN.getWindowSize();
 	if (uPos[0] > uSize[0] || uPos[1] > uSize[1]) return;

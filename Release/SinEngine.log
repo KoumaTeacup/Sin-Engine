@@ -1,39 +1,29 @@
-﻿Build started 12/6/2015 11:58:37 PM.
+﻿Build started 12/9/2015 10:42:51 AM.
      1>Project "F:\VS Projects\Sin-Engine\SinEngine.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Dev Software\Visual Studio\VC\bin\CL.exe /c /I"F:\VS Projects\Sin-Engine\glew\include" /I"F:\VS Projects\Sin-Engine\freeglut\include" /I"F:\VS Projects\Sin-Engine\sfml\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _CRT_SECURE_NO_WARNINGS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt enemy.cpp hull.cpp main.cpp SEComCamera.cpp SEComCollider.cpp SEComConstraint.cpp SEComController.cpp SEComLight.cpp SEComListener.cpp SEComponent.cpp SEComRenderer.cpp SEComRigidBody.cpp SEComTransform.cpp SEComUser.cpp SEEvent.cpp SEFile.cpp SEGameObject.cpp SEResource.cpp SEScene.cpp SESin.cpp SEUtility.cpp shader.cpp texture.cpp turret.cpp ufo.cpp vao.cpp
+         D:\Dev Software\Visual Studio\VC\bin\CL.exe /c /I"F:\VS Projects\Sin-Engine\glew\include" /I"F:\VS Projects\Sin-Engine\freeglut\include" /I"F:\VS Projects\Sin-Engine\sfml\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _CRT_SECURE_NO_WARNINGS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt bot.cpp bullet.cpp enemy.cpp hull.cpp main.cpp menu.cpp SEComCollider.cpp SEComController.cpp SEComListener.cpp SEComRigidBody.cpp SEEvent.cpp SEScene.cpp SESin.cpp turret.cpp ufo.cpp
+         bot.cpp
+         bullet.cpp
          enemy.cpp
          hull.cpp
          main.cpp
-     1>main.cpp(32): warning C4101: 'bot': unreferenced local variable
-         SEComCamera.cpp
+         menu.cpp
          SEComCollider.cpp
-         SEComConstraint.cpp
          SEComController.cpp
-         SEComLight.cpp
          SEComListener.cpp
-         SEComponent.cpp
-         SEComRenderer.cpp
          SEComRigidBody.cpp
-         SEComTransform.cpp
-         SEComUser.cpp
          SEEvent.cpp
-         SEFile.cpp
-         SEGameObject.cpp
-         SEResource.cpp
          SEScene.cpp
          SESin.cpp
-         Compiling...
-         SEUtility.cpp
-         shader.cpp
-         texture.cpp
          turret.cpp
          ufo.cpp
-         vao.cpp
        Link:
-         D:\Dev Software\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\VS Projects\Sin-Engine\Release\SinEngine.exe" /NOLOGO /LIBPATH:"F:\VS Projects\Sin-Engine\sfml\lib" /LIBPATH:"F:\VS Projects\Sin-Engine\freeglut\lib" /LIBPATH:"F:\VS Projects\Sin-Engine\glew\lib" "sfml-window.lib" "sfml-graphics.lib" "sfml-audio.lib" "sfml-network.lib" opengl32.lib "sfml-system.lib" freeglut.lib glew32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"F:\VS Projects\Sin-Engine\Release\SinEngine.pdb" /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\VS Projects\Sin-Engine\Release\SinEngine.lib" /MACHINE:X86 /SAFESEH Release\enemy.obj
+         D:\Dev Software\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\VS Projects\Sin-Engine\Release\SinEngine.exe" /NOLOGO /LIBPATH:"F:\VS Projects\Sin-Engine\sfml\lib" /LIBPATH:"F:\VS Projects\Sin-Engine\freeglut\lib" /LIBPATH:"F:\VS Projects\Sin-Engine\glew\lib" "sfml-window.lib" "sfml-graphics.lib" "sfml-audio.lib" "sfml-network.lib" opengl32.lib "sfml-system.lib" freeglut.lib glew32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"F:\VS Projects\Sin-Engine\Release\SinEngine.pdb" /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\VS Projects\Sin-Engine\Release\SinEngine.lib" /MACHINE:X86 /SAFESEH Release\bot.obj
+         Release\bullet.obj
+         Release\enemy.obj
          Release\hull.obj
          Release\main.obj
+         Release\menu.obj
          Release\SEComCamera.obj
          Release\SEComCollider.obj
          Release\SEComConstraint.obj
@@ -61,15 +51,13 @@
          Release\ufo.obj
          Release\vao.obj
          Generating code
-     1>f:\vs projects\sin-engine\secomtransform.cpp(85): warning C4172: returning address of local variable or temporary
-     1>f:\vs projects\sin-engine\segameobject.cpp(65): warning C4172: returning address of local variable or temporary: undefined
-         1485 of 2677 functions (55.5%) were compiled, the rest were copied from previous compilation.
-           670 functions were new in current compilation
-           194 functions had inline decision re-evaluated but remain unchanged
+         364 of 2739 functions (13.3%) were compiled, the rest were copied from previous compilation.
+           63 functions were new in current compilation
+           255 functions had inline decision re-evaluated but remain unchanged
          Finished generating code
          SinEngine.vcxproj -> F:\VS Projects\Sin-Engine\Release\SinEngine.exe
      1>Done Building Project "F:\VS Projects\Sin-Engine\SinEngine.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:44.70
+Time Elapsed 00:00:30.93

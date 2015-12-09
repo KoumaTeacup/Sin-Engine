@@ -129,6 +129,12 @@
     <ClCompile Include="bullet.cpp">
       <Filter>testGame</Filter>
     </ClCompile>
+    <ClCompile Include="bot.cpp">
+      <Filter>testGame</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>testGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SEVector.h">
@@ -233,12 +239,24 @@
     <ClInclude Include="bullet.h">
       <Filter>testGame</Filter>
     </ClInclude>
+    <ClInclude Include="bot.h">
+      <Filter>testGame</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>testGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.frag">
       <Filter>Shaders</Filter>
     </None>
     <None Include="default.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="menu.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="menu.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

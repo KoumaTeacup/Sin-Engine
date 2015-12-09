@@ -38,12 +38,11 @@ SEVector3f SEComCollider::testWith(const SEComCollider * col) const
 
 				case SECollider::AABB: dis *= -1.0f;
 					if (dis.lengthSqaure() > j.sqRadius) return SEVector3f(0.0f, 0.0f, 0.0f);
-					if (j.isPointInAABB(dis)) return otherPos - selfPos;
-					else return SEVector3f(0.0f, 0.0f, 0.0f);
+					if (j.isPointInAABB(dis)) reset += otherPos - selfPos;
+					break;
 
-				default: return SEVector3f(0.0f, 0.0f, 0.0f);
+				default: continue;
 				}
-				break;
 			case SECollider::plane:
 				switch (j.type) {
 				case SECollider::box:
@@ -65,7 +64,7 @@ SEVector3f SEComCollider::testWith(const SEComCollider * col) const
 					reset += (j.isAABBIntersectWithPlane(normal, dis));
 					continue;
 
-				default:return SEVector3f(0.0f, 0.0f, 0.0f);
+				default: continue;
 				}
 			case SECollider::box: break;
 				switch (j.type) {
@@ -82,10 +81,10 @@ SEVector3f SEComCollider::testWith(const SEComCollider * col) const
 						SE_TRANSFORM.rotationMatrix())) return otherPos - selfPos;
 					else return SEVector3f(0.0f, 0.0f, 0.0f);
 
-				case SECollider::box:
-				case SECollider::sphere:
+				case SECollider::box: continue;
+				case SECollider::sphere: continue;
 
-				default:return SEVector3f(0.0f, 0.0f, 0.0f);
+				default: continue;
 				}
 			case SECollider::sphere:
 				switch (j.type) {
@@ -112,15 +111,14 @@ SEVector3f SEComCollider::testWith(const SEComCollider * col) const
 					if (i.isAABBInSphere(dis, j.shape.lhw)) return otherPos - selfPos;
 					else return SEVector3f(0.0f, 0.0f, 0.0f);
 
-				default: return SEVector3f(0.0f, 0.0f, 0.0f);
+				default: continue;
 				}
-
 			case SECollider::AABB:
 				switch (j.type) {
 				case SECollider::point:
 					if (dis.lengthSqaure() > i.sqRadius) return SEVector3f(0.0f, 0.0f, 0.0f);
-					if (i.isPointInAABB(dis))return otherPos - selfPos;
-					else return SEVector3f(0.0f, 0.0f, 0.0f);
+					if (i.isPointInAABB(dis)) reset += selfPos - otherPos;
+					continue;
 
 				case SECollider::plane:
 					normal = j.shape.normal;
@@ -137,12 +135,12 @@ SEVector3f SEComCollider::testWith(const SEComCollider * col) const
 				case SECollider::AABB:
 					radius = i.shape.radius + j.shape.radius;
 					if (dis.lengthSqaure() > radius * radius) return SEVector3f(0.0f, 0.0f, 0.0f);
-					if (i.isAABBInAABB(dis, j.shape.lhw))return otherPos - selfPos;
-					else return SEVector3f(0.0f, 0.0f, 0.0f);
+					if (i.isAABBInAABB(dis, j.shape.lhw))reset += otherPos - selfPos;
+					continue;
 
-				default:return SEVector3f(0.0f, 0.0f, 0.0f);
+				default: continue;
 				}
-			default: return SEVector3f(0.0f, 0.0f, 0.0f);
+			default: continue;
 			}
 		}
 	return reset;

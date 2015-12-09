@@ -145,10 +145,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bot.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="hull.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="SEComCamera.cpp" />
     <ClCompile Include="SEComCollider.cpp" />
     <ClCompile Include="SEComConstraint.cpp" />
@@ -177,9 +179,11 @@
     <ClCompile Include="vao.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bot.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="hull.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="SampleStructure.h" />
     <ClInclude Include="SEComCamera.h" />
     <ClInclude Include="SEComCollider.h" />
@@ -215,6 +219,8 @@
   <ItemGroup>
     <None Include="default.frag" />
     <None Include="default.vert" />
+    <None Include="menu.frag" />
+    <None Include="menu.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
