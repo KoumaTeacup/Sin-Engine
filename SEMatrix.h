@@ -354,6 +354,12 @@ vector<DIM, T>& vector<DIM,T>::operator*=(const matrix<DIM, T> &rhs) {
 	return *this;
 }
 
+template<unsigned DIM, typename T>
+vector<DIM, T> vector<DIM, T>::operator*(const matrix<DIM, T>& rhs) const {
+	vector<DIM, T> result = rhs * *this;
+	return result;
+}
+
 }// namespace se_data
 
 // typedefs

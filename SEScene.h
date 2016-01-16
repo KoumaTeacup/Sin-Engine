@@ -78,6 +78,8 @@ private:
 	std::list<SEGameObject*> gameInsts;
 	std::map<unsigned, std::list<SEGameObject*>::iterator> idMaps;
 	std::list<int> idBase;
+
+	// Components container
 	std::set<SEComCamera*> cameras;
 	std::set<SEComListener*> listeners;
 	std::set<SEComCollider*> colliders;
@@ -87,6 +89,10 @@ private:
 	// |Color.r,	Color.g,	Color.b		|
 	// |decay.1,	decay.2,	decay.3		|
 	std::vector<SEMatrix3f> lightsInfo;
+
+	// State change container
+	std::vector<SEGameObject> toInstantiate;
+	std::vector<unsigned> toDestroy;
 };
 
 #endif

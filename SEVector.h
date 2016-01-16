@@ -45,6 +45,10 @@ public:
 		return *this;
 	}
 
+	// conversion optr
+	template <unsigned D>
+	operator vector<D, T>() const;
+
 	friend vector<DIM, T> operator* <>(T lhs, const vector<DIM, T> &rhs);
 
 	// operation overload
@@ -54,6 +58,7 @@ public:
 	vector<DIM, T>	operator%(const vector<DIM, T> &rhs)	const;	//cross product
 	vector<DIM, T>	operator*(T rhs)						const;	//scalar mult.
 	T				operator*(const vector<DIM, T> &rhs)	const;	//dot product
+	vector<DIM, T>	operator*(const matrix<DIM, T> &rhs)	const;	//matrix product
 	vector<DIM, T>	operator/(T rhs)						const;	//scalar div.
 	vector<DIM, T>	operator^(const vector<DIM, T> &rhs)	const;	//component product.
 	vector<DIM, T>&	operator+=(const vector<DIM, T> &rhs);
@@ -83,6 +88,14 @@ private:
 /***************************************************************************************************/
 /***************************************************************************************************/
 // Method definitions
+template<unsigned DIM, typename T>
+template<unsigned D>
+vector<DIM, T>::operator vector<D, T>() const {
+	vector<D, T> result;
+	int min = DIM > D ? D : DIM;
+	for (int i = 0; i < min; ++i) result[i] = data[i];
+	return result;
+}
 
 template <unsigned DIM, typename T>
 vector<DIM, T> vector<DIM, T>::operator-() const {
@@ -274,6 +287,7 @@ vector<DIM, T> operator*(T lhs, const vector<DIM, T>& rhs)
 {
 	return rhs * lhs;
 }
+
 
 }// namespace se_debug
 

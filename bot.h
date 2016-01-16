@@ -11,7 +11,6 @@ public:
 	unsigned hitCount;
 
 	Bot();
-	~Bot() {};
 
 	void handle(SEEvent &e);
 

@@ -58,8 +58,6 @@ void Bot::onUpdate()
 	float power = (dir.lengthSqaure() - 150.0f) / 2.0f;
 	if (power > 90) power = 90.0f;
 	dir[1] = 0.0f;
-	SEVector4f rot(dir[0], dir[1], dir[2], 0.0f);
-	rot *= SE_MATRIX_ROTATE4(se_data::AXIS_Y, 90.0f - power);
-	dir[0] = rot[0]; dir[2] = rot[2];
+	dir = SE_MATRIX_ROTATE4(se_data::AXIS_Y, 90.0f - power)* SEVector4f(dir);
 	SE_RIGIDBODY.applyForce(dir.unify() * BOT_SPEED);
 }

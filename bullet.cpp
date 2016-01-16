@@ -19,6 +19,5 @@ void Bullet::onInit()
 
 void Bullet::onUpdate()
 {
-	
 	SE_TRANSFORM.translation() += direction * BULLET_SPEED * SIN.getFrameTime();
 }
